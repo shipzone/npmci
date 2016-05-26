@@ -22,4 +22,4 @@ if (typeof cmdValue === 'undefined') {
 }
 console.log('command:', cmdValue);
 console.log('node Version:', nodeValue);
-shelljs.exec("bash -c \"source /usr/local/nvm/nvm.sh && nvm install "+ nodeValue + " nvm alias default " + nodeValue" "\"");
+shelljs.exec("bash -c \"source /usr/local/nvm/nvm.sh && nvm install "+ nodeValue + " nvm alias default " + nodeValue + "\"");
