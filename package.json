@@ -1,0 +1,30 @@
+{
+  "name": "npmci",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "npmci": "dist/index.js"
+  },
+  "scripts": {
+    "test": "(npmts)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pushrocks/npmci.git"
+  },
+  "author": "Lossless GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/pushrocks/npmci/issues"
+  },
+  "homepage": "https://gitlab.com/pushrocks/npmci#README",
+  "devDependencies": {
+    "npmts": "^5.1.15"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "shelljs": "^0.7.0",
+    "typings-global": "^1.0.3"
+  }
+}
