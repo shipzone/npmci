@@ -1,25 +1,30 @@
 #!/usr/bin/env node
-import "typings-global"
-let shelljs = require("shelljs");
+import "typings-global";
+import * as plugins from "./npmci.plugins";
 
-let program = require('commander');
-let cmdValue;
-let nodeValue;
 
-program
-  .version('0.0.1')
-  .arguments('<cmd> [node]')
-  .action(function (cmd, node) {
-     cmdValue = cmd;
-     nodeValue = node;
-  });
+
+let command;
+let commandOption;
+
+plugins.commander
+    .version('0.0.1')
+    .arguments('<cmd> [node]')
+    .action(function (commandArg, commandOptionArg) {
+        command = commandArg;
+        commandOption = commandOptionArg;
+    });
  
-program.parse(process.argv);
+plugins.commander.parse(process.argv);
  
-if (typeof cmdValue === 'undefined') {
-   console.error('no command given!');
-   process.exit(1);
+if (typeof command === 'undefined') {
+    console.error('no command given!');
+    process.exit(1);
 }
-console.log('command:', cmdValue);
-console.log('node Version:', nodeValue);
-shelljs.exec("bash -c \"source /usr/local/nvm/nvm.sh && nvm install "+ nodeValue + " nvm alias default " + nodeValue + "\"");
+
+switch (command){
+    case "install":
+        
+}
+
+shelljs.exec("bash -c \"source /usr/local/nvm/nvm.sh && nvm install "+ commandOption + " nvm alias default " + commandOption + "\"");
