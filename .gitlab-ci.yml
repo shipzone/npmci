@@ -16,16 +16,14 @@ testLTS:
 testSTABLE:
   stage: test
   script:
-    - npmci install stable
-    - npm install
-    - npm test
+    - npmci test stable
   tags:
     - docker
 
 release:
   stage: release
   script:
-    - npm -v
+    - npmci publish
   only:
     - tags
   tags:

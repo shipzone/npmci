@@ -5,6 +5,8 @@ export let test = (versionArg) => {
     let done = plugins.q.defer();
     install(versionArg)
         .then(function(){
+            plugins.beautylog.info("now installing dependencies:");
+            plugins.shelljs.exec("npm install");
             plugins.beautylog.info("now starting tests:");
             plugins.shelljs.exec("npm test");
             plugins.beautylog.success("test finished");
