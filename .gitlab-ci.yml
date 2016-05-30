@@ -21,8 +21,6 @@ testSTABLE:
 release:
   stage: release
   script:
-    - npm uninstall -g npmci
-    - npm install -g npmci
     - npmci publish
   only:
     - tags

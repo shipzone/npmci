@@ -4,7 +4,7 @@ import * as plugins from "./npmci.plugins";
 
 let packJson = require("../package.json");
 
-plugins.beautylog.log("npmci in version" + packJson.version);
+plugins.beautylog.info("npmci version: " + packJson.version);
 
 import {install} from "./npmci.install";
 import {test} from "./npmci.test";
