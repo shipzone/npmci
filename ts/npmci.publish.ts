@@ -15,8 +15,7 @@ export let publish = () => {
         plugins.beautylog.error("no access token found! Exiting!");
         process.exit(1);
     }
-    bash("echo $HOME");
-    plugins.smartfile.memory.toFsSync(npmrcFileString,{fileName:"npmrc",filePath:"$HOME"});
+    plugins.smartfile.memory.toFsSync(npmrcFileString,{fileName:".npmrc",filePath:"$HOME"});
     bash("npm publish");
     plugins.beautylog.ok("Done!")
     return done.promise;
