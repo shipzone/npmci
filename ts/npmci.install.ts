@@ -16,8 +16,8 @@ export let install = (versionArg) => {
         " nvm alias default " + version
     );
     plugins.beautylog.success("Node version " + version + " successfully installed!");
-    plugins.shelljs.exec("node -v");
-    plugins.shelljs.exec("npm -v");
+    bash("node -v");
+    bash("npm -v");
     done.resolve();
     return done.promise;
 }
