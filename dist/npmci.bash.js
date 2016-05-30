@@ -1,0 +1,10 @@
+"use strict";
+require("typings-global");
+var plugins = require("./npmci.plugins");
+exports.bash = function (commandArg) {
+    plugins.shelljs.exec("bash -c \"source /usr/local/nvm/nvm.sh &&" +
+        commandArg +
+        "\"");
+};
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5wbWNpLmJhc2gudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLFFBQU8sZ0JBQWdCLENBQUMsQ0FBQTtBQUN4QixJQUFZLE9BQU8sV0FBTSxpQkFBaUIsQ0FBQyxDQUFBO0FBQ2hDLFlBQUksR0FBRyxVQUFDLFVBQVU7SUFDekIsT0FBTyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQ2hCLDJDQUEyQztRQUMzQyxVQUFVO1FBQ1YsSUFBSSxDQUNQLENBQUM7QUFDTixDQUFDLENBQUEiLCJmaWxlIjoibnBtY2kuYmFzaC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBcInR5cGluZ3MtZ2xvYmFsXCI7XHJcbmltcG9ydCAqIGFzIHBsdWdpbnMgZnJvbSBcIi4vbnBtY2kucGx1Z2luc1wiO1xyXG5leHBvcnQgbGV0IGJhc2ggPSAoY29tbWFuZEFyZykgPT4ge1xyXG4gICAgcGx1Z2lucy5zaGVsbGpzLmV4ZWMoXHJcbiAgICAgICAgXCJiYXNoIC1jIFxcXCJzb3VyY2UgL3Vzci9sb2NhbC9udm0vbnZtLnNoICYmXCIgK1xyXG4gICAgICAgIGNvbW1hbmRBcmcgK1xyXG4gICAgICAgIFwiXFxcIlwiXHJcbiAgICApO1xyXG59Il19
