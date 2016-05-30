@@ -23,9 +23,9 @@ npmci install stable # will install latest stable node version and update PAth f
 npmci install x.x.x #  will install any specific node version.
 
 # Install any node version, install dependencies and run test in cwd:
-npmci test lts // will install latest lts node version and run "npm install" and "npm test".
+npmci test lts # will install latest lts node version and run "npm install" and "npm test".
 
 # publish npm module
-npmci publish // will look vor $NPMCITOKEN env var and push any module in cwd to npm   
+npmci publish # will look vor $NPMCITOKEN env var and push any module in cwd to npm   
 ```
 
