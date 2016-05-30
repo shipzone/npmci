@@ -9,10 +9,11 @@ npmci is your friend when it comes to handling npm packages during CI builds.
 npmci is designed to work in docker CI environments. The following docker images come with npmci presinstalled:
 
 Docker Hub:
-```
-hosttoday/ht-docker-node // has lts node version preinstalled. Change it with npmci
-hosttoday/ht-docker-node-python-3 // like ht-docker-node, but with python3 instead of python2.7
-```
+
+* [hosttoday/ht-docker-node](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
+has LTS node version preinstalled. Change it with npmci
+* [hosttoday/ht-docker-node-python-3](https://hub.docker.com/r/hosttoday/ht-docker-node-python3/)  
+like ht-docker-node, but with python3 instead of python2.7
 
 npmci can be called from commandline:
 ```shell
