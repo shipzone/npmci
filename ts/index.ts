@@ -2,6 +2,8 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
 
+plugins.beautylog.log("npmci in version 1.0.10");
+
 import {install} from "./npmci.install";
 import {test} from "./npmci.test";
 import {publish} from "./npmci.publish";
@@ -11,7 +13,6 @@ let command;
 let commandOption;
 
 plugins.commander
-    .version('0.0.1')
     .arguments('<commandarg> [commandoptionarg]')
     .action(function (commandarg, commandoptionarg) {
         command = commandarg;

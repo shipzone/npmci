@@ -1,4 +1,4 @@
-image: hosttoday/ht-docker-node
+image: hosttoday/ht-docker-node:latest
 
 stages:
 - test
