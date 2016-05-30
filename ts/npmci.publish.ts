@@ -9,8 +9,14 @@ let npmrcFileString = npmrcPrefix + npmToken;
 
 export let publish = () => {
     let done = plugins.q.defer();
-    plugins.beautylog.ok("Tests passed, now publishing to npm!");
-    plugins.smartfile.memory.toFsSync(npmrcFileString,{fileName:"npmrc",filePath:"/etc/"});
+    if(npmToken){
+        plugins.beautylog.info("found access token");
+    } else {
+        plugins.beautylog.error("no access token found! Exiting!");
+        process.exit(1);
+    }
+    bash("echo $HOME");
+    plugins.smartfile.memory.toFsSync(npmrcFileString,{fileName:"npmrc",filePath:"$HOME"});
     bash("npm publish");
     plugins.beautylog.ok("Done!")
     return done.promise;
