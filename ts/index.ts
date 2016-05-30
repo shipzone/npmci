@@ -2,7 +2,9 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
 
-plugins.beautylog.log("npmci in version 1.0.10");
+let packJson = require("../package.json");
+
+plugins.beautylog.log("npmci in version" + packJson.version);
 
 import {install} from "./npmci.install";
 import {test} from "./npmci.test";
