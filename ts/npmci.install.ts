@@ -5,7 +5,7 @@ import {bash} from "./npmci.bash";
 export let install = (versionArg) => {
     let done = plugins.q.defer();
     let version:string;
-    if(versionArg = "lts"){
+    if(versionArg == "lts"){
         version = "4";
     } else {
         version = versionArg;
