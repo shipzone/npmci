@@ -13,7 +13,7 @@ export let install = (versionArg) => {
     plugins.beautylog.log("now installing " + "node ".green + ("version " + version).yellow);
     bash(
         "nvm install " + version +
-        " nvm alias default " + version
+        " && nvm alias default " + version
     );
     plugins.beautylog.success("Node version " + version + " successfully installed!");
     bash("node -v");
