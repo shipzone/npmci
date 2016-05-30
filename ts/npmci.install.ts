@@ -17,6 +17,8 @@ export let install = (versionArg) => {
         "\""
     );
     plugins.beautylog.success("Node version " + version + " successfully installed!");
+    plugins.shelljs.exec("node -v");
+    plugins.shelljs.exec("npm -v");
     done.resolve();
     return done.promise;
 }
