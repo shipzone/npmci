@@ -1,0 +1,32 @@
+image: hosttoday/ht-docker-node
+
+stages:
+- test
+- release
+
+testLTS:
+  stage: test
+  script:
+    - npmci install 4
+    - npm install
+    - npm test
+  tags:
+    - docker
+    
+testSTABLE:
+  stage: test
+  script:
+    - npmci install stable
+    - npm install
+    - npm test
+  tags:
+    - docker
+
+release:
+  stage: release
+  script:
+    - npm -v
+  only:
+    - tags
+  tags:
+    - docker

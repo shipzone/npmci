@@ -25,6 +25,7 @@
   "dependencies": {
     "beautylog": "^5.0.6",
     "commander": "^2.9.0",
+    "q": "^1.4.1",
     "shelljs": "^0.7.0",
     "smartfile": "^3.0.10",
     "typings-global": "^1.0.3"

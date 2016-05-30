@@ -1,6 +1,15 @@
+import "typings-global";
+import * as plugins from "./npmci.plugins";
+
 let npmrcPrefix:string = "//registry.npmjs.org/:_authToken=";
-let npmToken:string;
+let npmToken:string = process.env.NPMCITOKEN;
+let npmrcFileString = npmrcPrefix + npmToken;
+
 
 export let publish = () => {
+    let done = plugins.q.defer();
     
+    plugins.smartfile.memory.toFs(npmrcFileString,{fileName:".npmrc",filePath:"/root/"});
+    plugins.shelljs.exec("npm publish");
+    return done.promise;
 };
