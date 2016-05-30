@@ -7,9 +7,7 @@ stages:
 testLTS:
   stage: test
   script:
-    - npmci install 4
-    - npm install
-    - npm test
+    - npmci test lts
   tags:
     - docker
     
