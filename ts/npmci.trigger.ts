@@ -6,11 +6,18 @@ import {bash} from "./npmci.bash";
 export let trigger = function(){
     let done = plugins.q.defer();
     plugins.beautylog.info("now running triggers");
+    let triggerRegex = /^([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)/;
     for(let i = 0; i < 100; i++){
         let iteratorString = i.toString();
         if(process.env["TRIGGER" + iteratorString]){
+            let triggerRegexResultArray = triggerRegex.exec(process.env["TRIGGER" + iteratorString]);
+            let regexDomain = triggerRegexResultArray[0];
+            let regexProjectId = triggerRegexResultArray[1];
+            let regexProjectTriggerToken = triggerRegexResultArray[2];
+            let regexRefName = triggerRegexResultArray[3];
+            plugins.beautylog.log("triggering build for ref " + regexRefName);
             plugins.beautylog.log("Found TRIGGER" + iteratorString);
-            plugins.request.post(process.env["TRIGGER" + iteratorString]);
+            plugins.request.post("https://gitlab.com/api/v3/projects/" + regexProjectId + "/trigger/builds", {form:{token:regexProjectTriggerToken,ref:regexRefName}});
         }
     }
     done.resolve();
