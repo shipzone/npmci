@@ -24,6 +24,7 @@ testLEGACY:
     - npmci test legacy
   tags:
     - docker
+  allow_failure: true
 
 release:
   stage: release
