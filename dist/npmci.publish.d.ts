@@ -1,2 +1,2 @@
 import "typings-global";
-export declare let publish: () => any;
+export declare let publish: (serviceArg?: string) => any;
