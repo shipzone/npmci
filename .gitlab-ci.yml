@@ -17,6 +17,13 @@ testSTABLE:
     - npmci test stable
   tags:
     - docker
+    
+testLEGACY:
+  stage: test
+  script:
+    - npmci test legacy
+  tags:
+    - docker
 
 release:
   stage: release
