@@ -10,7 +10,7 @@ export let trigger = function(){
         let iteratorString = i.toString();
         if(process.env["TRIGGER" + iteratorString]){
             plugins.beautylog.log("Found TRIGGER" + iteratorString);
-            bash("curl -X POST " + process.env["TRIGGER" + iteratorString]);
+            plugins.request.post(process.env["TRIGGER" + iteratorString]);
         }
     }
     done.resolve();
