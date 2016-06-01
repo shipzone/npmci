@@ -9,6 +9,7 @@ plugins.beautylog.info("npmci version: " + packJson.version);
 import {install} from "./npmci.install";
 import {test} from "./npmci.test";
 import {publish} from "./npmci.publish";
+import {trigger} from "./npmci.trigger";
 
 
 let command;
@@ -39,7 +40,8 @@ switch (command){
         
         break;
     case "publish":
-        publish(commandOption);
+        publish(commandOption)
+            .then(trigger);
         break;
     default:
         break;
