@@ -11,10 +11,10 @@ export let trigger = function(){
         let iteratorString = i.toString();
         if(process.env["TRIGGER" + iteratorString]){
             let triggerRegexResultArray = triggerRegex.exec(process.env["TRIGGER" + iteratorString]);
-            let regexDomain = triggerRegexResultArray[0];
-            let regexProjectId = triggerRegexResultArray[1];
-            let regexProjectTriggerToken = triggerRegexResultArray[2];
-            let regexRefName = triggerRegexResultArray[3];
+            let regexDomain = triggerRegexResultArray[1];
+            let regexProjectId = triggerRegexResultArray[2];
+            let regexProjectTriggerToken = triggerRegexResultArray[3];
+            let regexRefName = triggerRegexResultArray[4];
             plugins.beautylog.log("triggering build for ref " + regexRefName);
             plugins.beautylog.log("Found TRIGGER" + iteratorString);
             plugins.request.post("https://gitlab.com/api/v3/projects/" + regexProjectId + "/trigger/builds", {form:{token:regexProjectTriggerToken,ref:regexRefName}});
