@@ -4,13 +4,15 @@ import {bash} from "./npmci.bash";
 
 export let install = (versionArg) => {
     let done = plugins.q.defer();
+    plugins.beautylog.log("now installing " + "node ".green + ("version " + versionArg).yellow);
     let version:string;
     if(versionArg == "lts"){
         version = "4";
+    } else if(versionArg = "legacy"){
+        version = "4.0.0"
     } else {
         version = versionArg;
     };
-    plugins.beautylog.log("now installing " + "node ".green + ("version " + version).yellow);
     bash(
         "nvm install " + version +
         " && nvm alias default " + version

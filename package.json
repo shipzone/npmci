@@ -28,6 +28,7 @@
     "q": "^1.4.1",
     "shelljs": "^0.7.0",
     "smartfile": "^3.0.10",
+    "smartssh": "^1.0.4",
     "typings-global": "^1.0.3"
   }
 }

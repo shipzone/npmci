@@ -35,8 +35,11 @@ switch (command){
     case "test":
         test(commandOption);
         break;
+    case "prepare":
+        
+        break;
     case "publish":
-        publish();
+        publish(commandOption);
         break;
     default:
         break;
