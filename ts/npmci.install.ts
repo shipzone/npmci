@@ -8,7 +8,7 @@ export let install = (versionArg) => {
     let version:string;
     if(versionArg == "lts"){
         version = "4";
-    } else if(versionArg = "legacy"){
+    } else if(versionArg == "legacy"){
         version = "4.0.0"
     } else {
         version = versionArg;
