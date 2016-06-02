@@ -34,15 +34,18 @@ switch (command){
     case "install":
         install(commandOption);
         break;
-    case "test":
-        test(commandOption);
-        break;
     case "prepare":
         prepare(commandOption);
         break;
     case "publish":
         publish(commandOption)
             .then(trigger);
+        break;
+    case "test":
+        test(commandOption);
+        break;
+    case "trigger":
+        trigger();
         break;
     default:
         break;

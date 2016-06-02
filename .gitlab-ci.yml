@@ -3,6 +3,7 @@ image: hosttoday/ht-docker-node:latest
 stages:
 - test
 - release
+- release2
 
 testLTS:
   stage: test
@@ -34,6 +35,15 @@ release:
   stage: release
   script:
     - npmci publish
+  only:
+    - tags
+  tags:
+    - docker
+
+release2:
+  stage: release2
+  script:
+    - npmci trigger
   only:
     - tags
   tags:
