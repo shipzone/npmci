@@ -20,12 +20,12 @@ export let trigger = function(){
             let regexProjectTriggerToken = triggerRegexResultArray[3];
             let regexRefName = triggerRegexResultArray[4];
             let regexTriggerName;
-            if(triggerRegexResultArray.length == 5){
+            if(triggerRegexResultArray.length == 6){
                 regexTriggerName = triggerRegexResultArray[5];
             } else {
                 regexTriggerName = "Unnamed Trigger";
             }
-            plugins.beautylog.log("Found" + triggerName);
+            plugins.beautylog.info("Found " + triggerName);
             plugins.beautylog.log("triggering build for ref " + regexRefName + " of " + regexTriggerName);
             plugins.request.post("https://gitlab.com/api/v3/projects/" + regexProjectId + "/trigger/builds", {form:{token:regexProjectTriggerToken,ref:regexRefName}});
         }
