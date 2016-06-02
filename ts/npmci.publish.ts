@@ -37,6 +37,7 @@ let publishDocker = function(){
     prepare("docker")
         .then(function(){
             bash("docker push");
+            done.resolve();
         });
     return done.promise;
 };

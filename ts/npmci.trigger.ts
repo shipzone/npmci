@@ -3,13 +3,16 @@ import * as plugins from "./npmci.plugins";
 import {prepare} from "./npmci.prepare";
 import {bash} from "./npmci.bash";
 
+//Variables
+let triggerEnvPrefix = "NPMCI_TRIGGER";
+
 export let trigger = function(){
     let done = plugins.q.defer();
     plugins.beautylog.info("now running triggers");
-    let triggerRegex = /^([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)\/([a-zA-Z0-9\.]*)/;
+    let triggerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/;
     for(let i = 0; i < 100; i++){
         let iteratorString = i.toString();
-        if(process.env["TRIGGER" + iteratorString]){
+        if(process.env[triggerEnvPrefix + iteratorString]){
             let triggerRegexResultArray = triggerRegex.exec(process.env["TRIGGER" + iteratorString]);
             let regexDomain = triggerRegexResultArray[1];
             let regexProjectId = triggerRegexResultArray[2];

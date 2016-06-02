@@ -2,14 +2,21 @@ import "typings-global";
 import * as plugins from "./npmci.plugins";
 
 let docker = function(){
-    
+    let done = plugins.q.defer();
+    let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
+    let dockerRegexResultArray = dockerRegex.exec("process.env.NPMCI_LOGIN_DOCKER");
+    let username = dockerRegexResultArray[1];
+    let password = dockerRegexResultArray[2];
+    plugins.shelljs.exec("docker login -u " + username + " -p " + password);
+    done.resolve();
+    return done.promise;
 }
 
 let npm = function(){
     let done = plugins.q.defer();
     
     let npmrcPrefix:string = "//registry.npmjs.org/:_authToken=";
-    let npmToken:string = process.env.NPMCITOKEN;
+    let npmToken:string = process.env.NPMCI_TOKEN_NPM;
     let npmrcFileString = npmrcPrefix + npmToken;
     
     if(npmToken){
