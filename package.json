@@ -30,6 +30,7 @@
     "shelljs": "^0.7.0",
     "smartfile": "^3.0.10",
     "smartssh": "^1.0.4",
+    "smartstring": "^2.0.4",
     "typings-global": "^1.0.3"
   }
 }

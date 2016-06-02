@@ -6,10 +6,11 @@ let packJson = require("../package.json");
 
 plugins.beautylog.info("npmci version: " + packJson.version);
 
+import {build} from "./npmci.build"
 import {install} from "./npmci.install";
-import {test} from "./npmci.test";
 import {publish} from "./npmci.publish";
 import {prepare} from "./npmci.prepare";
+import {test} from "./npmci.test";
 import {trigger} from "./npmci.trigger";
 
 
@@ -31,6 +32,9 @@ if (typeof command === 'undefined') {
 }
 
 switch (command){
+    case "build":
+        build("commandArg");
+        break;
     case "install":
         install(commandOption);
         break;

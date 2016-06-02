@@ -5,4 +5,5 @@ export declare let q: any;
 export declare let request: any;
 export declare let shelljs: any;
 export declare let smartssh: any;
+export import smartstring = require("smartstring");
 export import smartfile = require("smartfile");
