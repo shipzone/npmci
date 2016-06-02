@@ -12,8 +12,9 @@ export let trigger = function(){
     let triggerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/;
     for(let i = 0; i < 100; i++){
         let iteratorString = i.toString();
-        if(process.env[triggerEnvPrefix + iteratorString]){
-            let triggerRegexResultArray = triggerRegex.exec(process.env["TRIGGER" + iteratorString]);
+        let triggerName = triggerEnvPrefix + iteratorString
+        if(process.env[triggerName]){
+            let triggerRegexResultArray = triggerRegex.exec(process.env[triggerName]);
             let regexDomain = triggerRegexResultArray[1];
             let regexProjectId = triggerRegexResultArray[2];
             let regexProjectTriggerToken = triggerRegexResultArray[3];
