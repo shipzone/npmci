@@ -38,8 +38,7 @@ switch (command){
         prepare(commandOption);
         break;
     case "publish":
-        publish(commandOption)
-            .then(trigger);
+        publish(commandOption);
         break;
     case "test":
         test(commandOption);
