@@ -1,5 +1,6 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
+import {bash} from "./npmci.bash";
 
 let docker = function(){
     let done = plugins.q.defer();
@@ -7,7 +8,7 @@ let docker = function(){
     let dockerRegexResultArray = dockerRegex.exec("process.env.NPMCI_LOGIN_DOCKER");
     let username = dockerRegexResultArray[1];
     let password = dockerRegexResultArray[2];
-    plugins.shelljs.exec("docker login -u " + username + " -p " + password);
+    bash("docker login -u " + username + " -p " + password);
     done.resolve();
     return done.promise;
 }
