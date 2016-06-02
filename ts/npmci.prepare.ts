@@ -5,7 +5,11 @@ import {bash} from "./npmci.bash";
 let docker = function(){
     let done = plugins.q.defer();
     let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
-    let dockerRegexResultArray = dockerRegex.exec("process.env.NPMCI_LOGIN_DOCKER");
+    if(!process.env.NPMCI_LOGIN_DOCKER){
+        plugins.beautylog.error("You have to specify Login Data to the Docker Registry");
+        process.exit(1);
+    }
+    let dockerRegexResultArray = dockerRegex.exec(process.env.NPMCI_LOGIN_DOCKER);
     let username = dockerRegexResultArray[1];
     let password = dockerRegexResultArray[2];
     bash("docker login -u " + username + " -p " + password);
