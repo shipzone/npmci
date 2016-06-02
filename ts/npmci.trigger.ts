@@ -9,7 +9,7 @@ let triggerEnvPrefix = "NPMCI_TRIGGER_";
 export let trigger = function(){
     let done = plugins.q.defer();
     plugins.beautylog.info("now running triggers");
-    let triggerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.]*)/;
+    let triggerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.\-\/]*)/;
     for(let i = 0; i < 100; i++){
         let iteratorString = i.toString();
         let triggerName = triggerEnvPrefix + iteratorString
