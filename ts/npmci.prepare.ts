@@ -12,7 +12,7 @@ let docker = function(){
     let dockerRegexResultArray = dockerRegex.exec(process.env.NPMCI_LOGIN_DOCKER);
     let username = dockerRegexResultArray[1];
     let password = dockerRegexResultArray[2];
-    bash("docker login -u " + username + " -p " + password);
+    plugins.shelljs.exec("docker login -u " + username + " -p " + password);
     done.resolve();
     return done.promise;
 }

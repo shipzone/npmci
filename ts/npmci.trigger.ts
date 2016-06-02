@@ -20,7 +20,7 @@ export let trigger = function(){
             let regexProjectTriggerToken = triggerRegexResultArray[3];
             let regexRefName = triggerRegexResultArray[4];
             let regexTriggerName;
-            if(triggerRegexResultArray.length = 5){
+            if(triggerRegexResultArray.length == 5){
                 regexTriggerName = triggerRegexResultArray[5];
             } else {
                 regexTriggerName = "Unnamed Trigger";
