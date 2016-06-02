@@ -4,7 +4,7 @@ import {prepare} from "./npmci.prepare";
 import {bash} from "./npmci.bash";
 
 //Variables
-let triggerEnvPrefix = "NPMCI_TRIGGER";
+let triggerEnvPrefix = "NPMCI_TRIGGER_";
 
 export let trigger = function(){
     let done = plugins.q.defer();

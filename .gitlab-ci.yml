@@ -10,7 +10,11 @@ testLTS:
     - npmci test lts
   tags:
     - docker
-    
+
+before_script:
+  - npm uninstall -g npmci
+  - npm install -g npmci
+   
 testSTABLE:
   stage: test
   script:
