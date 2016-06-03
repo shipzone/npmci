@@ -1,3 +1,8 @@
-export let env = function(){
-    
-};
+import "typings-global";
+import * as plugins from "./npmci.plugins";
+
+import {GitRepo} from "smartstring";
+
+export let repo = new GitRepo(process.env.CI_BUILD_REPO);
+export let dockerTestTag:string;
+export let dockerReleaseTag:string;
