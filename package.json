@@ -20,16 +20,16 @@
   },
   "homepage": "https://gitlab.com/pushrocks/npmci#README",
   "devDependencies": {
-    "npmts": "^5.1.18"
+    "npmts": "^5.2.1"
   },
   "dependencies": {
-    "beautylog": "^5.0.6",
+    "beautylog": "^5.0.8",
     "commander": "^2.9.0",
     "q": "^1.4.1",
     "request": "^2.72.0",
     "shelljs": "^0.7.0",
     "smartfile": "^3.0.10",
-    "smartssh": "^1.0.4",
+    "smartssh": "^1.0.5",
     "smartstring": "^2.0.4",
     "typings-global": "^1.0.3"
   }
