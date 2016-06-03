@@ -2,6 +2,7 @@ import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {prepare} from "./npmci.prepare";
 import {bash} from "./npmci.bash";
+import * as env from "./npmci.env";
 
 export let publish = (serviceArg:string = "npm") => {
     switch (serviceArg){
@@ -28,7 +29,7 @@ let publishDocker = function(){
     prepare("docker")
         .then(function(){
             bash 
-            bash("docker push ");
+            bash("docker push " + env.dockerTag());
             done.resolve();
         });
     return done.promise;
