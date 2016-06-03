@@ -14,6 +14,8 @@ Docker Hub:
 has LTS node version preinstalled. Change it with npmci
 * [hosttoday/ht-docker-node-python-3](https://hub.docker.com/r/hosttoday/ht-docker-node-python3/)  
 like ht-docker-node, but with python3 instead of python2.7
+* [hosttoday/ht-docker-dbase](https://hub.docker.com/r/hosttoday/ht-docker-dbase/)  
+based on docker:git, can be used to build docker images in conjuction with docker:dind
 
 npmci can be called from commandline:
 ```shell
