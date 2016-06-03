@@ -1,5 +1,5 @@
 # NPMCI
-npmci is your friend when it comes to handling npm packages during CI builds.
+npmci is your friend when it comes to handling npm packages during CI builds. It is optimized for GitLab CI
 
 ## Status
 [![build status](https://gitlab.com/pushrocks/npmci/badges/master/build.svg)](https://gitlab.com/pushrocks/npmci/commits/master)
@@ -19,13 +19,29 @@ npmci can be called from commandline:
 ```shell
 # Install any node version:
 npmci install lts # will install latest LTS node version and update PATH for node and npm versions
-npmci install stable # will install latest stable node version and update PAth for node and npm
+npmci install stable # will install latest stable node version and update PATH for node and npm
+npmci install legacy # will install latest legacy node version and update PATH for node and npm
 npmci install x.x.x #  will install any specific node version.
 
 # Install any node version, install dependencies and run test in cwd:
 npmci test lts # will install latest lts node version and run "npm install" and "npm test".
+npmci test stable # will install latest stable node version and run "npm install" and "npm test".
+npmci test legacy # will install latest legacy node version and run "npm install" and "npm test".
+npmci test x.x.x # will install any specific node version and run "npm install" and "npm test".
+
+# prepare tools
+npmci prepare npm # will look vor $NPMCI_TOKEN_NPM env var and create .npmrc, so npm is authenticated
+npmci prepare docker # will look $NPMCI_LOGIN_DOCKER ind form username|password and authenticate docker
+npmci prepare docker-gitlab # will log you in to gitlab container registry
+
+# build containers
+npmci build docker # will build container and tag it
 
 # publish npm module
-npmci publish # will look vor $NPMCITOKEN env var and push any module in cwd to npm   
+npmci publish npm # will look vor $NPMCI_TOKEN_NPM env var and push any module in cwd to npm
+npmci publish docker
+
+# trigger webhooks
+npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_99 in form domain|id|token|ref|name  
 ```
 
