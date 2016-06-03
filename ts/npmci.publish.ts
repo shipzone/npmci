@@ -4,21 +4,12 @@ import {prepare} from "./npmci.prepare";
 import {bash} from "./npmci.bash";
 
 export let publish = (serviceArg:string = "npm") => {
-    let done = plugins.q.defer();
     switch (serviceArg){
         case "npm": 
-            publishNpm()
-                .then(function(){
-                    done.resolve();
-                });
-            break;
+            return publishNpm();
         case "docker":
-            publishDocker()
-                .then(function(){
-                    done.resolve();
-                });
+            return publishDocker();
     }
-    return done.promise;
 };
 
 let publishNpm  = function(){
@@ -36,7 +27,8 @@ let publishDocker = function(){
     let done = plugins.q.defer();
     prepare("docker")
         .then(function(){
-            bash("docker push");
+            bash 
+            bash("docker push ");
             done.resolve();
         });
     return done.promise;

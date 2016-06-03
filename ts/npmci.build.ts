@@ -6,25 +6,14 @@ import * as env from "./npmci.env";
 export let build = function(commandArg){
     switch(commandArg){
         case "docker":
-            return docker();
-        case "docker-gitlab":
-            return dockerGitlab();
-        default:
-            break;
+            return docker();   
     }
 }
 
 let docker = function(){
     let done = plugins.q.defer();
-    plugins.shelljs.exec("docker build -t " + "registry.gitlab.com/" + env.repo.user + "/" + env.repo.repo + ":latest .");
+    plugins.shelljs.exec("docker build -t " + env.dockerTag());
     done.resolve();
     return done.promise;
 }
 
-let dockerGitlab = function(){
-    let done = plugins.q.defer();
-    let repo = new plugins.smartstring.GitRepo(process.env.CI_BUILD_REPO);
-    plugins.shelljs.exec("docker build -t " + "registry.gitlab.com/" + env.repo.user + "/" + env.repo.repo + ":latest .");
-    done.resolve();
-    return done.promise;
-}

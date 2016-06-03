@@ -1,6 +1,7 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {bash} from "./npmci.bash";
+import * as env from "./npmci.env"
 
 let npm = function(){
     let done = plugins.q.defer();
@@ -22,6 +23,7 @@ let npm = function(){
 
 let docker = function(){
     let done = plugins.q.defer();
+    env.dockerRegistry = "docker.io"
     let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
     if(!process.env.NPMCI_LOGIN_DOCKER){
         plugins.beautylog.error("You have to specify Login Data to the Docker Registry");
@@ -37,6 +39,7 @@ let docker = function(){
 
 let dockerGitlab = function(){
     let done = plugins.q.defer();
+    env.dockerRegistry = "registry.gitlab.io"
     let ciBuildToken = process.env.CI_BUILD_TOKEN
     plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + ciBuildToken + " registry.gitlab.com");
     done.resolve();
