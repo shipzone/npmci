@@ -39,7 +39,7 @@ let docker = function(){
 
 let dockerGitlab = function(){
     let done = plugins.q.defer();
-    env.dockerRegistry = "registry.gitlab.io"
+    env.dockerRegistry = "registry.gitlab.com";
     let ciBuildToken = process.env.CI_BUILD_TOKEN
     plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + ciBuildToken + " " + env.dockerRegistry);
     done.resolve();
