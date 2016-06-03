@@ -28,11 +28,12 @@ npmci test lts # will install latest lts node version and run "npm install" and 
 npmci test stable # will install latest stable node version and run "npm install" and "npm test".
 npmci test legacy # will install latest legacy node version and run "npm install" and "npm test".
 npmci test x.x.x # will install any specific node version and run "npm install" and "npm test".
+npmci test docker # will test any build image with tests defined in ./npmci/dockertest_1.sh to ./npmci/dockertest_100.sh
 
 # prepare tools
-npmci prepare npm # will look vor $NPMCI_TOKEN_NPM env var and create .npmrc, so npm is authenticated
-npmci prepare docker # will look $NPMCI_LOGIN_DOCKER ind form username|password and authenticate docker
-npmci prepare docker-gitlab # will log you in to gitlab container registry
+npmci prepare npm # will look for $NPMCI_TOKEN_NPM env var and create .npmrc, so npm is authenticated
+npmci prepare docker # will look for $NPMCI_LOGIN_DOCKER in form username|password and authenticate docker
+npmci prepare docker-gitlab # will authenticate docker for gitlab container registry
 
 # build containers
 npmci build docker # will build container and tag it
@@ -42,6 +43,6 @@ npmci publish npm # will look vor $NPMCI_TOKEN_NPM env var and push any module i
 npmci publish docker
 
 # trigger webhooks
-npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_99 in form domain|id|token|ref|name  
+npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domain|id|token|ref|name  
 ```
 
