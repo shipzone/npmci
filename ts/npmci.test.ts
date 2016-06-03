@@ -6,14 +6,36 @@ import * as env from "./npmci.env";
 
 export let test = (versionArg) => {
     let done = plugins.q.defer();
-    install(versionArg)
-        .then(function(){
-            plugins.beautylog.info("now installing dependencies:");
-            bash("npm install");
-            plugins.beautylog.info("now starting tests:");
-            bash("npm test");
-            plugins.beautylog.success("test finished");
-            done.resolve();
-        });
+    if(versionArg == "docker"){
+        testDocker()
+            .then(()=>{
+                done.resolve();
+            });
+    } else {
+        install(versionArg)
+            .then(npmDependencies)
+            .then(()=>{
+                plugins.beautylog.info("now starting tests:");
+                bash("npm test");
+                plugins.beautylog.success("test finished");
+                done.resolve();
+            });
+    }
     return done.promise;
 }
+
+let npmDependencies = function(){
+    let done = plugins.q.defer();
+    plugins.beautylog.info("now installing dependencies:");
+    bash("npm install");
+    done.resolve();
+    return done.promise;
+}
+
+let testDocker = function(){
+    let done = plugins.q.defer();
+    plugins.shelljs.exec("docker run --name " + env.repo.repo + " " + env.dockerTag());
+    done.resolve();
+    return done.promise;
+}
+
