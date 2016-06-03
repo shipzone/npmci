@@ -3,3 +3,8 @@ import { GitRepo } from "smartstring";
 export declare let repo: GitRepo;
 export declare let dockerTestTag: string;
 export declare let dockerReleaseTag: string;
+export declare let dockerRegistry: string;
+export declare let dockerTagVersion: () => string;
+export declare let dockerTag: () => string;
+export declare let dockerTagTest: () => string;
+export declare let dockerTagRelease: () => string;
