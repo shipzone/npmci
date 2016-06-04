@@ -7,4 +7,6 @@ export let repo = new GitRepo(process.env.CI_BUILD_REPO);
 export let dockerTestTag:string;
 export let dockerReleaseTag:string;
 
-export let dockerRegistry = "docker.io"; // will be set by npmci.prepare
+export let dockerRegistry; // will be set by npmci.prepare
+export let dockerImages;
+export let dockerFiles;
