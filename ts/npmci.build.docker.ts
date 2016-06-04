@@ -7,4 +7,4 @@ export let build = function(){
     return done.promise;
 }
 
-let getDockerFiles 
+let getDockerFiles = function(){};
