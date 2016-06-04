@@ -2,18 +2,14 @@ import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {bash} from "./npmci.bash";
 import * as env from "./npmci.env";
+import * as buildDocker from "./npmci.build.docker"
 
 export let build = function(commandArg){
     switch(commandArg){
         case "docker":
-            return docker();   
+            return buildDocker.build();   
     }
 }
 
-let docker = function(){
-    let done = plugins.q.defer();
-    plugins.shelljs.exec("docker build -t " + env.dockerTag());
-    done.resolve();
-    return done.promise;
-}
+
 
