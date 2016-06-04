@@ -1,6 +1,6 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
-import * as env from "./npmci.env";
+import * as NpmciEnv from "./npmci.env";
 export let dockerTagVersion = function(){
     if(process.env.CI_BUILD_STAGE == "test"){
         return "test";
@@ -9,14 +9,14 @@ export let dockerTagVersion = function(){
     }
 }
 
-export let dockerTag = function(){
-    return dockerRegistry + "/" + repo.user + "/" + repo.repo + ":" + dockerTagVersion() +" .";
+export let tagDocker = function(){
+    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":" + dockerTagVersion() +" .";
 }
 
 export let dockerTagTest = function(){
-    return dockerRegistry + "/" + repo.user + "/" + repo.repo + ":test .";
+    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":test .";
 }
 
 export let dockerTagRelease = function(){
-    return dockerRegistry + "/" + repo.user + "/" + repo.repo + ":latest .";
+    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":latest .";
 }
