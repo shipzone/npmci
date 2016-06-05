@@ -15,12 +15,27 @@ export let dockerFiles:Dockerfile[] = [];
 
 export let config;
 
+export let configStore = () => {
+    plugins.smartfile.memory.toFsSync(
+        JSON.stringify(config),
+        {
+            fileName:"config.json",
+            filePath:paths.NpmciPackageRoot
+        }
+    );
+}
+
 export let configLoad = () => {
-    config = plugins.smartfile.local.toObjectSync(paths.NpmciPackageConfig,"json");
+    try {
+        config = plugins.smartfile.local.toObjectSync(paths.NpmciPackageConfig,"json");
+    }
+    catch(err){
+        config = {};
+        configStore();
+        plugins.beautylog.log("config inititialized!");
+    }
+    
     config.dockerRegistry ? dockerRegistry = config.dockerRegistry : void(0);
     config.dockerFilesBuilt ? dockerFilesBuilt = config.dockerFilesBuilt : void(0);
 }
-
-export let configStore = () => {
-    
-}
+configLoad();
