@@ -2,6 +2,7 @@ import "typings-global";
 export import beautylog = require("beautylog");
 export declare let commander: any;
 export declare let gulp: any;
+export declare let gulpFunction: any;
 export import path = require("path");
 export declare let q: any;
 export declare let request: any;

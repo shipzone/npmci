@@ -3,26 +3,32 @@ import * as NpmciEnv from "./npmci.env";
 
 
 export let build = function(){
-    let done = plugins.q.defer();
-    done.resolve();
+    let done = plugins.q.defer();;
+    plugins.gulp.dest("./Dockerfile*")
+        .pipe(readDockerfiles)
+        .pipe(plugins.gulpFunction(done.resolve,"atEnd"));
     return done.promise;
 }
 
 let readDockerfiles = function(){
-    plugins.gulp.dest("./Dockerfile*")
-        .pipe(makeDockerfiles);
-};
-
-let makeDockerfiles = function(){
     return function(file,enc,cb){
+        let myDockerfile = new Dockerfile({
+            filePath:file.path,
+            read:true
+        });
         NpmciEnv.dockerFiles.push(
-            new Dockerfile({
-                filePath:file.path,
-                read:true
-            })
+            myDockerfile
         );
-        cb();
+        file["Dockerfile"] = myDockerfile;
+        cb(null,file);
     };
+}
+
+let buildDockerfiles = function(){
+    return function(file,enc,cb){
+        file.myDockerfile.build();
+        cb();
+    }
 }
 
 export class Dockerfile {
@@ -42,9 +48,15 @@ export class Dockerfile {
         this.baseImage = dockerBaseImage(this.content);
     };
     build(){
-        let tag = dockerTag(this.repo,this.version);
-        plugins.shelljs.exec("docker build -t " + tag + " -f " + this.filePath + " .");
-        this.buildTag = tag;
+        if(!this.buildTag){
+            let tag = dockerTag(this.repo,this.version);
+            plugins.shelljs.exec("docker build -t " + tag + " -f " + this.filePath + " .");
+            this.buildTag = tag;
+            NpmciEnv.dockerFilesBuilt.push(this);
+        } else {
+            plugins.beautylog.error("This Dockerfile already has been built!");
+        }
+        
     };
     push(){
         if(this.buildTag){

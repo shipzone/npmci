@@ -8,6 +8,6 @@ export let dockerTestTag:string;
 export let dockerReleaseTag:string;
 
 export let dockerRegistry; // will be set by npmci.prepare
-export let dockerImages;
-export let dockerFiles:Dockerfile[];
+export let dockerFilesBuilt:Dockerfile[] = [];
+export let dockerFiles:Dockerfile[] = [];
 

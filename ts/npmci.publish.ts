@@ -2,7 +2,7 @@ import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {prepare} from "./npmci.prepare";
 import {bash} from "./npmci.bash";
-import * as env from "./npmci.env";
+import * as NpmciEnv from "./npmci.env";
 
 export let publish = (serviceArg:string = "npm") => {
     switch (serviceArg){
@@ -26,5 +26,17 @@ let publishNpm  = function(){
 
 let publishDocker = function(){
     let done = plugins.q.defer();
+    NpmciEnv.dockerFilesBuilt.forEach(function(dockerfileArg){
+        dockerfileArg.push();
+    });
     return done.promise;
 };
+
+let publishDockerTest = function(){
+    let done = plugins.q.defer();
+    NpmciEnv.dockerFilesBuilt.forEach(function(dockerfileArg){
+        dockerfileArg.push();
+    });
+    done.resolve();
+    return done.promise;
+}
