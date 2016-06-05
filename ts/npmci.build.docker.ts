@@ -4,7 +4,7 @@ import * as NpmciEnv from "./npmci.env";
 
 export let build = function(){
     let done = plugins.q.defer();
-    plugins.gulp.dest("./Dockerfile*")
+    plugins.gulp.src("./Dockerfile*")
         .pipe(readDockerfiles())
         .pipe(plugins.gulpFunction(function(){
             sortDockerfiles()
