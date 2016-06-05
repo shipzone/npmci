@@ -10,3 +10,7 @@ export let bash = (commandArg) => {
         process.exit(1);
     }
 }
+
+export let bashBare = () => {
+    
+}
