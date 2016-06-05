@@ -1,4 +1,8 @@
 export declare let build: () => any;
+export declare let readDockerfiles: () => any;
+export declare let cleanTagsArrayFunction: (dockerfileArrayArg: Dockerfile[]) => string[];
+export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
+export declare let buildDockerfiles: () => any;
 export declare class Dockerfile {
     filePath: string;
     repo: string;
@@ -15,4 +19,6 @@ export declare class Dockerfile {
     build(): void;
     push(): void;
 }
+export declare let dockerFileVersion: (dockerfileNameArg: string) => string;
+export declare let dockerBaseImage: (dockerfileContentArg: string) => string;
 export declare let dockerTag: (repoArg: string, versionArg: string) => string;

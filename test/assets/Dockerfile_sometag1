@@ -1,0 +1,2 @@
+FROM myrepo/mygroup:sometag2
+RUN apt-get update

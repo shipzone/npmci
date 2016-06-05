@@ -4,55 +4,51 @@ import * as NpmciEnv from "./npmci.env";
 
 export let build = function(){
     let done = plugins.q.defer();
-    plugins.gulp.src("./Dockerfile*")
-        .pipe(readDockerfiles())
-        .pipe(plugins.gulpFunction(function(){
-            sortDockerfiles()
-                .then(buildDockerfiles)
-                .then(done.resolve);
-        },"atEnd"));
+    
     return done.promise;
 }
 
-let readDockerfiles = function(){
-    return plugins.through2.obj(function(file,enc,cb){
-        let myDockerfile = new Dockerfile({
-            filePath:file.path,
-            read:true
-        });
-        NpmciEnv.dockerFiles.push(
-            myDockerfile
-        );
-        cb(null,file);
-    });
+export let readDockerfiles = function(){
+    let done = plugins.q.defer();
+    let readDockerfilesArray:Dockerfile[] = []
+    plugins.gulp.src("./Dockerfile*")
+        .pipe(plugins.through2.obj(function(file,enc,cb){
+            let myDockerfile = new Dockerfile({
+                filePath:file.path,
+                read:true
+            });
+            readDockerfilesArray.push(myDockerfile);
+            cb(null,file);
+         },function(){
+             done.resolve(readDockerfilesArray);
+         }));
+    return done.promise;
 }
 
-let cleanTagsArrayFunction = function(){
-    let cleanTagsArray = [];
-    NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
+export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[]):string[]{
+    let cleanTagsArray:string[] = [];
+    dockerfileArrayArg.forEach(function(dockerfileArg){
         cleanTagsArray.push(dockerfileArg.cleanTag);
     });
     return cleanTagsArray;
 }
 
-let sortDockerfiles = function(){
+export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
-    let sortableArray = NpmciEnv.dockerFiles;
     let sortedArray:Dockerfile[] = []; 
     let sorterFunctionCounter:number = 0;
     let sorterFunction = function(){
-        let cleanTags = cleanTagsArrayFunction();
-        sortableArray.forEach((dockerfileArg)=>{
+        console.log(sorterFunctionCounter);
+        let cleanTags = cleanTagsArrayFunction(sortableArrayArg);
+        sortableArrayArg.forEach((dockerfileArg)=>{
             if(cleanTags.indexOf(dockerfileArg.baseImage) == -1){
-                let dockerfileArgIndex = sortableArray.indexOf(dockerfileArg);
-                sortableArray.splice(dockerfileArgIndex);
+                let dockerfileArgIndex = sortableArrayArg.indexOf(dockerfileArg);
+                sortableArrayArg.splice(dockerfileArgIndex,1);
                 sortedArray.push(dockerfileArg);
             }
         });
-        if(sortableArray.length == 0){
-            console.log(sortedArray);
-            NpmciEnv.dockerFiles = sortedArray;
-            done.resolve();
+        if(sortableArrayArg.length == 0){
+            done.resolve(sortedArray);
         } else if (sorterFunctionCounter < 100) {
             sorterFunctionCounter++;
             sorterFunction();
@@ -62,7 +58,7 @@ let sortDockerfiles = function(){
     return done.promise;
 }
 
-let buildDockerfiles = function(){
+export let buildDockerfiles = function(){
     let done = plugins.q.defer();
     NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
         dockerfileArg.build();
@@ -109,7 +105,7 @@ export class Dockerfile {
     }
 }
 
-let dockerFileVersion = function(dockerfileNameArg:string):string{
+export let dockerFileVersion = function(dockerfileNameArg:string):string{
     let versionString:string;
     let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/;
     let regexResultArray = versionRegex.exec(dockerfileNameArg);
@@ -121,8 +117,8 @@ let dockerFileVersion = function(dockerfileNameArg:string):string{
     return versionString;
 }
 
-let dockerBaseImage = function(dockerfileContentArg:string){
-    let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n/
+export let dockerBaseImage = function(dockerfileContentArg:string){
+    let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/
     let regexResultArray = baseImageRegex.exec(dockerfileContentArg)
     return regexResultArray[1];
 }
