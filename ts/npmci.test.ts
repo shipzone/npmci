@@ -34,7 +34,7 @@ let npmDependencies = function(){
 
 let testDocker = function(){
     let done = plugins.q.defer();
-    plugins.shelljs.exec("docker run --name " + env.repo.repo + " " + env.dockerTag());
+    
     done.resolve();
     return done.promise;
 }
