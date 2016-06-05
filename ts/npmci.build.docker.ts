@@ -108,7 +108,7 @@ let dockerFileVersion = function(dockerfileNameArg:string):string{
     let versionString:string;
     let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/;
     let regexResultArray = versionRegex.exec(dockerfileNameArg);
-    if(regexResultArray.length == 2){
+    if(regexResultArray && regexResultArray.length == 2){
         versionString = regexResultArray[1];        
     } else {
         versionString = "latest";
