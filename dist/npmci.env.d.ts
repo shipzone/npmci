@@ -6,3 +6,6 @@ export declare let buildStage: string;
 export declare let dockerRegistry: any;
 export declare let dockerFilesBuilt: Dockerfile[];
 export declare let dockerFiles: Dockerfile[];
+export declare let config: any;
+export declare let configLoad: () => void;
+export declare let configStore: () => void;
