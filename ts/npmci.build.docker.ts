@@ -34,13 +34,13 @@ let sortDockerfiles = function(){
         NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
             cleanTags.push(dockerfileArg.cleanTag);
         });
-        let aIndex = cleanTags.indexOf(a.cleanTag);
-        let bIndex = cleanTags.indexOf(b.baseImage);
+        let aIndex = cleanTags.indexOf(a.baseImage); 
+        let bIndex = cleanTags.indexOf(b.cleanTag);
         console.log(cleanTags);
-        console.log(a.cleanTag);
-        console.log(b.cleanTag);
-        if(bIndex < aIndex && bIndex != -1){
-            return -1;
+        console.log(a.baseImage,aIndex);
+        console.log(b.cleanTag,bIndex);
+        if(aIndex < bIndex && bIndex != -1){
+            return 1;
         } else {
             return 0
         }
@@ -117,12 +117,12 @@ let dockerBaseImage = function(dockerfileContentArg:string){
 export let dockerTag = function(repoArg:string,versionArg:string):string{
     let tagString:string;
     let registry = NpmciEnv.dockerRegistry;
-    if(process.env.CI_BUILD_STAGE == "test"){
+    if(process.env.CI_BUILD_STAGE == "build"  || process.env.CI_BUILD_STAGE == "test"){
         registry = "registry.gitlab.com";
     } 
     let repo = repoArg;
     let version = versionArg;
-    if(process.env.CI_BUILD_STAGE == "test" || process.env.CI_BUILD_STAGE == "build"){
+    if(process.env.CI_BUILD_STAGE == "build" || process.env.CI_BUILD_STAGE == "test"){
         version = version + "_test";
     }
     tagString = registry + "/" + repo + ":" + version;
