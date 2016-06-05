@@ -21,17 +21,22 @@ let makeDockerfiles = function(){
                 read:true
             })
         );
+        cb();
     };
 }
 
 export class Dockerfile {
     repo:string;
     version:string;
+    content:string;
     baseImage:string;
     constructor(options:{filePath?:string,fileContents?:string|Buffer,read?:boolean}){
+        this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
+        this.version = dockerFileVersion(plugins.path.parse(options.filePath).base);
         if(options.filePath && options.read){
-            
-        }
+            this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
+        };
+        this.baseImage = dockerBaseImage(this.content);
     };
     build(){
         
@@ -39,7 +44,24 @@ export class Dockerfile {
     push(){
         
     }
-    
+}
+
+let dockerFileVersion = function(dockerfileNameArg:string):string{
+    let versionString:string;
+    let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/;
+    let regexResultArray = versionRegex.exec(dockerfileNameArg);
+    if(regexResultArray.length = 2){
+        versionString = regexResultArray[1];        
+    } else {
+        versionString = "latest";
+    }
+    return versionString;
+}
+
+let dockerBaseImage = function(dockerfileContentArg:string){
+    let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n/
+    let regexResultArray = baseImageRegex.exec(dockerfileContentArg)
+    return regexResultArray[1];
 }
 
 export let dockerTagVersion = function(){
@@ -48,16 +70,4 @@ export let dockerTagVersion = function(){
     } else {
         return "latest"
     }
-}
-
-export let tagDocker = function(){
-    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":" + dockerTagVersion() +" .";
-}
-
-export let dockerTagTest = function(){
-    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":test .";
-}
-
-export let dockerTagRelease = function(){
-    return NpmciEnv.dockerRegistry + "/" + NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo + ":latest .";
-}
+};
