@@ -8,6 +8,8 @@ export let build = function(commandArg){
     switch(commandArg){
         case "docker":
             return buildDocker.build();   
+        default:
+            plugins.beautylog.log("build target " + commandArg + " not recognised!");
     }
 }
 

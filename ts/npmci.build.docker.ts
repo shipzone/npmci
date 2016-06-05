@@ -3,7 +3,7 @@ import * as NpmciEnv from "./npmci.env";
 
 
 export let build = function(){
-    let done = plugins.q.defer();;
+    let done = plugins.q.defer();
     plugins.gulp.dest("./Dockerfile*")
         .pipe(readDockerfiles)
         .pipe(plugins.gulpFunction(function(){
