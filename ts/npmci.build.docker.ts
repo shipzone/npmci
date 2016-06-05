@@ -48,7 +48,7 @@ let sortDockerfiles = function(){
                 redoSort = true;
                 return -1;
             } else {
-                return 1
+                return 0
             }
         });
         if(redoSort && sortCounter <= 50){
