@@ -29,6 +29,7 @@ let publishDocker = function(){
     NpmciEnv.dockerFilesBuilt.forEach(function(dockerfileArg){
         dockerfileArg.push();
     });
+    done.resolve();
     return done.promise;
 };
 

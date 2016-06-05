@@ -11,6 +11,7 @@ process.cwd = () => {
 
 //require NPMCI files
 import NpmciBuildDocker = require("../dist/npmci.build.docker");
+import NpmciPublish = require("../dist/npmci.publish");
 import NpmciTest = require("../dist/npmci.test");
 
 
@@ -48,6 +49,14 @@ describe("NPMCI",function(){
                     done();
                 });
         })
+    });
+    describe(".publish.docker",function(){
+        it("should publish all built Dockerfiles",function(done){
+            NpmciPublish.publish("docker")
+                .then(() => {
+                    done();
+                });;
+        });
     });
     describe(".test.npm",function(){
         it("should source nvm using bash and install a specific node version",function(done){

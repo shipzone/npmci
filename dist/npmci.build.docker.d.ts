@@ -3,6 +3,7 @@ export declare let readDockerfiles: () => any;
 export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
 export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => any;
 export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
+export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
 export declare class Dockerfile {
     filePath: string;
     repo: string;

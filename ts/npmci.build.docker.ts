@@ -7,6 +7,7 @@ export let build = function(){
         .then(sortDockerfiles)
         .then(mapDockerfiles)
         .then(buildDockerfiles)
+        .then(pushDockerfiles)
         .then(() => {
             done.resolve();
         });
@@ -77,7 +78,16 @@ export let buildDockerfiles = function(sortedArrayArg:Dockerfile[]){
     sortedArrayArg.forEach(function(dockerfileArg){
         dockerfileArg.build();
     })
-    done.resolve();
+    done.resolve(sortedArrayArg);
+    return done.promise;
+}
+
+export let pushDockerfiles = function(sortedArrayArg:Dockerfile[]){
+    let done = plugins.q.defer();
+    sortedArrayArg.forEach(function(dockerfileArg){
+        dockerfileArg.push();
+    });
+    done.resolve(sortedArrayArg);
     return done.promise;
 }
 
