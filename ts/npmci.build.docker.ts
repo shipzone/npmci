@@ -1,7 +1,6 @@
 import * as plugins from "./npmci.plugins"
 import * as NpmciEnv from "./npmci.env";
 
-
 export let build = function(){
     let done = plugins.q.defer();
     
@@ -25,10 +24,12 @@ export let readDockerfiles = function(){
     return done.promise;
 }
 
-export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[]):string[]{
+export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[],trackingArrayArg:Dockerfile[]):string[]{
     let cleanTagsArray:string[] = [];
     dockerfileArrayArg.forEach(function(dockerfileArg){
-        cleanTagsArray.push(dockerfileArg.cleanTag);
+        if(trackingArrayArg.indexOf(dockerfileArg) == -1){
+            cleanTagsArray.push(dockerfileArg.cleanTag);
+        }
     });
     return cleanTagsArray;
 }
@@ -36,20 +37,26 @@ export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[]):st
 export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
     let sortedArray:Dockerfile[] = []; 
+    let trackingArray:Dockerfile[] = [];
     let sorterFunctionCounter:number = 0;
+    console.log(sortableArrayArg);
+    console.log(sortedArray);
     let sorterFunction = function(){
+        plugins.beautylog.log("++++++++++++++++++++++++++++++++++++++++++++++");
         console.log(sorterFunctionCounter);
-        let cleanTags = cleanTagsArrayFunction(sortableArrayArg);
         sortableArrayArg.forEach((dockerfileArg)=>{
-            if(cleanTags.indexOf(dockerfileArg.baseImage) == -1){
-                let dockerfileArgIndex = sortableArrayArg.indexOf(dockerfileArg);
-                sortableArrayArg.splice(dockerfileArgIndex,1);
+            console.log(dockerfileArg);
+            let cleanTags = cleanTagsArrayFunction(sortableArrayArg,trackingArray);
+            console.log(cleanTags);
+            if(cleanTags.indexOf(dockerfileArg.baseImage) == -1 && trackingArray.indexOf(dockerfileArg) == -1){
                 sortedArray.push(dockerfileArg);
+                trackingArray.push(dockerfileArg);
             }
         });
-        if(sortableArrayArg.length == 0){
+        plugins.beautylog.info(sortedArray.length.toString());
+        if(sortableArrayArg.length == sortedArray.length){
             done.resolve(sortedArray);
-        } else if (sorterFunctionCounter < 100) {
+        } else if (sorterFunctionCounter < 10) {
             sorterFunctionCounter++;
             sorterFunction();
         };

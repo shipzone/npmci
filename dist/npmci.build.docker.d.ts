@@ -1,6 +1,6 @@
 export declare let build: () => any;
 export declare let readDockerfiles: () => any;
-export declare let cleanTagsArrayFunction: (dockerfileArrayArg: Dockerfile[]) => string[];
+export declare let cleanTagsArrayFunction: (dockerfileArrayArg: Dockerfile[], trackingArrayArg: Dockerfile[]) => string[];
 export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
 export declare let buildDockerfiles: () => any;
 export declare class Dockerfile {
