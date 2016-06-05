@@ -26,11 +26,14 @@ let makeDockerfiles = function(){
 }
 
 export class Dockerfile {
+    filePath:string;
+    buildTag:string;
     repo:string;
     version:string;
     content:string;
     baseImage:string;
     constructor(options:{filePath?:string,fileContents?:string|Buffer,read?:boolean}){
+        this.filePath = options.filePath;
         this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
         this.version = dockerFileVersion(plugins.path.parse(options.filePath).base);
         if(options.filePath && options.read){
@@ -39,10 +42,16 @@ export class Dockerfile {
         this.baseImage = dockerBaseImage(this.content);
     };
     build(){
-        
+        let tag = dockerTag(this.repo,this.version);
+        plugins.shelljs.exec("docker build -t " + tag + " -f " + this.filePath + " .");
+        this.buildTag = tag;
     };
     push(){
-        
+        if(this.buildTag){
+            plugins.shelljs.exec("docker push " + this.buildTag);
+        } else {
+            plugins.beautylog.error("Dockerfile hasn't been built yet!");
+        }
     }
 }
 
@@ -64,10 +73,17 @@ let dockerBaseImage = function(dockerfileContentArg:string){
     return regexResultArray[1];
 }
 
-export let dockerTagVersion = function(){
+export let dockerTag = function(repoArg:string,versionArg:string):string{
+    let tagString:string;
+    let registry = NpmciEnv.dockerRegistry;
     if(process.env.CI_BUILD_STAGE == "test"){
-        return "test";
-    } else {
-        return "latest"
+        registry = "registry.gitlab.com";
+    } 
+    let repo = repoArg;
+    let version = versionArg;
+    if(process.env.CI_BUILD_STAGE == "test" || process.env.CI_BUILD_STAGE == "build"){
+        version = version + "_test";
     }
+    tagString = registry + "/" + repo + ":" + version;
+    return tagString;
 };

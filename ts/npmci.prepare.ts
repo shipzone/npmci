@@ -51,9 +51,10 @@ export let prepare = function(serviceArg:string){
         case "npm":
             return npm();
         case "docker":
-            return docker();
+            return docker()
+                .then(dockerGitlab); // always also login to gitlab registry for tests 
         case "docker-gitlab":
-            return dockerGitlab();
+            return dockerGitlab()
         default:
             break;
     }
