@@ -6,7 +6,10 @@ export let build = function(){
     readDockerfiles()
         .then(sortDockerfiles)
         .then(mapDockerfiles)
-        .then(buildDockerfiles);
+        .then(buildDockerfiles)
+        .then(() => {
+            done.resolve();
+        });
     return done.promise;
 }
 
