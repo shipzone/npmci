@@ -1,9 +1,12 @@
-image: hosttoday/ht-docker-node:npmci
+image: hosttoday/ht-docker-node:lts
 
 stages:
 - test
 - release
 - trigger
+
+before_script:
+  - npm install -g npmci
 
 testLTS:
   stage: test
@@ -11,10 +14,6 @@ testLTS:
     - npmci test lts
   tags:
     - docker
-
-before_script:
-  - npm uninstall -g npmci
-  - npm install -g npmci
    
 testSTABLE:
   stage: test
