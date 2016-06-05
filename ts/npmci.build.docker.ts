@@ -3,7 +3,10 @@ import * as NpmciEnv from "./npmci.env";
 
 export let build = function(){
     let done = plugins.q.defer();
-    
+    readDockerfiles()
+        .then(sortDockerfiles)
+        .then(mapDockerfiles)
+        .then(buildDockerfiles);
     return done.promise;
 }
 
@@ -24,36 +27,21 @@ export let readDockerfiles = function(){
     return done.promise;
 }
 
-export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[],trackingArrayArg:Dockerfile[]):string[]{
-    let cleanTagsArray:string[] = [];
-    dockerfileArrayArg.forEach(function(dockerfileArg){
-        if(trackingArrayArg.indexOf(dockerfileArg) == -1){
-            cleanTagsArray.push(dockerfileArg.cleanTag);
-        }
-    });
-    return cleanTagsArray;
-}
-
 export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
     let sortedArray:Dockerfile[] = []; 
     let trackingArray:Dockerfile[] = [];
     let sorterFunctionCounter:number = 0;
-    console.log(sortableArrayArg);
-    console.log(sortedArray);
     let sorterFunction = function(){
-        plugins.beautylog.log("++++++++++++++++++++++++++++++++++++++++++++++");
-        console.log(sorterFunctionCounter);
         sortableArrayArg.forEach((dockerfileArg)=>{
-            console.log(dockerfileArg);
             let cleanTags = cleanTagsArrayFunction(sortableArrayArg,trackingArray);
-            console.log(cleanTags);
             if(cleanTags.indexOf(dockerfileArg.baseImage) == -1 && trackingArray.indexOf(dockerfileArg) == -1){
                 sortedArray.push(dockerfileArg);
                 trackingArray.push(dockerfileArg);
-            }
+            } else if(cleanTags.indexOf(dockerfileArg.baseImage) != -1){
+                dockerfileArg.localBaseImageDependent = true;
+            };
         });
-        plugins.beautylog.info(sortedArray.length.toString());
         if(sortableArrayArg.length == sortedArray.length){
             done.resolve(sortedArray);
         } else if (sorterFunctionCounter < 10) {
@@ -63,11 +51,27 @@ export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     }
     sorterFunction();
     return done.promise;
+};
+
+export let mapDockerfiles = function(sortedArray:Dockerfile[]){
+    let done = plugins.q.defer();
+    sortedArray.forEach((dockerfileArg) => {
+        if(dockerfileArg.localBaseImageDependent){
+            let dockerfileDependency:Dockerfile;
+            sortedArray.forEach((dockfile2:Dockerfile) => {
+                if(dockfile2.cleanTag == dockerfileArg.baseImage){
+                    dockerfileArg.localBaseDockerfile = dockfile2;
+                }
+            })
+        };
+    });
+    done.resolve(sortedArray);
+    return done.promise;
 }
 
-export let buildDockerfiles = function(){
+export let buildDockerfiles = function(sortedArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
-    NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
+    sortedArrayArg.forEach(function(dockerfileArg){
         dockerfileArg.build();
     })
     done.resolve();
@@ -81,7 +85,10 @@ export class Dockerfile {
     cleanTag:string;
     buildTag:string;
     content:string;
+    patchedContent:string;
     baseImage:string;
+    localBaseImageDependent:boolean;
+    localBaseDockerfile:Dockerfile;
     constructor(options:{filePath?:string,fileContents?:string|Buffer,read?:boolean}){
         this.filePath = options.filePath;
         this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
@@ -91,15 +98,18 @@ export class Dockerfile {
             this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
         };
         this.baseImage = dockerBaseImage(this.content);
+        this.localBaseImageDependent = false;
     };
     build(){
         if(!this.buildTag){
+            this.patchContents();
             let tag = dockerTag(this.repo,this.version);
             plugins.shelljs.exec("docker build -t " + tag + " -f " + this.filePath + " .");
             this.buildTag = tag;
             NpmciEnv.dockerFilesBuilt.push(this);
+            this.restoreContents();
         } else {
-            plugins.beautylog.error("This Dockerfile already has been built!");
+            plugins.beautylog.error("This Dockerfile has already been built!");
         }
         
     };
@@ -110,6 +120,12 @@ export class Dockerfile {
             plugins.beautylog.error("Dockerfile hasn't been built yet!");
         }
     }
+    patchContents(){
+        
+    };
+    restoreContents(){
+        
+    };
 }
 
 export let dockerFileVersion = function(dockerfileNameArg:string):string{
@@ -144,3 +160,13 @@ export let dockerTag = function(repoArg:string,versionArg:string):string{
     tagString = registry + "/" + repo + ":" + version;
     return tagString;
 };
+
+export let cleanTagsArrayFunction = function(dockerfileArrayArg:Dockerfile[],trackingArrayArg:Dockerfile[]):string[]{
+    let cleanTagsArray:string[] = [];
+    dockerfileArrayArg.forEach(function(dockerfileArg){
+        if(trackingArrayArg.indexOf(dockerfileArg) == -1){
+            cleanTagsArray.push(dockerfileArg.cleanTag);
+        }
+    });
+    return cleanTagsArray;
+}
