@@ -1,9 +1,9 @@
 image: hosttoday/ht-docker-node:lts
 
 stages:
+- test
 - release
 - trigger
-- test
 
 
 before_script:
