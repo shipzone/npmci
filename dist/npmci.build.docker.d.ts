@@ -1,5 +1,6 @@
 export declare let build: () => any;
 export declare let readDockerfiles: () => any;
+export declare let getDockerImagesGitlab: (sortableArrayArg: Dockerfile[]) => void;
 export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
 export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => any;
 export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
@@ -20,10 +21,10 @@ export declare class Dockerfile {
         fileContents?: string | Buffer;
         read?: boolean;
     });
-    build(): void;
-    push(): void;
-    patchContents(): void;
-    restoreContents(): void;
+    build(): any;
+    push(): any;
+    patchContents(): any;
+    restoreContents(): any;
 }
 export declare let dockerFileVersion: (dockerfileNameArg: string) => string;
 export declare let dockerBaseImage: (dockerfileContentArg: string) => string;

@@ -31,6 +31,10 @@ export let readDockerfiles = function(){
     return done.promise;
 }
 
+export let getDockerImagesGitlab = function(sortableArrayArg:Dockerfile[]){
+    
+}
+
 export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
     let sortedArray:Dockerfile[] = []; 
@@ -61,7 +65,6 @@ export let mapDockerfiles = function(sortedArray:Dockerfile[]){
     let done = plugins.q.defer();
     sortedArray.forEach((dockerfileArg) => {
         if(dockerfileArg.localBaseImageDependent){
-            let dockerfileDependency:Dockerfile;
             sortedArray.forEach((dockfile2:Dockerfile) => {
                 if(dockfile2.cleanTag == dockerfileArg.baseImage){
                     dockerfileArg.localBaseDockerfile = dockfile2;
@@ -114,30 +117,54 @@ export class Dockerfile {
         this.localBaseImageDependent = false;
     };
     build(){
-        if(!this.buildTag){
-            this.patchContents();
-            let tag = dockerTag(this.repo,this.version);
-            bashBare("docker build -t " + tag + " -f " + this.filePath + " .");
-            this.buildTag = tag;
-            NpmciEnv.dockerFilesBuilt.push(this);
-            this.restoreContents();
-        } else {
-            plugins.beautylog.error("This Dockerfile has already been built!");
-        }
-        
+        let done = plugins.q.defer();
+        this.patchContents();
+        let tag = dockerTag(this.repo,this.version);
+        bashBare("docker build -t " + tag + " -f " + this.filePath + " .");
+        this.buildTag = tag;
+        NpmciEnv.dockerFilesBuilt.push(this);
+        this.restoreContents();
+        done.resolve();
+        return done.promise;
     };
     push(){
+        let done = plugins.q.defer();
         if(this.buildTag){
             bashBare("docker push " + this.buildTag);
         } else {
             plugins.beautylog.error("Dockerfile hasn't been built yet!");
         }
+        done.resolve();
+        return done.promise;
     }
     patchContents(){
-        
+        let done = plugins.q.defer();
+        if(this.localBaseImageDependent == true){
+            this.patchedContent = this.content.replace(/FROM\s[a-zA-Z0-9\/\-\:]*/, 'FROM ' + this.localBaseDockerfile.buildTag);
+            plugins.smartfile.memory.toFsSync(
+                this.patchedContent,
+                {
+                    fileName:plugins.path.parse(this.filePath).name,
+                    filePath:plugins.path.parse(this.filePath).dir
+                }
+            );
+        }
+        done.resolve();
+        return done.promise;
     };
     restoreContents(){
-        
+        let done = plugins.q.defer();
+        if(this.localBaseImageDependent == true){
+            plugins.smartfile.memory.toFsSync(
+                this.content,
+                {
+                    fileName:plugins.path.parse(this.filePath).name,
+                    filePath:plugins.path.parse(this.filePath).dir
+                }
+            );
+        }
+        done.resolve();
+        return done.promise;
     };
 }
 
