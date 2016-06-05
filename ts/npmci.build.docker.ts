@@ -27,25 +27,38 @@ let readDockerfiles = function(){
     });
 }
 
+let cleanTagsArrayFunction = function(){
+    let cleanTagsArray = [];
+    NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
+        cleanTagsArray.push(dockerfileArg.cleanTag);
+    });
+    return cleanTagsArray;
+}
+
 let sortDockerfiles = function(){
     let done = plugins.q.defer();
-    NpmciEnv.dockerFiles.sort(function(a,b){
-        let cleanTags = [];
-        NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
-            cleanTags.push(dockerfileArg.cleanTag);
+    let sortableArray = NpmciEnv.dockerFiles;
+    let sortedArray:Dockerfile[] = []; 
+    let sorterFunctionCounter:number = 0;
+    let sorterFunction = function(){
+        let cleanTags = cleanTagsArrayFunction();
+        sortableArray.forEach((dockerfileArg)=>{
+            if(cleanTags.indexOf(dockerfileArg.baseImage) == -1){
+                let dockerfileArgIndex = sortableArray.indexOf(dockerfileArg);
+                sortableArray.splice(dockerfileArgIndex);
+                sortedArray.push(dockerfileArg);
+            }
         });
-        let aIndex = cleanTags.indexOf(a.baseImage); 
-        let bIndex = cleanTags.indexOf(b.cleanTag);
-        console.log(cleanTags);
-        console.log(a.baseImage,aIndex);
-        console.log(b.cleanTag,bIndex);
-        if(aIndex < bIndex && bIndex != -1){
-            return 1;
-        } else {
-            return 0
-        }
-    });
-    done.resolve();
+        if(sortableArray.length == 0){
+            console.log(sortedArray);
+            NpmciEnv.dockerFiles = sortedArray;
+            done.resolve();
+        } else if (sorterFunctionCounter < 100) {
+            sorterFunctionCounter++;
+            sorterFunction();
+        };
+    }
+    sorterFunction();
     return done.promise;
 }
 
