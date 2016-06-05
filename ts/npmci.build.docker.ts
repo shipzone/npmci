@@ -8,17 +8,37 @@ export let build = function(){
     return done.promise;
 }
 
+let readDockerfiles = function(){
+    plugins.gulp.dest("./Dockerfile*")
+        .pipe(makeDockerfiles);
+};
 
-class Dockerfile {
+let makeDockerfiles = function(){
+    return function(file,enc,cb){
+        NpmciEnv.dockerFiles.push(
+            new Dockerfile({
+                filePath:file.path,
+                read:true
+            })
+        );
+    };
+}
+
+export class Dockerfile {
     repo:string;
     version:string;
     baseImage:string;
-    constructor(){
-        
+    constructor(options:{filePath?:string,fileContents?:string|Buffer,read?:boolean}){
+        if(options.filePath && options.read){
+            
+        }
     };
     build(){
         
     };
+    push(){
+        
+    }
     
 }
 

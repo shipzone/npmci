@@ -32,6 +32,7 @@
     "smartfile": "^3.0.10",
     "smartssh": "^1.0.5",
     "smartstring": "^2.0.4",
+    "through2": "^2.0.1",
     "typings-global": "^1.0.3"
   }
 }

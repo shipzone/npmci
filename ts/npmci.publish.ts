@@ -26,11 +26,5 @@ let publishNpm  = function(){
 
 let publishDocker = function(){
     let done = plugins.q.defer();
-    prepare("docker")
-        .then(function(){
-            bash 
-            bash("docker push " + env.dockerTag());
-            done.resolve();
-        });
     return done.promise;
 };
