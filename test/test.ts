@@ -11,6 +11,7 @@ process.cwd = () => {
 
 //require NPMCI files
 import NpmciBuildDocker = require("../dist/npmci.build.docker");
+import NpmciTest = require("../dist/npmci.test");
 
 
 let dockerfile1:NpmciBuildDocker.Dockerfile;
@@ -47,5 +48,22 @@ describe("NPMCI",function(){
                     done();
                 });
         })
-    })
+    });
+    describe(".test.npm",function(){
+        it("should source nvm using bash and install a specific node version",function(done){
+            NpmciTest.test("legacy")
+                .then(() => {
+                    return NpmciTest.test("lts");
+                })
+                .then(() => {
+                    return NpmciTest.test("stable");
+                })
+                .then(() => {
+                     return NpmciTest.test("docker");
+                })
+                .then(() => {
+                    done();
+                });
+        })
+    });
 })
