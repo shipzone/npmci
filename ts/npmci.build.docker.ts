@@ -38,17 +38,20 @@ let sortDockerfiles = function(){
             notYetBuiltImages.push(dockerFileArg.cleanTag);
         });
         NpmciEnv.dockerFiles.sort(function(a,b){
-            plugins.beautylog.log("sort build order for Dockerimages");
+            console.log("iteration: " + sortCounter.toString());
+            console.log(notYetBuiltImages)
+            console.log(a.cleanTag);
             let aIndex = notYetBuiltImages.indexOf(a.cleanTag);
             if(aIndex != -1){notYetBuiltImages.splice(aIndex,1)}
+            console.log(notYetBuiltImages);
             if(notYetBuiltImages.indexOf(b.cleanTag) != -1){
                 redoSort = true;
-                return 1;
+                return -1;
             } else {
                 return 0
             }
         });
-        if(redoSort && sortCounter <= 100){
+        if(redoSort && sortCounter <= 50){
             sortCounter++;
             sortFunction();
         } else {
