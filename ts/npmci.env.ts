@@ -4,8 +4,6 @@ import {GitRepo} from "smartstring";
 import {Dockerfile} from "./npmci.build.docker"
 
 export let repo = new GitRepo(process.env.CI_BUILD_REPO);
-console.log(process.env.CI_BUILD_REPO);
-console.log(repo);
 export let dockerTestTag:string;
 export let dockerReleaseTag:string;
 

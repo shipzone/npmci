@@ -29,36 +29,23 @@ let readDockerfiles = function(){
 
 let sortDockerfiles = function(){
     let done = plugins.q.defer();
-    let redoSort:boolean;
-    let sortCounter:number = 0;
-    let sortFunction = function(){
-        redoSort = false;
-        let notYetBuiltImages:string[] = [];
-        NpmciEnv.dockerFiles.forEach((dockerFileArg)=>{
-            notYetBuiltImages.push(dockerFileArg.cleanTag);
+    NpmciEnv.dockerFiles.sort(function(a,b){
+        let cleanTags = [];
+        NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
+            cleanTags.push(dockerfileArg.cleanTag);
         });
-        NpmciEnv.dockerFiles.sort(function(a,b){
-            console.log("iteration: " + sortCounter.toString());
-            console.log(notYetBuiltImages)
-            console.log(a.cleanTag);
-            let aIndex = notYetBuiltImages.indexOf(a.cleanTag);
-            if(aIndex != -1){notYetBuiltImages.splice(aIndex,1)}
-            console.log(notYetBuiltImages);
-            if(notYetBuiltImages.indexOf(b.baseImage) != -1){
-                redoSort = true;
-                return -1;
-            } else {
-                return 0
-            }
-        });
-        if(redoSort && sortCounter <= 50){
-            sortCounter++;
-            sortFunction();
+        let aIndex = cleanTags.indexOf(a.cleanTag);
+        let bIndex = cleanTags.indexOf(b.baseImage);
+        console.log(cleanTags);
+        console.log(a.cleanTag);
+        console.log(b.cleanTag);
+        if(bIndex < aIndex && bIndex != -1){
+            return -1;
         } else {
-            done.resolve();
+            return 0
         }
-    };
-    sortFunction();
+    });
+    done.resolve();
     return done.promise;
 }
 
