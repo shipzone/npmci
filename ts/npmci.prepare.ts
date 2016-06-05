@@ -29,7 +29,7 @@ let docker = function(){
         plugins.beautylog.error("You have to specify Login Data to the Docker Registry");
         process.exit(1);
     }
-    plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + ciBuildToken + " " + "registry.gitlab.com"); // Always also login to GitLab Registry
+    plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + process.env.CI_BUILD_TOKEN + " " + "registry.gitlab.com"); // Always also login to GitLab Registry
     let dockerRegexResultArray = dockerRegex.exec(process.env.NPMCI_LOGIN_DOCKER);
     let username = dockerRegexResultArray[1];
     let password = dockerRegexResultArray[2];
@@ -41,8 +41,7 @@ let docker = function(){
 let dockerGitlab = function(){
     let done = plugins.q.defer();
     env.dockerRegistry = "registry.gitlab.com";
-    let ciBuildToken = process.env.CI_BUILD_TOKEN
-    plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + ciBuildToken + " " + "registry.gitlab.com");
+    plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + process.env.CI_BUILD_TOKEN + " " + "registry.gitlab.com");
     done.resolve();
     return done.promise;
 }
