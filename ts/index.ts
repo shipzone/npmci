@@ -34,7 +34,7 @@ if (typeof command === 'undefined') {
 
 switch (command){
     case "build":
-        build("commandArg");
+        build(commandOption);
         break;
     case "install":
         install(commandOption);
