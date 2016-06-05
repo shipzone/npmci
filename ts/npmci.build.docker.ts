@@ -162,12 +162,12 @@ export let dockerBaseImage = function(dockerfileContentArg:string){
 export let dockerTag = function(repoArg:string,versionArg:string):string{
     let tagString:string;
     let registry = NpmciEnv.dockerRegistry;
-    if(process.env.CI_BUILD_STAGE == "build"  || process.env.CI_BUILD_STAGE == "test"){
+    if(NpmciEnv.buildStage == "build"  || NpmciEnv.buildStage == "test"){
         registry = "registry.gitlab.com";
     } 
     let repo = repoArg;
     let version = versionArg;
-    if(process.env.CI_BUILD_STAGE == "build" || process.env.CI_BUILD_STAGE == "test"){
+    if(NpmciEnv.buildStage == "build" || NpmciEnv.buildStage == "test"){
         version = version + "_test";
     }
     tagString = registry + "/" + repo + ":" + version;
