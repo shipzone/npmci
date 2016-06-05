@@ -30,6 +30,7 @@ let readDockerfiles = function(){
 let sortDockerfiles = function(){
     let done = plugins.q.defer();
     let redoSort:boolean;
+    let sortCounter:number = 0;
     let sortFunction = function(){
         redoSort = false;
         let notYetBuiltImages:string[] = [];
@@ -42,12 +43,13 @@ let sortDockerfiles = function(){
             if(aIndex != -1){notYetBuiltImages.splice(aIndex,1)}
             if(notYetBuiltImages.indexOf(b.cleanTag) != -1){
                 redoSort = true;
-                return -1;
+                return 1;
             } else {
                 return 0
             }
         });
-        if(redoSort){
+        if(redoSort && sortCounter <= 100){
+            sortCounter++;
             sortFunction();
         } else {
             done.resolve();

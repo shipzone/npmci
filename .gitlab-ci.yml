@@ -2,8 +2,9 @@ image: hosttoday/ht-docker-node:lts
 
 stages:
 - release
-- test
 - trigger
+- test
+
 
 before_script:
   - npm install -g npmci
