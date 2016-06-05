@@ -44,7 +44,7 @@ let sortDockerfiles = function(){
             let aIndex = notYetBuiltImages.indexOf(a.cleanTag);
             if(aIndex != -1){notYetBuiltImages.splice(aIndex,1)}
             console.log(notYetBuiltImages);
-            if(notYetBuiltImages.indexOf(b.cleanTag) != -1){
+            if(notYetBuiltImages.indexOf(b.baseImage) != -1){
                 redoSort = true;
                 return -1;
             } else {
