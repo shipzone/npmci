@@ -6,7 +6,11 @@ export let build = function(){
     let done = plugins.q.defer();;
     plugins.gulp.dest("./Dockerfile*")
         .pipe(readDockerfiles)
-        .pipe(plugins.gulpFunction(done.resolve,"atEnd"));
+        .pipe(plugins.gulpFunction(function(){
+            sortDockerfiles()
+                .then(buildDockerfiles)
+                .then(done.resolve);
+        },"atEnd"));
     return done.promise;
 }
 
@@ -19,29 +23,62 @@ let readDockerfiles = function(){
         NpmciEnv.dockerFiles.push(
             myDockerfile
         );
-        file["Dockerfile"] = myDockerfile;
         cb(null,file);
     };
 }
 
+let sortDockerfiles = function(){
+    let done = plugins.q.defer();
+    let redoSort:boolean;
+    let sortFunction = function(){
+        redoSort = false;
+        let notYetBuiltImages:string[] = [];
+        NpmciEnv.dockerFiles.forEach((dockerFileArg)=>{
+            notYetBuiltImages.push(dockerFileArg.cleanTag);
+        });
+        NpmciEnv.dockerFiles.sort(function(a,b){
+            plugins.beautylog.log("sort build order for Dockerimages");
+            let aIndex = notYetBuiltImages.indexOf(a.cleanTag);
+            if(aIndex != -1){notYetBuiltImages.splice(aIndex,1)}
+            if(notYetBuiltImages.indexOf(b.cleanTag) != -1){
+                redoSort = true;
+                return -1;
+            } else {
+                return 0
+            }
+        });
+        if(redoSort){
+            sortFunction();
+        } else {
+            done.resolve();
+        }
+    };
+    sortFunction();
+    return done.promise;
+}
+
 let buildDockerfiles = function(){
-    return function(file,enc,cb){
-        file.myDockerfile.build();
-        cb();
-    }
+    let done = plugins.q.defer();
+    NpmciEnv.dockerFiles.forEach(function(dockerfileArg){
+        dockerfileArg.build();
+    })
+    done.resolve();
+    return done.promise;
 }
 
 export class Dockerfile {
     filePath:string;
-    buildTag:string;
     repo:string;
     version:string;
+    cleanTag:string;
+    buildTag:string;
     content:string;
     baseImage:string;
     constructor(options:{filePath?:string,fileContents?:string|Buffer,read?:boolean}){
         this.filePath = options.filePath;
         this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
         this.version = dockerFileVersion(plugins.path.parse(options.filePath).base);
+        this.cleanTag = this.repo + ":" + this.version;
         if(options.filePath && options.read){
             this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
         };

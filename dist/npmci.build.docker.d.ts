@@ -1,9 +1,10 @@
 export declare let build: () => any;
 export declare class Dockerfile {
     filePath: string;
-    buildTag: string;
     repo: string;
     version: string;
+    cleanTag: string;
+    buildTag: string;
     content: string;
     baseImage: string;
     constructor(options: {
