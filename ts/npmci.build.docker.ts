@@ -15,7 +15,7 @@ export let build = function(){
 }
 
 let readDockerfiles = function(){
-    return plugins.trhough2(function(file,enc,cb){
+    return plugins.through2(function(file,enc,cb){
         let myDockerfile = new Dockerfile({
             filePath:file.path,
             read:true

@@ -10,3 +10,4 @@ export let shelljs = require("shelljs");
 export import smartssh = require("smartssh");
 export import smartstring = require("smartstring");
 export import smartfile = require("smartfile");
+export let through2 = require("through2");
