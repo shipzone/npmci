@@ -4,6 +4,7 @@ import path = require("path");
 import * as beautylog from "beautylog"
 //set up environment
 process.env.CI_BUILD_REPO = "https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git";
+process.env.NPMTS_TEST = "true";
 process.cwd = () => {
     return path.join(__dirname,"assets/");
 };
@@ -39,6 +40,12 @@ describe("NPMCI",function(){
                     console.log(sortedArrayArg);
                     done();
                 })
+        });
+        it("should correctly chain Dockerfile handling",function(done){
+            NpmciBuildDocker.build()
+                .then(()=>{
+                    done();
+                });
         })
     })
 })

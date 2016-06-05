@@ -1,6 +1,6 @@
 import * as plugins from "./npmci.plugins"
 import * as NpmciEnv from "./npmci.env";
-
+import {bashBare} from "./npmci.bash";
 export let build = function(){
     let done = plugins.q.defer();
     readDockerfiles()
@@ -104,7 +104,7 @@ export class Dockerfile {
         if(!this.buildTag){
             this.patchContents();
             let tag = dockerTag(this.repo,this.version);
-            plugins.shelljs.exec("docker build -t " + tag + " -f " + this.filePath + " .");
+            bashBare("docker build -t " + tag + " -f " + this.filePath + " .");
             this.buildTag = tag;
             NpmciEnv.dockerFilesBuilt.push(this);
             this.restoreContents();
@@ -115,7 +115,7 @@ export class Dockerfile {
     };
     push(){
         if(this.buildTag){
-            plugins.shelljs.exec("docker push " + this.buildTag);
+            bashBare("docker push " + this.buildTag);
         } else {
             plugins.beautylog.error("Dockerfile hasn't been built yet!");
         }
