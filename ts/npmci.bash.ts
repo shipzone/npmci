@@ -14,7 +14,7 @@ export let bash = (commandArg:string,retryArg = 2) => {
                 i = retryArg + 1; // if everything works out ok retrials are not wanted
             } else {
                 plugins.beautylog.warn("Something went wrong! Exit Code: " + exitCode.toString);
-                plugins.beautylog.info("Retry " + (i + 1).toString + " of " +  retryArg.toString);
+                plugins.beautylog.info("Retry " + (i + 1).toString() + " of " +  retryArg.toString());
             }
         }
     } else {
@@ -32,7 +32,7 @@ export let bashBare = (commandArg,retryArg = 2) => {
                 i = retryArg + 1; // if everything works out ok retrials are not wanted
             } else {
                 plugins.beautylog.warn("Something went wrong! Exit Code: " + exitCode.toString);
-                plugins.beautylog.info("Retry " + (i + 1).toString + " of " +  retryArg.toString);
+                plugins.beautylog.info("Retry " + (i + 1).toString() + " of " +  retryArg.toString());
             }
         }
     } else {
