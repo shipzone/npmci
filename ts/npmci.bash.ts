@@ -14,7 +14,7 @@ export let bash = (commandArg:string,retryArg = 2,bareArg = false) => {
                     "\""
                 );
             } else {
-                execResult = plugins.shelljs.exec(bareArg);
+                execResult = plugins.shelljs.exec(commandArg);
             }
             exitCode = execResult.code;
             stdOut = execResult.stdout;
