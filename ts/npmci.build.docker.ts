@@ -110,15 +110,6 @@ export let testDockerfiles = (sortedArrayArg:Dockerfile[]) => {
     return done.promise;
 };
 
-export let releaseDockerfiles = (sortedArrayArg:Dockerfile[], registryArg = NpmciEnv.dockerRegistry) => {
-     let done = plugins.q.defer();
-    sortedArrayArg.forEach(function(dockerfileArg){
-        dockerfileArg.push(registryArg);
-    });
-    done.resolve(sortedArrayArg);
-    return done.promise;
-}
-
 export class Dockerfile {
     filePath:string;
     repo:string;

@@ -29,7 +29,7 @@ let publishDocker = function(){
     let done = plugins.q.defer();
         NpmciBuildDocker.readDockerfiles()
         .then(NpmciBuildDocker.pullDockerfileImages)
-        .then(NpmciBuildDocker.releaseDockerfiles)
+        .then(NpmciBuildDocker.pushDockerfiles)
         .then(done.resolve);
     return done.promise;
 };

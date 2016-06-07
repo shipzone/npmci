@@ -6,7 +6,6 @@ export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
 export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
 export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => any;
 export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
-export declare let releaseDockerfiles: (sortedArrayArg: Dockerfile[], registryArg?: any) => any;
 export declare class Dockerfile {
     filePath: string;
     repo: string;
