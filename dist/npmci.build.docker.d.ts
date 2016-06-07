@@ -3,7 +3,7 @@ export declare let readDockerfiles: () => any;
 export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
 export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => any;
 export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
-export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[], regsitryArg?: string) => any;
+export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
 export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => any;
 export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
 export declare let releaseDockerfiles: (sortedArrayArg: Dockerfile[], registryArg?: any) => any;
@@ -26,7 +26,7 @@ export declare class Dockerfile {
         read?: boolean;
     });
     build(): any;
-    push(registryArg: string): any;
+    push(stageArg: any): any;
     pull(registryArg: string): void;
     test(): void;
     getId(): string;

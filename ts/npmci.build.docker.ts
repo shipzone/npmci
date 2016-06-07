@@ -83,10 +83,10 @@ export let buildDockerfiles = (sortedArrayArg:Dockerfile[]) => {
     return done.promise;
 }
 
-export let pushDockerfiles = function(sortedArrayArg:Dockerfile[],regsitryArg = "registry.gitlab.com"){
+export let pushDockerfiles = function(sortedArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
     sortedArrayArg.forEach(function(dockerfileArg){
-        dockerfileArg.push(regsitryArg);
+        dockerfileArg.push(NpmciEnv.buildStage);
     });
     done.resolve(sortedArrayArg);
     return done.promise;
@@ -155,10 +155,18 @@ export class Dockerfile {
         done.resolve();
         return done.promise;
     };
-    push(registryArg:string){
+    push(stageArg){
         let done = plugins.q.defer();
         let pushTag;
-        NpmciEnv.buildStage == "test" ? pushTag = this.testTag : pushTag = this.releaseTag;
+        switch (stageArg){
+            case "release":
+                pushTag = this.releaseTag;
+                break;
+            case "test":
+            default:
+                pushTag = this.testTag;
+                break;
+        }
         bashBare("docker tag " + this.buildTag + " " + pushTag);
         bashBare("docker push " + pushTag);
         done.resolve();
