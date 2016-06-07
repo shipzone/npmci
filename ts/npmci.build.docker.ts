@@ -172,8 +172,7 @@ export class Dockerfile {
 
         bashBare("docker run -v " + 
             plugins.path.join(paths.NpmciProjectDir,"./test") + ":/test/ " +
-            "--name " + this.containerName);
-        bashBare("docker stop /" + this.containerName);
+            "--name " + this.containerName + " /test/" + "test_" + this.version);
     };
     release(){
         bashBare("docker tag " + this.getId() + " " + this.releaseTag);
