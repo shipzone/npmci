@@ -3,6 +3,7 @@ import * as plugins from "./npmci.plugins";
 import {bash} from "./npmci.bash";
 import {install} from "./npmci.install";
 import * as env from "./npmci.env";
+import * as NpmciBuildDocker from "./npmci.build.docker";
 
 export let test = (versionArg) => {
     let done = plugins.q.defer();
@@ -14,10 +15,8 @@ export let test = (versionArg) => {
     } else {
         install(versionArg)
             .then(npmDependencies)
+            .then(npmTest)
             .then(()=>{
-                plugins.beautylog.info("now starting tests:");
-                bash("npm test");
-                plugins.beautylog.success("test finished");
                 done.resolve();
             });
     }
@@ -32,10 +31,20 @@ let npmDependencies = function(){
     return done.promise;
 }
 
+let npmTest = () => {
+    let done = plugins.q.defer();
+    plugins.beautylog.info("now starting tests:");
+    bash("npm test");
+    done.resolve();
+    return done.promise;
+}
+
 let testDocker = function(){
     let done = plugins.q.defer();
-    
-    done.resolve();
+    NpmciBuildDocker.readDockerfiles()
+        .then(NpmciBuildDocker.pullDockerfileImages)
+        .then(NpmciBuildDocker.testDockerfiles)
+        .then(done.resolve)
     return done.promise;
 }
 

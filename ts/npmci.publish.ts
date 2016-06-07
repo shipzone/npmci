@@ -28,8 +28,8 @@ let publishNpm  = function(){
 let publishDocker = function(){
     let done = plugins.q.defer();
         NpmciBuildDocker.readDockerfiles()
-            
-        
-    done.resolve();
+        .then(NpmciBuildDocker.pullDockerfileImages)
+        .then(NpmciBuildDocker.releaseDockerfiles)
+        .then(done.resolve);
     return done.promise;
 };

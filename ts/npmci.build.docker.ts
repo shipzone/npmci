@@ -94,8 +94,10 @@ export let pushDockerfiles = function(sortedArrayArg:Dockerfile[]){
 
 export let pullDockerfileImages = (sortableArrayArg:Dockerfile[]) => {
     let done = plugins.q.defer();
-    sortableArrayArg;
-    done.resolve();
+    sortableArrayArg.forEach((dockerfileArg) => {
+        dockerfileArg.pull();
+    });
+    done.resolve(sortableArrayArg);
     return done.promise;
 }
 

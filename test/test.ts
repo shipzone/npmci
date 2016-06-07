@@ -59,7 +59,7 @@ describe("NPMCI",function(){
         });
     });
     describe(".test.npm",function(){
-        it("should source nvm using bash and install a specific node version",function(done){
+        it("should source nvm using bash and install a specific node version, then test it",function(done){
             NpmciTest.test("legacy")
                 .then(() => {
                     return NpmciTest.test("lts");
@@ -68,8 +68,13 @@ describe("NPMCI",function(){
                     return NpmciTest.test("stable");
                 })
                 .then(() => {
-                     return NpmciTest.test("docker");
-                })
+                    done();
+                });
+        })
+    });
+    describe("test.docker",function(){
+        it("should test dockerfiles",function(done){
+            NpmciTest.test("docker")
                 .then(() => {
                     done();
                 });
