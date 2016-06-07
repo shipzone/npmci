@@ -1,3 +1,3 @@
 import "typings-global";
-export declare let bash: (commandArg: string, retryArg?: number) => void;
-export declare let bashBare: (commandArg: any, retryArg?: number) => void;
+export declare let bash: (commandArg: string, retryArg?: number, bareArg?: boolean) => string;
+export declare let bashBare: (commandArg: any, retryArg?: number) => string;
