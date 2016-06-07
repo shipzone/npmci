@@ -173,6 +173,9 @@ export class Dockerfile {
         let testFile = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
         let testExists = plugins.smartfile.checks.fileExistsSync(testFile);
         if(testExists){
+            console.log("docker run -v " + 
+                paths.NpmciTestDir + ":/test " +
+                "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
             bashBare("docker run -v " + 
                 paths.NpmciTestDir + ":/test " +
                 "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
