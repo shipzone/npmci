@@ -35,16 +35,16 @@ export let readDockerfiles = function(){
 
 export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
     let done = plugins.q.defer();
-    let sortedArray:Dockerfile[] = []; 
-    let trackingArray:Dockerfile[] = [];
+    let sortedArray:Dockerfile[] = [];
+    let cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg,sortedArray);
     let sorterFunctionCounter:number = 0;
     let sorterFunction = function(){
         sortableArrayArg.forEach((dockerfileArg)=>{
-            let cleanTags = cleanTagsArrayFunction(sortableArrayArg,trackingArray);
-            if(cleanTags.indexOf(dockerfileArg.baseImage) == -1 && trackingArray.indexOf(dockerfileArg) == -1){
+            let cleanTags = cleanTagsArrayFunction(sortableArrayArg,sortedArray);
+            if(cleanTags.indexOf(dockerfileArg.baseImage) == -1 && sortedArray.indexOf(dockerfileArg) == -1){
                 sortedArray.push(dockerfileArg);
-                trackingArray.push(dockerfileArg);
-            } else if(cleanTags.indexOf(dockerfileArg.baseImage) != -1){
+            };
+            if(cleanTagsOriginal.indexOf(dockerfileArg.baseImage) != -1){
                 dockerfileArg.localBaseImageDependent = true;
             };
         });
