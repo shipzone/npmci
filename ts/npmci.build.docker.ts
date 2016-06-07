@@ -1,4 +1,5 @@
-import * as plugins from "./npmci.plugins"
+import * as plugins from "./npmci.plugins";
+import * as paths from "./npmci.paths";
 import * as NpmciEnv from "./npmci.env";
 import {bashBare} from "./npmci.bash";
 
@@ -30,10 +31,6 @@ export let readDockerfiles = function(){
              done.resolve(readDockerfilesArray);
          }));
     return done.promise;
-}
-
-export let getDockerImagesGitlab = function(sortableArrayArg:Dockerfile[]){
-    
 }
 
 export let sortDockerfiles = function(sortableArrayArg:Dockerfile[]){
@@ -77,7 +74,7 @@ export let mapDockerfiles = function(sortedArray:Dockerfile[]){
     return done.promise;
 }
 
-export let buildDockerfiles = function(sortedArrayArg:Dockerfile[]){
+export let buildDockerfiles = (sortedArrayArg:Dockerfile[]) => {
     let done = plugins.q.defer();
     sortedArrayArg.forEach(function(dockerfileArg){
         dockerfileArg.build();
@@ -95,12 +92,39 @@ export let pushDockerfiles = function(sortedArrayArg:Dockerfile[]){
     return done.promise;
 }
 
+export let pullDockerfileImages = (sortableArrayArg:Dockerfile[]) => {
+    let done = plugins.q.defer();
+    sortableArrayArg;
+    done.resolve();
+    return done.promise;
+}
+
+export let testDockerfiles = (sortedArrayArg:Dockerfile[]) => {
+    let done = plugins.q.defer();
+    sortedArrayArg.forEach(function(dockerfileArg){
+        dockerfileArg.test();
+    });
+    done.resolve(sortedArrayArg);
+    return done.promise;
+};
+
+export let releaseDockerfiles = (sortedArrayArg:Dockerfile[]) => {
+     let done = plugins.q.defer();
+    sortedArrayArg.forEach(function(dockerfileArg){
+        dockerfileArg.release();
+    });
+    done.resolve(sortedArrayArg);
+    return done.promise;
+}
+
 export class Dockerfile {
     filePath:string;
     repo:string;
     version:string;
     cleanTag:string;
     buildTag:string;
+    releaseTag:string;
+    containerName:string
     content:string;
     patchedContent:string;
     baseImage:string;
@@ -111,6 +135,9 @@ export class Dockerfile {
         this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
         this.version = dockerFileVersion(plugins.path.parse(options.filePath).base);
         this.cleanTag = this.repo + ":" + this.version;
+        this.buildTag = dockerTag(this.repo,this.version,"build");
+        this.releaseTag = dockerTag(this.repo,this.version,"release");
+        this.containerName = "dockerfile-" + this.version;
         if(options.filePath && options.read){
             this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
         };
@@ -120,9 +147,7 @@ export class Dockerfile {
     build(){
         let done = plugins.q.defer();
         this.patchContents();
-        let tag = dockerTag(this.repo,this.version);
-        bashBare("docker build -t " + tag + " -f " + this.filePath + " .");
-        this.buildTag = tag;
+        bashBare("docker build -t " + this.buildTag + " -f " + this.filePath + " .");
         NpmciEnv.dockerFilesBuilt.push(this);
         this.restoreContents();
         done.resolve();
@@ -138,6 +163,24 @@ export class Dockerfile {
         done.resolve();
         return done.promise;
     }
+    pull(){
+        bashBare("docker pull " + this.buildTag);
+    };
+    test(){
+
+        bashBare("docker run -v " + 
+            plugins.path.join(paths.NpmciProjectDir,"./test") + ":/test/ " +
+            "--name " + this.containerName);
+        bashBare("docker stop /" + this.containerName);
+    };
+    release(){
+        bashBare("docker tag " + this.getId() + " " + this.releaseTag);
+        bashBare("docker push " + this.releaseTag);
+    }
+    getId(){
+        let containerId = bashBare("docker inspect --format=\"{{.Id}}\" " + this.buildTag);
+        return containerId;
+    };
     patchContents(){
         let done = plugins.q.defer();
         if(this.localBaseImageDependent == true){
@@ -187,10 +230,10 @@ export let dockerBaseImage = function(dockerfileContentArg:string){
     return regexResultArray[1];
 }
 
-export let dockerTag = function(repoArg:string,versionArg:string):string{
+export let dockerTag = function(repoArg:string,versionArg:string,stageArg:string):string{
     let tagString:string;
     let registry = NpmciEnv.dockerRegistry;
-    if(NpmciEnv.buildStage == "build"  || NpmciEnv.buildStage == "test"){
+    if(stageArg == "build"  || stageArg == "test"){
         registry = "registry.gitlab.com";
     } 
     let repo = repoArg;
