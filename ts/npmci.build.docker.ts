@@ -169,10 +169,16 @@ export class Dockerfile {
         bashBare("docker pull " + this.buildTag);
     };
     test(){
-
-        bashBare("docker run -v " + 
-            plugins.path.join(paths.NpmciProjectDir,"./test") + ":/test/ " +
-            "--name " + this.containerName + " /test/" + "test_" + this.version);
+        let testExists = plugins.smartfile.checks.fileExistsSync(
+            plugins.path.join(paths.NpmciProjectDir,("./test/test_" + this.version + ".sh"))
+        );
+        if(testExists){
+            bashBare("docker run -v " + 
+                plugins.path.join(paths.NpmciProjectDir,"./test") + ":/test/ " +
+                "--name " + this.containerName + " /test/" + "test_" + this.version  + ".sh");
+        } else {
+            plugins.beautylog.warn("skipping tests for " + this.cleanTag + " because no testfile was found!");
+        }
     };
     release(){
         bashBare("docker tag " + this.getId() + " " + this.releaseTag);
