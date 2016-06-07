@@ -13,9 +13,12 @@ export let dockerRegistry; // will be set by npmci.prepare
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
 
-export let config;
-
 export let configStore = () => {
+    let config = {
+        dockerRegistry: dockerRegistry,
+        dockerFilesBuilt: dockerFilesBuilt,
+        dockerFiles: dockerFiles
+    }
     plugins.smartfile.memory.toFsSync(
         JSON.stringify(config),
         {
@@ -26,13 +29,14 @@ export let configStore = () => {
 }
 
 export let configLoad = () => {
+    let config;
     try {
         config = plugins.smartfile.local.toObjectSync(paths.NpmciPackageConfig,"json");
     }
     catch(err){
         config = {};
         configStore();
-        plugins.beautylog.log("config inititialized!");
+        plugins.beautylog.log("config initialized!");
     }
     
     config.dockerRegistry ? dockerRegistry = config.dockerRegistry : void(0);

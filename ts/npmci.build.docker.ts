@@ -249,7 +249,7 @@ export let dockerTag = function(repoArg:string,versionArg:string,stageArg:string
     } 
     let repo = repoArg;
     let version = versionArg;
-    if(NpmciEnv.buildStage == "build" || NpmciEnv.buildStage == "test"){
+    if(stageArg == "build"  || stageArg == "test"){
         version = version + "_test";
     }
     tagString = registry + "/" + repo + ":" + version;

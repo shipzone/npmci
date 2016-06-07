@@ -13,6 +13,7 @@ import {prepare} from "./npmci.prepare";
 import {tag, retag} from "./npmci.tag";
 import {test} from "./npmci.test";
 import {trigger} from "./npmci.trigger";
+import * as NpmciEnv from "./npmci.env";
 
 
 let command;
@@ -34,19 +35,24 @@ if (typeof command === 'undefined') {
 
 switch (command){
     case "build":
-        build(commandOption);
+        build(commandOption)
+            .then(NpmciEnv.configStore);
         break;
     case "install":
-        install(commandOption);
+        install(commandOption)
+            .then(NpmciEnv.configStore);;
         break;
     case "prepare":
-        prepare(commandOption);
+        prepare(commandOption)
+            .then(NpmciEnv.configStore);;
         break;
     case "publish":
-        publish(commandOption);
+        publish(commandOption)
+            .then(NpmciEnv.configStore);;
         break;
     case "test":
-        test(commandOption);
+        test(commandOption)
+            .then(NpmciEnv.configStore);
         break;
     case "trigger":
         trigger();
