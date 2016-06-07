@@ -147,6 +147,7 @@ export class Dockerfile {
         this.localBaseImageDependent = false;
     };
     build(){
+        plugins.beautylog.info("now building Dockerfile for " + this.cleanTag);
         let done = plugins.q.defer();
         this.patchContents();
         bashBare("docker build -t " + this.buildTag + " -f " + this.filePath + " .");
@@ -191,7 +192,7 @@ export class Dockerfile {
     patchContents(){
         let done = plugins.q.defer();
         if(this.localBaseImageDependent == true){
-            plugins.beautylog.info("Patching Dockerfile due to local build dependency!");
+            plugins.beautylog.info("patching Dockerfile due to local build dependency!");
             this.patchedContent = this.content.replace(/FROM\s[a-zA-Z0-9\/\-\:]*/, 'FROM ' + this.localBaseDockerfile.buildTag);
             plugins.smartfile.memory.toFsSync(
                 this.patchedContent,
