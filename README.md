@@ -3,7 +3,6 @@ npmci is your friend when it comes to handling npm packages during CI builds. It
 
 ## Status
 [![build status](https://gitlab.com/pushrocks/npmci/badges/master/build.svg)](https://gitlab.com/pushrocks/npmci/commits/master)
-[![Build status](https://ci.appveyor.com/api/projects/status/7h4qq2qtrke5a9vj/branch/master?svg=true)](https://ci.appveyor.com/project/philkunz/npmci/branch/master)
 
 ## Usage
 npmci is designed to work in docker CI environments. The following docker images come with npmci presinstalled:
