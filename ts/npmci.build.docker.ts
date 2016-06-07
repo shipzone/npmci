@@ -176,7 +176,7 @@ export class Dockerfile {
         if(testExists){
             bashBare("docker run -v " + 
                 plugins.path.join(paths.NpmciProjectDir,"./test") + ":/test/ " +
-                "--name " + this.containerName + " /test/" + "test_" + this.version  + ".sh");
+                "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
         } else {
             plugins.beautylog.warn("skipping tests for " + this.cleanTag + " because no testfile was found!");
         }
