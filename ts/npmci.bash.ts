@@ -12,7 +12,7 @@ export let bash = (commandArg:string,retryArg = 2,bareArg = false) => {
                     "bash -c \"source /usr/local/nvm/nvm.sh &&" +
                     commandArg +
                     "\""
-                ).code;
+                );
             } else {
                 execResult = plugins.shelljs.exec(bareArg);
             }
