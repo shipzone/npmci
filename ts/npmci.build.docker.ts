@@ -170,12 +170,11 @@ export class Dockerfile {
         bashBare("docker pull " + this.buildTag);
     };
     test(){
-        let testExists = plugins.smartfile.checks.fileExistsSync(
-            plugins.path.join(paths.NpmciProjectDir,("./test/test_" + this.version + ".sh"))
-        );
+        let testFile = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
+        let testExists = plugins.smartfile.checks.fileExistsSync(testFile);
         if(testExists){
             bashBare("docker run -v " + 
-                plugins.path.join(paths.NpmciProjectDir,"./test/") + ":/test/ " +
+                paths.NpmciTestDir + ":/test " +
                 "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
         } else {
             plugins.beautylog.warn("skipping tests for " + this.cleanTag + " because no testfile was found!");
