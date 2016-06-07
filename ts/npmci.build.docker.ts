@@ -185,7 +185,7 @@ export class Dockerfile {
         bashBare("docker push " + this.releaseTag);
     }
     getId(){
-        let containerId = bashBare("docker inspect --format=\"{{.Id}}\" " + this.buildTag);
+        let containerId = bashBare("docker inspect --type=image --format=\"{{.Id}}\" " + this.buildTag);
         return containerId;
     };
     patchContents(){
