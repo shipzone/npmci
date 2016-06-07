@@ -191,6 +191,7 @@ export class Dockerfile {
     patchContents(){
         let done = plugins.q.defer();
         if(this.localBaseImageDependent == true){
+            plugins.beautylog.info("Patching Dockerfile due to local build dependency!");
             this.patchedContent = this.content.replace(/FROM\s[a-zA-Z0-9\/\-\:]*/, 'FROM ' + this.localBaseDockerfile.buildTag);
             plugins.smartfile.memory.toFsSync(
                 this.patchedContent,
