@@ -184,13 +184,11 @@ export class Dockerfile {
         }
     };
     release(){
-        bashBare("docker tag " + this.getId() + " " + this.releaseTag);
+        bashBare("docker tag " + this.buildTag + " " + this.releaseTag);
         bashBare("docker push " + this.releaseTag);
     }
     getId(){
-        console.log("docker inspect --type=image --format=\"{{.Id}}\" " + this.buildTag);
         let containerId = bashBare("docker inspect --type=image --format=\"{{.Id}}\" " + this.buildTag);
-        console.log(containerId);
         return containerId;
     };
     patchContents(){
