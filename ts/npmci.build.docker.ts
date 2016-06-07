@@ -170,15 +170,15 @@ export class Dockerfile {
         bashBare("docker pull " + this.buildTag);
     };
     test(){
-        let testFile = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
-        let testExists = plugins.smartfile.checks.fileExistsSync(testFile);
-        if(testExists){
-            console.log("docker run -v " + 
-                paths.NpmciTestDir + ":/test " +
-                "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
-            bashBare("docker run -v " + 
-                paths.NpmciTestDir + ":/test " +
-                "--name " + this.containerName + " " + this.buildTag + " /test/" + "test_" + this.version  + ".sh");
+        let testFile:string = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
+        let testFileExists:boolean = plugins.smartfile.checks.fileExistsSync(testFile);
+        if(testFileExists){
+            bashBare("docker run --name npmci_test_container " + this.buildTag + " mkdir /npmci_test");
+            bashBare("docker cp " + testFile + " npmci_test_container:/npmci_test/test.sh");
+            bashBare("docker commit npmci_test_container npmci_test_image");
+            bashBare("docker run npmci_test_image sh /npmci_test/test.sh");
+            bashBare("docker rm npmci_test_container");
+            bashBare("docker rmi --force npmci_test_image");
         } else {
             plugins.beautylog.warn("skipping tests for " + this.cleanTag + " because no testfile was found!");
         }
