@@ -83,19 +83,19 @@ export let buildDockerfiles = (sortedArrayArg:Dockerfile[]) => {
     return done.promise;
 }
 
-export let pushDockerfiles = function(sortedArrayArg:Dockerfile[]){
+export let pushDockerfiles = function(sortedArrayArg:Dockerfile[],regsitryArg = "registry.gitlab.com"){
     let done = plugins.q.defer();
     sortedArrayArg.forEach(function(dockerfileArg){
-        dockerfileArg.push();
+        dockerfileArg.push(regsitryArg);
     });
     done.resolve(sortedArrayArg);
     return done.promise;
 }
 
-export let pullDockerfileImages = (sortableArrayArg:Dockerfile[]) => {
+export let pullDockerfileImages = (sortableArrayArg:Dockerfile[],registryArg = "registry.gitlab.com") => {
     let done = plugins.q.defer();
     sortableArrayArg.forEach((dockerfileArg) => {
-        dockerfileArg.pull();
+        dockerfileArg.pull(registryArg);
     });
     done.resolve(sortableArrayArg);
     return done.promise;
@@ -110,10 +110,10 @@ export let testDockerfiles = (sortedArrayArg:Dockerfile[]) => {
     return done.promise;
 };
 
-export let releaseDockerfiles = (sortedArrayArg:Dockerfile[]) => {
+export let releaseDockerfiles = (sortedArrayArg:Dockerfile[], registryArg = NpmciEnv.dockerRegistry) => {
      let done = plugins.q.defer();
     sortedArrayArg.forEach(function(dockerfileArg){
-        dockerfileArg.release();
+        dockerfileArg.push(registryArg);
     });
     done.resolve(sortedArrayArg);
     return done.promise;
@@ -125,10 +125,10 @@ export class Dockerfile {
     version:string;
     cleanTag:string;
     buildTag:string;
+    testTag:string;
     releaseTag:string;
     containerName:string
     content:string;
-    patchedContent:string;
     baseImage:string;
     localBaseImageDependent:boolean;
     localBaseDockerfile:Dockerfile;
@@ -137,8 +137,9 @@ export class Dockerfile {
         this.repo = NpmciEnv.repo.user + "/" + NpmciEnv.repo.repo;
         this.version = dockerFileVersion(plugins.path.parse(options.filePath).base);
         this.cleanTag = this.repo + ":" + this.version;
-        this.buildTag = dockerTag(this.repo,this.version,"build");
-        this.releaseTag = dockerTag(this.repo,this.version,"release");
+        this.buildTag = this.cleanTag;
+        this.testTag = dockerTag("registry.gitlab.com",this.repo,this.version,"test");
+        this.releaseTag = dockerTag(NpmciEnv.dockerRegistry,this.repo,this.version);
         this.containerName = "dockerfile-" + this.version;
         if(options.filePath && options.read){
             this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
@@ -147,27 +148,26 @@ export class Dockerfile {
         this.localBaseImageDependent = false;
     };
     build(){
-        plugins.beautylog.info("now building Dockerfile for " + this.cleanTag);
         let done = plugins.q.defer();
-        this.patchContents();
+        plugins.beautylog.info("now building Dockerfile for " + this.cleanTag);
         bashBare("docker build -t " + this.buildTag + " -f " + this.filePath + " .");
         NpmciEnv.dockerFilesBuilt.push(this);
-        this.restoreContents();
         done.resolve();
         return done.promise;
     };
-    push(){
+    push(registryArg:string){
         let done = plugins.q.defer();
-        if(this.buildTag){
-            bashBare("docker push " + this.buildTag);
-        } else {
-            plugins.beautylog.error("Dockerfile hasn't been built yet!");
-        }
+        let pushTag;
+        NpmciEnv.buildStage == "test" ? pushTag = this.testTag : pushTag = this.releaseTag;
+        bashBare("docker tag " + this.buildTag + " " + pushTag);
+        bashBare("docker push " + pushTag);
         done.resolve();
         return done.promise;
     }
-    pull(){
-        bashBare("docker pull " + this.buildTag);
+    pull(registryArg:string){
+        let pullTag = this.testTag;
+        bashBare("docker pull " + pullTag);
+        bashBare("docker tag " + pullTag + " " + this.buildTag);
     };
     test(){
         let testFile:string = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
@@ -183,43 +183,9 @@ export class Dockerfile {
             plugins.beautylog.warn("skipping tests for " + this.cleanTag + " because no testfile was found!");
         }
     };
-    release(){
-        bashBare("docker tag " + this.buildTag + " " + this.releaseTag);
-        bashBare("docker push " + this.releaseTag);
-    }
     getId(){
         let containerId = bashBare("docker inspect --type=image --format=\"{{.Id}}\" " + this.buildTag);
         return containerId;
-    };
-    patchContents(){
-        let done = plugins.q.defer();
-        if(this.localBaseImageDependent == true){
-            plugins.beautylog.info("patching Dockerfile due to local build dependency!");
-            this.patchedContent = this.content.replace(/FROM\s[a-zA-Z0-9\/\-\:]*/, 'FROM ' + this.localBaseDockerfile.buildTag);
-            plugins.smartfile.memory.toFsSync(
-                this.patchedContent,
-                {
-                    fileName:plugins.path.parse(this.filePath).name,
-                    filePath:plugins.path.parse(this.filePath).dir
-                }
-            );
-        }
-        done.resolve();
-        return done.promise;
-    };
-    restoreContents(){
-        let done = plugins.q.defer();
-        if(this.localBaseImageDependent == true){
-            plugins.smartfile.memory.toFsSync(
-                this.content,
-                {
-                    fileName:plugins.path.parse(this.filePath).name,
-                    filePath:plugins.path.parse(this.filePath).dir
-                }
-            );
-        }
-        done.resolve();
-        return done.promise;
     };
 }
 
@@ -241,17 +207,14 @@ export let dockerBaseImage = function(dockerfileContentArg:string){
     return regexResultArray[1];
 }
 
-export let dockerTag = function(repoArg:string,versionArg:string,stageArg:string):string{
+export let dockerTag = function(registryArg:string,repoArg:string,versionArg:string,suffixArg?:string):string{
     let tagString:string;
-    let registry = NpmciEnv.dockerRegistry;
-    if(stageArg == "build"  || stageArg == "test"){
-        registry = "registry.gitlab.com";
-    } 
+    let registry = registryArg;
     let repo = repoArg;
     let version = versionArg;
-    if(stageArg == "build"  || stageArg == "test"){
-        version = version + "_test";
-    }
+    if(suffixArg){
+        version = versionArg + "_" + suffixArg;
+    };
     tagString = registry + "/" + repo + ":" + version;
     return tagString;
 };
