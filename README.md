@@ -9,12 +9,10 @@ npmci is designed to work in docker CI environments. The following docker images
 
 Docker Hub:
 
-* [hosttoday/ht-docker-node](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
-has LTS node version preinstalled. Change it with npmci
-* [hosttoday/ht-docker-node-python-3](https://hub.docker.com/r/hosttoday/ht-docker-node-python3/)  
-like ht-docker-node, but with python3 instead of python2.7
+* [hosttoday/ht-docker-node:npmci](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
+has LTS node version and npmci preinstalled.
 * [hosttoday/ht-docker-dbase](https://hub.docker.com/r/hosttoday/ht-docker-dbase/)  
-based on docker:git, can be used to build docker images in conjuction with docker:dind
+based on docker:git, can be used to build docker images in conjunction with docker:dind
 
 npmci can be called from commandline:
 ```shell
@@ -30,6 +28,8 @@ npmci test stable # will install latest stable node version and run "npm install
 npmci test legacy # will install latest legacy node version and run "npm install" and "npm test".
 npmci test x.x.x # will install any specific node version and run "npm install" and "npm test".
 npmci test docker # will test any build image with tests defined in ./npmci/dockertest_1.sh to ./npmci/dockertest_100.sh
+## npmci test docker will look at all Dockerfiles and look for according tags on GitLab container registry
+
 
 # prepare tools
 npmci prepare npm # will look for $NPMCI_TOKEN_NPM env var and create .npmrc, so npm is authenticated
@@ -37,7 +37,11 @@ npmci prepare docker # will look for $NPMCI_LOGIN_DOCKER in form username|passwo
 npmci prepare docker-gitlab # will authenticate docker for gitlab container registry
 
 # build containers
-npmci build docker # will build container and tag it
+npmci build docker # will build containers
+## all Dockerfiles named DOckerfile* are picked up.
+## specify tags lake this Dockerfile_[tag]
+## uploads all built images as [username]/[reponame]:[tag]_test to GitLab
+## then test in next step with "npmci test docker"
 
 # publish npm module
 npmci publish npm # will look vor $NPMCI_TOKEN_NPM env var and push any module in cwd to npm
