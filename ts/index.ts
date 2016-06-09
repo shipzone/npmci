@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 import "typings-global";
 import * as plugins from "./npmci.plugins";
-
-let packJson = require("../package.json");
-
-plugins.beautylog.info("npmci version: " + packJson.version);
+import * as paths from "./npmci.paths";
+let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
+plugins.beautylog.log("npmci version: " + npmciInfo.version);
 
 import {build} from "./npmci.build"
 import {install} from "./npmci.install";
