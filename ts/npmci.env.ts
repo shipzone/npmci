@@ -4,7 +4,8 @@ import * as paths from "./npmci.paths";
 import {GitRepo} from "smartstring";
 import {Dockerfile} from "./npmci.build.docker"
 
-export let repo:GitRepo = new GitRepo(process.env.CI_BUILD_REPO);
+export let repo:GitRepo;
+if(process.env.CI_BUILD_REPO) repo = new GitRepo(process.env.CI_BUILD_REPO);
 
 export let buildStage:string = process.env.CI_BUILD_STAGE;
 

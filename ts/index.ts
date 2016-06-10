@@ -14,6 +14,9 @@ import {test} from "./npmci.test";
 import {trigger} from "./npmci.trigger";
 import * as NpmciEnv from "./npmci.env";
 
+export {build} from "./npmci.build"
+export {install} from "./npmci.install";
+export {publish} from "./npmci.publish";
 
 let command;
 let commandOption;
