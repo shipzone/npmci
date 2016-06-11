@@ -42,7 +42,7 @@ switch (command){
             .then(NpmciEnv.configStore);
         break;
     case "command":
-        command()
+        command2()
             .then(NpmciEnv.configStore);
         break;
     case "install":
