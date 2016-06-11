@@ -7,7 +7,8 @@ export let command = () => {
     let wrappedCommand:string = "";
     let argvArray = process.argv;
     for(let i = 3; i < argvArray.length; i++){
-        wrappedCommand = wrappedCommand + argvArray[i]; 
+        wrappedCommand = wrappedCommand + argvArray[i];
+        if(i + 1 != argvArray.length) wrappedCommand = wrappedCommand + " "; 
     }
     bash(wrappedCommand);
     done.resolve();
