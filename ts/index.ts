@@ -6,6 +6,7 @@ let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
 plugins.beautylog.log("npmci version: " + npmciInfo.version);
 
 import {build} from "./npmci.build"
+import {command as command2} from "./npmci.command";
 import {install} from "./npmci.install";
 import {publish} from "./npmci.publish";
 import {prepare} from "./npmci.prepare";
@@ -19,7 +20,7 @@ export {install} from "./npmci.install";
 export {publish} from "./npmci.publish";
 
 let command;
-let commandOption;
+let commandOption:string;
 
 plugins.commander
     .arguments('<commandarg> [commandoptionarg]')
@@ -38,6 +39,10 @@ if (typeof command === 'undefined') {
 switch (command){
     case "build":
         build(commandOption)
+            .then(NpmciEnv.configStore);
+        break;
+    case "command":
+        command()
             .then(NpmciEnv.configStore);
         break;
     case "install":
@@ -60,6 +65,8 @@ switch (command){
         trigger();
         break;
     default:
+        plugins.beautylog.error("command " + commandOption.blue + " not recognised");
+        process.exit(1);
         break;
 }
 
