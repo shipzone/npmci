@@ -13,6 +13,7 @@ export let buildStage:string = process.env.CI_BUILD_STAGE;
 export let dockerRegistry; // will be set by npmci.prepare
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
+export let config;
 
 export let configStore = () => {
     let config = {
@@ -29,8 +30,8 @@ export let configStore = () => {
     );
 }
 
-export let configLoad = () => {
-    let config;
+let configLoad = () => {
+    // internal config to transfer information in between npmci shell calls
     try {
         config = plugins.smartfile.local.toObjectSync(paths.NpmciPackageConfig,"json");
     }
@@ -38,6 +39,18 @@ export let configLoad = () => {
         config = {};
         configStore();
         plugins.beautylog.log("config initialized!");
+    }
+
+    // project config
+    try {
+        if(!config.project){
+            config.project = plugins.smartfile.local.toObjectSync(paths.NpmciProjectDir,"npmci.json");
+            plugins.beautylog.ok("project config found!");
+        };
+    }
+    catch(err){
+        config.project = {};
+        plugins.beautylog.log("no project config found, so proceeding with default behaviour!");
     }
     
     config.dockerRegistry ? dockerRegistry = config.dockerRegistry : void(0);
