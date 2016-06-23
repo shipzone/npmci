@@ -33,7 +33,7 @@ export let configStore = () => {
 let configLoad = () => {
     // internal config to transfer information in between npmci shell calls
     try {
-        config = plugins.smartfile.local.toObjectSync(paths.NpmciPackageConfig,"json");
+        config = plugins.smartfile.fs.toObjectSync(paths.NpmciPackageConfig,"json");
     }
     catch(err){
         config = {};
@@ -44,7 +44,7 @@ let configLoad = () => {
     // project config
     try {
         if(!config.project){
-            config.project = plugins.smartfile.local.toObjectSync(paths.NpmciProjectDir,"npmci.json");
+            config.project = plugins.smartfile.fs.toObjectSync(paths.NpmciProjectDir,"npmci.json");
             plugins.beautylog.ok("project config found!");
         };
     }

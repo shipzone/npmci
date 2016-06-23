@@ -34,6 +34,7 @@
     "request": "^2.72.0",
     "shelljs": "^0.7.0",
     "smartfile": "^4.0.4",
+    "smartparam": "^0.1.1",
     "smartssh": "^1.0.6",
     "smartstring": "^2.0.10",
     "through2": "^2.0.1",

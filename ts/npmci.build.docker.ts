@@ -133,7 +133,7 @@ export class Dockerfile {
         this.releaseTag = dockerTag(NpmciEnv.dockerRegistry,this.repo,this.version);
         this.containerName = "dockerfile-" + this.version;
         if(options.filePath && options.read){
-            this.content = plugins.smartfile.local.toStringSync(plugins.path.resolve(options.filePath));
+            this.content = plugins.smartfile.fs.toStringSync(plugins.path.resolve(options.filePath));
         };
         this.baseImage = dockerBaseImage(this.content);
         this.localBaseImageDependent = false;
@@ -170,7 +170,7 @@ export class Dockerfile {
     };
     test(){
         let testFile:string = plugins.path.join(paths.NpmciTestDir,"test_" + this.version + ".sh");
-        let testFileExists:boolean = plugins.smartfile.checks.fileExistsSync(testFile);
+        let testFileExists:boolean = plugins.smartfile.fs.fileExistsSync(testFile);
         if(testFileExists){
             bashBare("docker run --name npmci_test_container " + this.buildTag + " mkdir /npmci_test");
             bashBare("docker cp " + testFile + " npmci_test_container:/npmci_test/test.sh");
