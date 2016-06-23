@@ -21,21 +21,21 @@
   "homepage": "https://gitlab.com/pushrocks/npmci#README",
   "devDependencies": {
     "npmts-g": "^5.2.6",
-    "should": "^9.0.1",
+    "should": "^9.0.2",
     "typings-test": "^1.0.1"
   },
   "dependencies": {
-    "beautylog": "^5.0.8",
+    "beautylog": "^5.0.12",
     "commander": "^2.9.0",
     "gulp": "^3.9.1",
-    "gulp-function": "^1.3.5",
+    "gulp-function": "^1.3.6",
     "projectinfo": "^1.0.3",
     "q": "^1.4.1",
     "request": "^2.72.0",
     "shelljs": "^0.7.0",
-    "smartfile": "^3.0.10",
-    "smartssh": "^1.0.5",
-    "smartstring": "^2.0.6",
+    "smartfile": "^4.0.4",
+    "smartssh": "^1.0.6",
+    "smartstring": "^2.0.10",
     "through2": "^2.0.1",
     "typings-global": "^1.0.3"
   }
