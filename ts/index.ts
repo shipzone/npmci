@@ -23,6 +23,7 @@ let command;
 let commandOption:string;
 
 plugins.commander
+    .version(npmciInfo.version)
     .arguments('<commandarg> [commandoptionarg]')
     .action(function (commandarg, commandoptionarg) {
         command = commandarg;
