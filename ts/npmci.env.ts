@@ -23,10 +23,7 @@ export let configStore = () => {
     }
     plugins.smartfile.memory.toFsSync(
         JSON.stringify(config),
-        {
-            fileName:"config.json",
-            filePath:paths.NpmciPackageRoot
-        }
+        paths.NpmciPackageConfig
     );
 }
 

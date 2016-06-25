@@ -16,7 +16,7 @@ let npm = function(){
         plugins.beautylog.error("no access token found! Exiting!");
         process.exit(1);
     }
-    plugins.smartfile.memory.toFsSync(npmrcFileString,{fileName:".npmrc",filePath:"/root"});
+    plugins.smartfile.memory.toFsSync(npmrcFileString,"/root/.npmrc");
     done.resolve();
     return done.promise;
 };
