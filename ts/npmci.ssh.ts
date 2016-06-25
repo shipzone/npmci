@@ -5,12 +5,15 @@ let sshRegex = /^(.*)\|?(.*)\|?(.*)/
 let sshInstance:plugins.smartssh.SshInstance;
 
 export let ssh = () => {
+    let done = plugins.q.defer();
     sshInstance = new plugins.smartssh.SshInstance();
-    plugins.smartparam.forEachMinimatch(process.env,"NPMCI_SSHKEY_*",evaluateSshkey);
+    plugins.smartparam.forEachMinimatch(process.env,"NPMCI_SSHKEY_*",evaluateSshEnv);
     sshInstance.writeToDisk();
+    done.resolve();
+    return done.promise;
 };
 
-export let evaluateSshkey = (sshkeyEnvVarArg) => {
+let evaluateSshEnv = (sshkeyEnvVarArg) => {
     let resultArray = sshRegex.exec(sshkeyEnvVarArg);
     let sshKey = new plugins.smartssh.SshKey();
     

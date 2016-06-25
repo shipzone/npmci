@@ -2,6 +2,7 @@ import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {bash} from "./npmci.bash";
 import * as env from "./npmci.env"
+import * as sshModule from "./npmci.ssh"
 
 let npm = function(){
     let done = plugins.q.defer();
@@ -43,6 +44,13 @@ let dockerGitlab = function(){
     env.dockerRegistry = "registry.gitlab.com";
     plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + process.env.CI_BUILD_TOKEN + " " + "registry.gitlab.com");
     done.resolve();
+    return done.promise;
+}
+
+let ssh = function(){
+    let done = plugins.q.defer();
+    sshModule.ssh()
+        .then(done.resolve);
     return done.promise;
 }
 

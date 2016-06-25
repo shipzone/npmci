@@ -36,7 +36,7 @@
     "smartcli": "^1.0.4",
     "smartfile": "^4.0.5",
     "smartparam": "^0.1.1",
-    "smartssh": "^1.1.0",
+    "smartssh": "^1.1.2",
     "smartstring": "^2.0.10",
     "through2": "^2.0.1",
     "typings-global": "^1.0.3"
