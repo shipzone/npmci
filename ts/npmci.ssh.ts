@@ -1,7 +1,7 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
 
-let sshRegex = /^(.*)\|?(.*)\|?(.*)/
+let sshRegex = /^(.*)\|(.*)\|(.*)/
 let sshInstance:plugins.smartssh.SshInstance;
 
 export let ssh = () => {
@@ -17,11 +17,13 @@ let evaluateSshEnv = (sshkeyEnvVarArg) => {
     let resultArray = sshRegex.exec(sshkeyEnvVarArg);
     let sshKey = new plugins.smartssh.SshKey();
     
-    if(resultArray[1] && resultArray[1] != "undefined") sshKey.privKeyBase64 = resultArray[1];
-    let publicKey:string;
-    if(resultArray[2] && resultArray[2] != "undefined") sshKey.pubKeyBase64 = resultArray[2];
-    let host:string;
-    if(resultArray[3] && resultArray[3] != "undefined") sshKey.host = resultArray[1];
+    if(notUndefined(resultArray[1])) sshKey.host = resultArray[1];
+    if(notUndefined(resultArray[2])) sshKey.privKeyBase64 = resultArray[2];
+    if(notUndefined(resultArray[3])) sshKey.pubKeyBase64 = resultArray[3];
     
     sshInstance.addKey(sshKey);
 };
+
+let notUndefined = (stringArg:string) => {
+    return (stringArg && stringArg != "undefined" && stringArg != "##")
+}
