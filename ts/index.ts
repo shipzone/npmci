@@ -22,8 +22,8 @@ export {publish} from "./npmci.publish";
 let command;
 let commandOption:string;
 
-plugins.commander
-    .version(npmciInfo.version)
+let commander = plugins.commander
+    .option("-v","--version","print version")
     .arguments('<commandarg> [commandoptionarg]')
     .action(function (commandarg, commandoptionarg) {
         command = commandarg;
@@ -31,7 +31,12 @@ plugins.commander
     });
  
 plugins.commander.parse(process.argv);
- 
+
+if(commander.version) {
+    console.log(npmciInfo.version);
+    process.exit(0);
+}
+
 if (typeof command === 'undefined') {
     console.error('no command given!');
     process.exit(1);

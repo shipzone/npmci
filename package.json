@@ -7,7 +7,8 @@
     "npmci": "dist/index.js"
   },
   "scripts": {
-    "test": "(npmts)"
+    "test": "(npmts) && (npm run testVersion)",
+    "testVersion":"node dist/index.js -v"
   },
   "repository": {
     "type": "git",
