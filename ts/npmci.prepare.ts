@@ -61,7 +61,9 @@ export let prepare = function(serviceArg:string){
         case "docker":
             return docker();
         case "docker-gitlab":
-            return dockerGitlab()
+            return dockerGitlab();
+        case "ssh":
+            return ssh();
         default:
             break;
     }
