@@ -1,6 +1,6 @@
 {
   "name": "npmci",
-  "version": "2.1.60",
+  "version": "2.1.61",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "(npmts) && (npm run testVersion)",
-    "testVersion":"node dist/index.js -v"
+    "testVersion": "node dist/index.js -v"
   },
   "repository": {
     "type": "git",
