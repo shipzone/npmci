@@ -7,7 +7,7 @@ let sshInstance:plugins.smartssh.SshInstance;
 export let ssh = () => {
     sshInstance = new plugins.smartssh.SshInstance();
     plugins.smartparam.forEachMinimatch(process.env,"NPMCI_SSHKEY_*",evaluateSshkey);
-    sshInstance.sync("to");
+    sshInstance.writeToDisk();
 };
 
 export let evaluateSshkey = (sshkeyEnvVarArg) => {
