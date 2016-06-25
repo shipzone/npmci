@@ -6,7 +6,7 @@ let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
 plugins.beautylog.log("npmci version: " + npmciInfo.version);
 
 import {build} from "./npmci.build"
-import {command as command2} from "./npmci.command";
+import {command} from "./npmci.command";
 import {install} from "./npmci.install";
 import {publish} from "./npmci.publish";
 import {prepare} from "./npmci.prepare";
@@ -19,60 +19,63 @@ export {build} from "./npmci.build"
 export {install} from "./npmci.install";
 export {publish} from "./npmci.publish";
 
-let command;
-let commandOption:string;
 
-let commander = plugins.commander
-    .option("-v","--version","print version")
-    .arguments('<commandarg> [commandoptionarg]')
-    .action(function (commandarg, commandoptionarg) {
-        command = commandarg;
-        commandOption = commandoptionarg;
-    });
- 
-plugins.commander.parse(process.argv);
+let smartcli = new plugins.smartcli.Smartcli();
+smartcli.addVersion(npmciInfo.version);
 
-if(commander.version) {
-    console.log(npmciInfo.version);
-    process.exit(0);
-}
+// build
+smartcli.addCommand({
+    commandName:"build"
+}).then((argv) => {
+    build(argv._[1])
+        .then(NpmciEnv.configStore);
+});
 
-if (typeof command === 'undefined') {
-    console.error('no command given!');
-    process.exit(1);
-}
+// command
+smartcli.addCommand({
+    commandName:"command"
+}).then((argv) => {
+    command()
+        .then(NpmciEnv.configStore);
+});
 
-switch (command){
-    case "build":
-        build(commandOption)
-            .then(NpmciEnv.configStore);
-        break;
-    case "command":
-        command2()
-            .then(NpmciEnv.configStore);
-        break;
-    case "install":
-        install(commandOption)
-            .then(NpmciEnv.configStore);;
-        break;
-    case "prepare":
-        prepare(commandOption)
-            .then(NpmciEnv.configStore);;
-        break;
-    case "publish":
-        publish(commandOption)
-            .then(NpmciEnv.configStore);;
-        break;
-    case "test":
-        test(commandOption)
-            .then(NpmciEnv.configStore);
-        break;
-    case "trigger":
-        trigger();
-        break;
-    default:
-        plugins.beautylog.error("command " + commandOption.blue + " not recognised");
-        process.exit(1);
-        break;
-}
+// install
+smartcli.addCommand({
+    commandName:"install"
+}).then((argv) => {
+    install(argv._[1])
+        .then(NpmciEnv.configStore);
+});
 
+// prepare
+smartcli.addCommand({
+    commandName:"prepare"
+}).then((argv) => {
+    prepare(argv._[1])
+        .then(NpmciEnv.configStore);
+});
+
+// publish
+smartcli.addCommand({
+    commandName:"publish"
+}).then((argv) => {
+    publish(argv._[1])
+        .then(NpmciEnv.configStore);
+});
+
+// test
+smartcli.addCommand({
+    commandName:"test"
+}).then((argv) => {
+    test(argv._[1])
+        .then(NpmciEnv.configStore);
+});
+
+// trigger
+smartcli.addCommand({
+    commandName:"trigger"
+}).then((argv) => {
+    trigger();
+});
+
+smartcli.startParse();

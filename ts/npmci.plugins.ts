@@ -1,6 +1,5 @@
 import "typings-global";
 export import beautylog = require("beautylog");
-export let commander = require("commander");
 export let gulp = require("gulp");
 export let gulpFunction = require("gulp-function");
 export import path = require("path");
@@ -8,6 +7,7 @@ export import projectinfo = require("projectinfo");
 export let q = require("q");
 export let request = require("request");
 export let shelljs = require("shelljs");
+export import smartcli = require("smartcli");
 export import smartfile = require("smartfile");
 export import smartparam = require("smartparam");
 export import smartssh = require("smartssh");
