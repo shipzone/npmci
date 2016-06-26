@@ -4,6 +4,7 @@ import path = require("path");
 import * as beautylog from "beautylog"
 //set up environment
 process.env.CI_BUILD_REPO = "https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git";
+process.env.NPMCI_SSHKEY_1 = "hostString|somePrivKey|##"
 process.env.NPMTS_TEST = "true";
 process.cwd = () => {
     return path.join(__dirname,"assets/");
@@ -14,6 +15,7 @@ import npmci = require("../dist/index");
 import NpmciBuildDocker = require("../dist/npmci.build.docker");
 import NpmciPublish = require("../dist/npmci.publish");
 import NpmciTest = require("../dist/npmci.test");
+import NpmciSsh = require("../dist/npmci.ssh")
 
 
 let dockerfile1:NpmciBuildDocker.Dockerfile;
@@ -81,4 +83,12 @@ describe("NPMCI",function(){
                 });
         })
     });
+    describe("npmci prepare ssh",function(){
+        it("should pick up SSH keys",function(done){
+            NpmciSsh.ssh()
+                .then(() => {
+                    done();
+                })
+        })
+    })
 })
