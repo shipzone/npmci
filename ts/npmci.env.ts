@@ -13,14 +13,14 @@ export let buildStage:string = process.env.CI_BUILD_STAGE;
 export let dockerRegistry; // will be set by npmci.prepare
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
-export let config;
+export let config = {
+    dockerRegistry: dockerRegistry,
+    dockerFilesBuilt: dockerFilesBuilt,
+    dockerFiles: dockerFiles,
+    project: undefined
+};
 
 export let configStore = () => {
-    let config = {
-        dockerRegistry: dockerRegistry,
-        dockerFilesBuilt: dockerFilesBuilt,
-        dockerFiles: dockerFiles
-    }
     plugins.smartfile.memory.toFsSync(
         JSON.stringify(config),
         paths.NpmciPackageConfig
@@ -30,10 +30,9 @@ export let configStore = () => {
 let configLoad = () => {
     // internal config to transfer information in between npmci shell calls
     try {
-        config = plugins.smartfile.fs.toObjectSync(paths.NpmciPackageConfig,"json");
+        plugins.lodash.assign(config,plugins.smartfile.fs.toObjectSync(paths.NpmciPackageConfig,"json"));
     }
     catch(err){
-        config = {};
         configStore();
         plugins.beautylog.log("config initialized!");
     }
