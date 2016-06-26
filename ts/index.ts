@@ -10,7 +10,6 @@ import {command} from "./npmci.command";
 import {install} from "./npmci.install";
 import {publish} from "./npmci.publish";
 import {prepare} from "./npmci.prepare";
-import {tag, retag} from "./npmci.tag";
 import {test} from "./npmci.test";
 import {trigger} from "./npmci.trigger";
 import * as NpmciEnv from "./npmci.env";
