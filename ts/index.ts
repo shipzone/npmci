@@ -6,6 +6,7 @@ let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
 plugins.beautylog.log("npmci version: " + npmciInfo.version);
 
 import {build} from "./npmci.build"
+import {clean} from "./npmci.clean";
 import {command} from "./npmci.command";
 import {install} from "./npmci.install";
 import {publish} from "./npmci.publish";
@@ -27,6 +28,14 @@ smartcli.addCommand({
     commandName:"build"
 }).then((argv) => {
     build(argv._[1])
+        .then(NpmciEnv.configStore);
+});
+
+// clean
+smartcli.addCommand({
+    commandName:"clean"
+}).then((argv) => {
+    clean()
         .then(NpmciEnv.configStore);
 });
 
