@@ -14,13 +14,14 @@ export let dockerRegistry; // will be set by npmci.prepare
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
 export let config = {
-    dockerRegistry: dockerRegistry,
+    dockerRegistry: undefined, // this will be set later on store
     dockerFilesBuilt: dockerFilesBuilt,
     dockerFiles: dockerFiles,
     project: undefined
 };
 
 export let configStore = () => {
+    config.dockerRegistry = dockerRegistry;
     plugins.smartfile.memory.toFsSync(
         JSON.stringify(config),
         paths.NpmciPackageConfig
