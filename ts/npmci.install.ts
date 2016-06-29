@@ -6,11 +6,13 @@ export let install = (versionArg) => {
     let done = plugins.q.defer();
     plugins.beautylog.log("now installing " + "node ".green + ("version " + versionArg).yellow);
     let version:string;
-    if(versionArg == "lts"){
-        version = "4";
+    if(versionArg == "stable"){
+        version = "6.6.2";
+    } else if(versionArg == "lts"){
+        version = "4.4.7";
     } else if(versionArg == "legacy"){
-        version = "0"
-    } else {
+        version = "4.4.7"
+    } else  {
         version = versionArg;
     };
     bash(
