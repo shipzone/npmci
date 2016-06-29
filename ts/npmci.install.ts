@@ -7,7 +7,7 @@ export let install = (versionArg) => {
     plugins.beautylog.log("now installing " + "node ".green + ("version " + versionArg).yellow);
     let version:string;
     if(versionArg == "stable"){
-        version = "6.6.2";
+        version = "6.2.2";
     } else if(versionArg == "lts"){
         version = "4.4.7";
     } else if(versionArg == "legacy"){
