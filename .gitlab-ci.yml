@@ -7,6 +7,7 @@ stages:
 
 
 before_script:
+  - npm uninstall -g npmci
   - npm install -g npmci
 
 testLTS:
