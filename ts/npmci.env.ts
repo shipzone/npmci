@@ -11,6 +11,9 @@ export let buildStage:string = process.env.CI_BUILD_STAGE;
 
 // handling config between commands
 export let dockerRegistry:string; // will be set by npmci.prepare
+export let setDockerRegistry = (dockerRegistryArg:string) => {
+    dockerRegistry = dockerRegistryArg;
+}
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
 export let config = {

@@ -24,7 +24,7 @@ let npm = function(){
 
 let docker = function(){
     let done = plugins.q.defer();
-    env.dockerRegistry = "docker.io";
+    env.setDockerRegistry("docker.io");
     let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
     if(!process.env.NPMCI_LOGIN_DOCKER){
         plugins.beautylog.error("You have to specify Login Data to the Docker Registry");
@@ -41,7 +41,7 @@ let docker = function(){
 
 let dockerGitlab = function(){
     let done = plugins.q.defer();
-    env.dockerRegistry = "registry.gitlab.com";
+    env.setDockerRegistry("registry.gitlab.com");
     plugins.shelljs.exec("docker login -u gitlab-ci-token -p " + process.env.CI_BUILD_TOKEN + " " + "registry.gitlab.com");
     done.resolve();
     return done.promise;
