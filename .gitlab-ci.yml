@@ -1,4 +1,4 @@
-image: hosttoday/ht-docker-node:npmts
+image: hosttoday/ht-docker-node:stable
 
 stages:
 - test
@@ -7,12 +7,13 @@ stages:
 
 
 before_script:
-  - npm uninstall -g npmci
   - npm install -g npmci
 
 testLTS:
   stage: test
   script:
+    - npmci install lts
+    - npmci command npm install -g npmts
     - npmci test lts
   tags:
     - docker
@@ -20,6 +21,8 @@ testLTS:
 testSTABLE:
   stage: test
   script:
+    - npmci install stable
+    - npmci command npm install -g npmts
     - npmci test stable
   tags:
     - docker
@@ -27,6 +30,8 @@ testSTABLE:
 testLEGACY:
   stage: test
   script:
+    - npmci install legacy
+    - npmci command npm install -g npmts
     - npmci test legacy
   tags:
     - docker
