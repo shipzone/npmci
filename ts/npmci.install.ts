@@ -9,9 +9,9 @@ export let install = (versionArg) => {
     if(versionArg == "stable"){
         version = "6.3.0";
     } else if(versionArg == "lts"){
-        version = "6.2.2";
+        version = "6.3.0";
     } else if(versionArg == "legacy"){
-        version = "5.12.0"
+        version = "6.3.0"
     } else  {
         version = versionArg;
     };
