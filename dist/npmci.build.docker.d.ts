@@ -1,3 +1,4 @@
+/// <reference types="node" />
 export declare let build: () => any;
 export declare let readDockerfiles: () => any;
 export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;

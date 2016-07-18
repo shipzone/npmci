@@ -10,7 +10,7 @@ if(process.env.CI_BUILD_REPO) repo = new GitRepo(process.env.CI_BUILD_REPO);
 export let buildStage:string = process.env.CI_BUILD_STAGE;
 
 // handling config between commands
-export let dockerRegistry; // will be set by npmci.prepare
+export let dockerRegistry:string; // will be set by npmci.prepare
 export let dockerFilesBuilt:Dockerfile[] = [];
 export let dockerFiles:Dockerfile[] = [];
 export let config = {

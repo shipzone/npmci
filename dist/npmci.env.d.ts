@@ -3,7 +3,7 @@ import { GitRepo } from "smartstring";
 import { Dockerfile } from "./npmci.build.docker";
 export declare let repo: GitRepo;
 export declare let buildStage: string;
-export declare let dockerRegistry: any;
+export declare let dockerRegistry: string;
 export declare let dockerFilesBuilt: Dockerfile[];
 export declare let dockerFiles: Dockerfile[];
 export declare let config: {
