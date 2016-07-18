@@ -24,7 +24,7 @@ let npm = function(){
 
 let docker = function(){
     let done = plugins.q.defer();
-    env.dockerRegistry = "docker.io"
+    env.dockerRegistry = "docker.io";
     let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
     if(!process.env.NPMCI_LOGIN_DOCKER){
         plugins.beautylog.error("You have to specify Login Data to the Docker Registry");
