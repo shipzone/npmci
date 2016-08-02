@@ -1,0 +1,8 @@
+{
+    "npmts":{
+        "mode":"default"
+    },
+    "npmdocker":{
+        "baseImage":"hosttoday/ht-docker-node:npmts"
+    }
+}
