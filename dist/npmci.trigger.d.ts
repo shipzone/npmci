@@ -1,2 +1,4 @@
+/// <reference types="q" />
 import "typings-global";
-export declare let trigger: () => any;
+import * as plugins from "./npmci.plugins";
+export declare let trigger: () => plugins.q.Promise<{}>;

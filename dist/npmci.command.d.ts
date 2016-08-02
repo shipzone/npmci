@@ -1,2 +1,4 @@
+/// <reference types="q" />
 import "typings-global";
-export declare let command: () => any;
+import * as plugins from "./npmci.plugins";
+export declare let command: () => plugins.q.Promise<{}>;

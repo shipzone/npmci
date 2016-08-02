@@ -1,2 +1,4 @@
+/// <reference types="q" />
 import "typings-global";
-export declare let publish: (serviceArg?: string) => any;
+import * as plugins from "./npmci.plugins";
+export declare let publish: (serviceArg?: string) => plugins.q.Promise<{}>;

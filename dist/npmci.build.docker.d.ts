@@ -1,12 +1,14 @@
+/// <reference types="q" />
 /// <reference types="node" />
-export declare let build: () => any;
-export declare let readDockerfiles: () => any;
-export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => any;
-export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => any;
-export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
-export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
-export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => any;
-export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => any;
+import * as plugins from "./npmci.plugins";
+export declare let build: () => plugins.q.Promise<{}>;
+export declare let readDockerfiles: () => plugins.q.Promise<{}>;
+export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => plugins.q.Promise<{}>;
+export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
 export declare class Dockerfile {
     filePath: string;
     repo: string;
@@ -25,8 +27,8 @@ export declare class Dockerfile {
         fileContents?: string | Buffer;
         read?: boolean;
     });
-    build(): any;
-    push(stageArg: any): any;
+    build(): plugins.q.Promise<{}>;
+    push(stageArg: any): plugins.q.Promise<{}>;
     pull(registryArg: string): void;
     test(): void;
     getId(): string;

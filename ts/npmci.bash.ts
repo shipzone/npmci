@@ -1,17 +1,27 @@
 import "typings-global";
 import * as plugins from "./npmci.plugins";
 
+
+let nvmSourceString:string = "";
+export let nvmAvailable:boolean = false;
+let checkNvm = () => {
+    let nvmExecCode = plugins.shelljs.exec(`bash -c "source /usr/local/nvm/nvm.sh"`).code;
+    if(nvmExecCode === 0){
+        nvmSourceString = `source /usr/local/nvm/nvm.sh && `
+        nvmAvailable = true;
+    }
+};
+checkNvm();
+
 export let bash = (commandArg:string,retryArg = 2,bareArg = false) => {
     let exitCode:number;
     let stdOut:string;
     let execResult;
-    if(!process.env.NPMTS_TEST){
+    if(!process.env.NPMTS_TEST){ // NPMTS_TEST is used during testing
         for (let i = 0; i <= retryArg; i++){
             if(!bareArg){
                 execResult = plugins.shelljs.exec(
-                    "bash -c \"source /usr/local/nvm/nvm.sh &&" +
-                    commandArg +
-                    "\""
+                    `bash -c "${nvmSourceString} ${commandArg}"`
                 );
             } else {
                 execResult = plugins.shelljs.exec(commandArg);
