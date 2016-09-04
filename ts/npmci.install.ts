@@ -5,7 +5,7 @@ import { nvmAvailable } from "./npmci.bash"
 
 export let install = (versionArg) => {
     let done = plugins.q.defer();
-    plugins.beautylog.log("now installing " + "node ".green + ("version " + versionArg).yellow);
+    plugins.beautylog.log(`now installing node version ${versionArg}`);
     let version: string;
     if (versionArg == "stable") {
         version = "6.3.0";

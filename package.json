@@ -42,6 +42,7 @@
     "smartcli": "^1.0.4",
     "smartfile": "^4.0.12",
     "smartparam": "^0.1.1",
+    "smartsocket": "^1.1.4",
     "smartssh": "^1.1.5",
     "smartstring": "^2.0.15",
     "through2": "^2.0.1",

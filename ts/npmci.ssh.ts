@@ -4,12 +4,15 @@ import * as plugins from "./npmci.plugins";
 let sshRegex = /^(.*)\|(.*)\|(.*)/
 let sshInstance:plugins.smartssh.SshInstance;
 
+/**
+ * checks for ENV vars in form of NPMCI_SSHKEY_* and deploys any found ones
+ */
 export let ssh = () => {
     let done = plugins.q.defer();
-    sshInstance = new plugins.smartssh.SshInstance();
+    sshInstance = new plugins.smartssh.SshInstance(); // init ssh instance
     plugins.smartparam.forEachMinimatch(process.env,"NPMCI_SSHKEY_*",evaluateSshEnv);
     if(!process.env.NPMTS_TEST){
-        sshInstance.writeToDisk()
+        sshInstance.writeToDisk();
     } else {
         plugins.beautylog.log("In test mode, so not storing SSH keys to disk!");
     };
@@ -17,6 +20,9 @@ export let ssh = () => {
     return done.promise;
 };
 
+/**
+ * gets called for each found SSH ENV Var and deploys it 
+ */
 let evaluateSshEnv = (sshkeyEnvVarArg) => {
     let resultArray = sshRegex.exec(sshkeyEnvVarArg);
     let sshKey = new plugins.smartssh.SshKey();
@@ -37,6 +43,9 @@ let evaluateSshEnv = (sshkeyEnvVarArg) => {
     sshInstance.addKey(sshKey);
 };
 
+/**
+ * checks if not undefined
+ */
 let notUndefined = (stringArg:string) => {
     return (stringArg && stringArg != "undefined" && stringArg != "##");
 }

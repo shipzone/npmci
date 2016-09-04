@@ -40,7 +40,7 @@ export let bash = (commandArg: string, retryArg = 2, bareArg = false) => {
             }
         }
     } else {
-        plugins.beautylog.log("ShellExec would be: " + commandArg.blue)
+        plugins.beautylog.log("ShellExec would be: " + commandArg)
     }
     return stdOut;
 }

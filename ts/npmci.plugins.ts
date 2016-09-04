@@ -11,6 +11,7 @@ export import shelljs = require("shelljs");
 export import smartcli = require("smartcli");
 export import smartfile = require("smartfile");
 export import smartparam = require("smartparam");
+export import smartsocket = require("smartsocket");
 export import smartssh = require("smartssh");
 export import smartstring = require("smartstring");
 export let through2 = require("through2");

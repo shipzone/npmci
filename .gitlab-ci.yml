@@ -4,6 +4,7 @@ stages:
 - test
 - release
 - trigger
+- page
 
 
 before_script:
@@ -55,3 +56,15 @@ trigger:
     - tags
   tags:
     - docker
+
+pages:
+  image: hosttoday/ht-docker-node:npmpage
+  stage: page
+  script:
+    - npmci command npmpage --host gitlab
+  only:
+    - tags
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - public
