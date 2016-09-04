@@ -4,6 +4,17 @@ import {bash} from "./npmci.bash";
 import * as env from "./npmci.env"
 import * as sshModule from "./npmci.ssh"
 
+
+//types
+
+/**
+ * defines possible prepare services
+ */
+export type TPrepService = "npm" | "docker" | "docker-gitlab" | "ssh";
+
+/**
+ * authenticates npm with token from env var
+ */
 let npm = function(){
     let done = plugins.q.defer();
     
@@ -22,6 +33,9 @@ let npm = function(){
     return done.promise;
 };
 
+/**
+ * logs in docker
+ */
 let docker = function(){
     let done = plugins.q.defer();
     env.setDockerRegistry("docker.io");
@@ -39,6 +53,9 @@ let docker = function(){
     return done.promise;
 }
 
+/**
+ * prepare docker for gitlab registry
+ */
 let dockerGitlab = function(){
     let done = plugins.q.defer();
     env.setDockerRegistry("registry.gitlab.com");
@@ -47,14 +64,21 @@ let dockerGitlab = function(){
     return done.promise;
 }
 
+/**
+ * prepare ssh
+ */
 let ssh = function(){
     let done = plugins.q.defer();
     sshModule.ssh()
         .then(done.resolve);
     return done.promise;
-}
+};
 
-export let prepare = function(serviceArg:string){
+/**
+ * the main exported prepare function
+ * @param servieArg describes the service to prepare
+ */
+export let prepare = function(serviceArg:TPrepService){
     switch (serviceArg) {
         case "npm":
             return npm();

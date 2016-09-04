@@ -4,9 +4,9 @@ import * as plugins from "./npmci.plugins";
 /**
  * type of supported services
  */
-export declare type registryService = "npm" | "docker";
+export declare type TPubService = "npm" | "docker";
 /**
  * the main exported publish function.
- * @param registryServiceArg the serviceArg
+ * @param pubServiceArg references targeted service to publish to
  */
-export declare let publish: (registryServiceArg?: registryService) => plugins.q.Promise<{}>;
+export declare let publish: (pubServiceArg?: TPubService) => plugins.q.Promise<{}>;

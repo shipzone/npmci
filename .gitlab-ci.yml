@@ -61,6 +61,7 @@ pages:
   image: hosttoday/ht-docker-node:npmpage
   stage: page
   script:
+    - npmci command npmts
     - npmci command npmpage --host gitlab
   only:
     - tags

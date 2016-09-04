@@ -6,6 +6,7 @@ npmci is your friend when it comes to handling npm packages during CI builds. It
 [![git](https://push.rocks/assets/repo-button-git.svg)](https://gitlab.com/pushrocks/npmci)
 [![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/npmci)
 [![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/npmci/docs)
+[![docs](https://push.rocks/assets/repo-button-api.svg)](https://pushrocks.gitlab.io/npmci/api)
 
 ## Status for master
 [![build status](https://gitlab.com/pushrocks/npmci/badges/master/build.svg)](https://gitlab.com/pushrocks/npmci/commits/master)

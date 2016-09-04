@@ -8,14 +8,14 @@ import * as NpmciBuildDocker from "./npmci.build.docker"
 /**
  * type of supported services
  */
-export type registryService = "npm" | "docker";
+export type TPubService = "npm" | "docker";
 
 /**
  * the main exported publish function.
- * @param registryServiceArg the serviceArg 
+ * @param pubServiceArg references targeted service to publish to 
  */
-export let publish = (registryServiceArg:registryService = "npm") => {
-    switch (registryServiceArg){
+export let publish = (pubServiceArg:TPubService = "npm") => {
+    switch (pubServiceArg){
         case "npm": 
             return publishNpm();
         case "docker":
@@ -24,7 +24,7 @@ export let publish = (registryServiceArg:registryService = "npm") => {
 };
 
 /**
- * tries to publish project at cwd to npm
+ * tries to publish current cwd to NPM registry
  */
 let publishNpm  = function(){
     let done = plugins.q.defer();
