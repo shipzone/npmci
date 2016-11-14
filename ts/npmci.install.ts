@@ -8,9 +8,9 @@ export let install = (versionArg) => {
     plugins.beautylog.log(`now installing node version ${versionArg}`);
     let version: string;
     if (versionArg == "stable") {
-        version = "6.6.0";
+        version = "stable";
     } else if (versionArg == "lts") {
-        version = "6.6.0";
+        version = "--lts";
     } else if (versionArg == "legacy") {
         version = "6.6.0"
     } else {
