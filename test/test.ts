@@ -89,7 +89,8 @@ describe('NPMCI',function(){
                     done()
                 })
         })
-    });
+    })
+
     describe('npmci prepare ssh',function(){
         it('should pick up SSH keys',function(done){
             NpmciSsh.ssh()
