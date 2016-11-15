@@ -1,4 +1,4 @@
-image: hosttoday/ht-docker-node:stable
+image: node:latest
 
 stages:
 - test
@@ -8,7 +8,6 @@ stages:
 
 
 before_script:
-  - npm uninstall -g npmci
   - npm install -g npmci
 
 testLTS:
