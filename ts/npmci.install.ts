@@ -12,7 +12,7 @@ export let install = (versionArg) => {
     } else if (versionArg === 'lts') {
         version = '6'
     } else if (versionArg === 'legacy') {
-        version = '4'
+        version = '6'
     } else {
         version = versionArg
     };
