@@ -8,7 +8,7 @@ stages:
 
 
 before_script:
-  - npm install npmci -s -g
+  - npm install npmci -q -g
 
 testLTS:
   stage: test
