@@ -1,6 +1,6 @@
 {
   "name": "npmci",
-  "version": "2.3.20",
+  "version": "2.3.21",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
