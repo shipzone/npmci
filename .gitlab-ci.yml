@@ -57,10 +57,10 @@ trigger:
     - docker
 
 pages:
-  image: hosttoday/ht-docker-node:npmpage
   stage: page
   script:
     - npmci test stable
+    - npmci command npm install -g -q npmpage
     - npmci command npmpage --host gitlab
   only:
     - tags
