@@ -1,6 +1,6 @@
 /// <reference types="q" />
-import "typings-global";
-import * as plugins from "./npmci.plugins";
+import 'typings-global';
+import * as plugins from './npmci.plugins';
 /**
  * checks for ENV vars in form of NPMCI_SSHKEY_* and deploys any found ones
  */

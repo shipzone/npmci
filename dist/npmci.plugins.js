@@ -1,13 +1,14 @@
 "use strict";
 require("typings-global");
 exports.beautylog = require("beautylog");
-exports.gulp = require("gulp");
+exports.gulp = require('gulp');
 exports.gulpFunction = require("gulp-function");
 exports.lodash = require("lodash");
+exports.npmextra = require("npmextra");
 exports.path = require("path");
 exports.projectinfo = require("projectinfo");
 exports.q = require("q");
-exports.request = require("request");
+exports.request = require('request');
 exports.shelljs = require("shelljs");
 exports.smartcli = require("smartcli");
 exports.smartfile = require("smartfile");
@@ -16,4 +17,4 @@ exports.smartsocket = require("smartsocket");
 exports.smartssh = require("smartssh");
 exports.smartstring = require("smartstring");
 exports.through2 = require("through2");
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucGx1Z2lucy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnBsdWdpbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDBCQUF3QjtBQUN4Qix5Q0FBK0M7QUFDcEMsUUFBQSxJQUFJLEdBQUcsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0FBQ3ZCLFFBQUEsWUFBWSxHQUFHLE9BQU8sQ0FBQyxlQUFlLENBQUMsQ0FBQztBQUN4QyxRQUFBLE1BQU0sR0FBRyxPQUFPLENBQUMsUUFBUSxDQUFDLENBQUM7QUFDdEMsK0JBQXFDO0FBQ3JDLDZDQUFtRDtBQUNuRCx5QkFBK0I7QUFDcEIsUUFBQSxPQUFPLEdBQUcsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDO0FBQ3hDLHFDQUEyQztBQUMzQyx1Q0FBNkM7QUFDN0MseUNBQStDO0FBQy9DLDJDQUFpRDtBQUNqRCw2Q0FBbUQ7QUFDbkQsdUNBQTZDO0FBQzdDLDZDQUFtRDtBQUN4QyxRQUFBLFFBQVEsR0FBRyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucGx1Z2lucy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnBsdWdpbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDBCQUF1QjtBQUN2Qix5Q0FBOEM7QUFDbkMsUUFBQSxJQUFJLEdBQUcsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFBO0FBQ2pDLGdEQUFxRDtBQUNyRCxtQ0FBd0M7QUFDeEMsdUNBQTRDO0FBQzVDLCtCQUFvQztBQUNwQyw2Q0FBa0Q7QUFDbEQseUJBQThCO0FBQ25CLFFBQUEsT0FBTyxHQUFHLE9BQU8sQ0FBQyxTQUFTLENBQUMsQ0FBQTtBQUN2QyxxQ0FBMEM7QUFDMUMsdUNBQTRDO0FBQzVDLHlDQUE4QztBQUM5QywyQ0FBZ0Q7QUFDaEQsNkNBQWtEO0FBQ2xELHVDQUE0QztBQUM1Qyw2Q0FBa0Q7QUFDbEQsdUNBQTRDIn0=

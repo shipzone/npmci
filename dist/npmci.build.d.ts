@@ -1,10 +1,10 @@
 /// <reference types="q" />
-import "typings-global";
-import * as plugins from "./npmci.plugins";
+import 'typings-global';
+import * as plugins from './npmci.plugins';
 /**
  * defines possible build services
  */
-export declare type TBuildService = "docker";
+export declare type TBuildService = 'docker';
 /**
  * builds for a specific service
  */

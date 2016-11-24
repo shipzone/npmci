@@ -1,6 +1,6 @@
 /// <reference types="q" />
 /// <reference types="node" />
-import * as plugins from "./npmci.plugins";
+import * as plugins from './npmci.plugins';
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
  */

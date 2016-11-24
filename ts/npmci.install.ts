@@ -1,8 +1,8 @@
-import 'typings-global';
-import * as plugins from './npmci.plugins';
-import { bash } from './npmci.bash';
+import 'typings-global'
+import * as plugins from './npmci.plugins'
+import * as configModule from './npmci.config'
+import { bash } from './npmci.bash'
 import { nvmAvailable } from './npmci.bash'
-
 export let install = (versionArg) => {
     let done = plugins.q.defer()
     plugins.beautylog.log(`now installing node version ${versionArg}`)
@@ -24,6 +24,15 @@ export let install = (versionArg) => {
     };
     bash('node -v')
     bash('npm -v')
-    done.resolve()
+
+    // lets look for further config
+    configModule.getConfig()
+        .then(config => {
+            for (let npmTool of config.globalNpmTools) {
+                plugins.beautylog.info(`globally installing ${npmTool} from npm`)
+                bash(`npm install --loglevel=silent  -g ${npmTool}`)
+            }
+            done.resolve()
+        })
     return done.promise
 }

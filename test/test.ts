@@ -1,7 +1,6 @@
 import 'typings-test'
 import * as should from 'should'
-import path = require('path')
-import * as beautylog from 'beautylog'
+import * as path from 'path'
 
 // set up environment
 process.env.CI_BUILD_REPO = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git'
@@ -12,7 +11,6 @@ process.cwd = () => {
 }
 
 // require NPMCI files
-import npmci = require('../dist/index')
 import NpmciBuildDocker = require('../dist/npmci.build.docker')
 import NpmciPublish = require('../dist/npmci.publish')
 import NpmciTest = require('../dist/npmci.test')
@@ -44,7 +42,6 @@ describe('NPMCI',function(){
         it('should sort an array of Dockerfiles',function(done){
             NpmciBuildDocker.sortDockerfiles(sortableArray)
                 .then(function(sortedArrayArg: NpmciBuildDocker.Dockerfile[]){
-                    beautylog.success('final result')
                     console.log(sortedArrayArg)
                     done()
                 })
