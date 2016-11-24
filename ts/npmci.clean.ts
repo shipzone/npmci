@@ -1,4 +1,3 @@
-import "typings-global";
 import * as plugins from "./npmci.plugins";
 import * as paths from "./npmci.paths"
 

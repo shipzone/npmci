@@ -1,4 +1,3 @@
-import 'typings-global'
 import * as plugins from './npmci.plugins'
 import * as configModule from './npmci.config'
 import { bash } from './npmci.bash'

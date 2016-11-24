@@ -11,6 +11,7 @@ process.cwd = () => {
 }
 
 // require NPMCI files
+import npmci = require('../dist/index')
 import NpmciBuildDocker = require('../dist/npmci.build.docker')
 import NpmciPublish = require('../dist/npmci.publish')
 import NpmciTest = require('../dist/npmci.test')

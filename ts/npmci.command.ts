@@ -1,4 +1,3 @@
-import "typings-global";
 import * as plugins from "./npmci.plugins";
 import {bash} from "./npmci.bash";
 

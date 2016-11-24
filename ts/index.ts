@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-import 'typings-global'
 import * as plugins from './npmci.plugins'
 import * as paths from './npmci.paths'
 let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot)

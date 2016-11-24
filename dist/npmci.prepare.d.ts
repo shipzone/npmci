@@ -1,5 +1,4 @@
 /// <reference types="q" />
-import 'typings-global';
 import * as plugins from './npmci.plugins';
 /**
  * defines possible prepare services

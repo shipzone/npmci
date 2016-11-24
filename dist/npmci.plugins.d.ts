@@ -1,4 +1,3 @@
-import 'typings-global';
 export import beautylog = require('beautylog');
 export declare let gulp: any;
 export import gulpFunction = require('gulp-function');

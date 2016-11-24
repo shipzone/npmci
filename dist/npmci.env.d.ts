@@ -1,6 +1,5 @@
-import "typings-global";
-import { GitRepo } from "smartstring";
-import { Dockerfile } from "./npmci.build.docker";
+import { GitRepo } from 'smartstring';
+import { Dockerfile } from './npmci.build.docker';
 export declare let repo: GitRepo;
 export declare let buildStage: string;
 export declare let dockerRegistry: string;

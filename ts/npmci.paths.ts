@@ -1,4 +1,3 @@
-import 'typings-global'
 import * as plugins from './npmci.plugins'
 
 export let cwd = process.cwd()
