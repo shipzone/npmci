@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "(npmts) && (npm run testVersion)",
-    "testVersion": "node dist/index.js -v"
+    "testVersion": "(cd test/assets/ && node ../../dist/index.js -v)"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://gitlab.com/pushrocks/npmci#README",
   "devDependencies": {
+    "@types/should": "^8.1.30",
     "npmts-g": "^5.2.8",
     "should": "^11.1.1",
     "typings-test": "^1.0.3"

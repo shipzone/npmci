@@ -1,5 +1,5 @@
 /// <reference types="q" />
-import * as plugins from "./npmci.plugins";
+import * as plugins from './npmci.plugins';
 /**
  * cleans npmci config files
  */
