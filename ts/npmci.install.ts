@@ -34,7 +34,7 @@ export let install = (versionArg) => {
                     plugins.beautylog.log(`Tool ${npmTool} is available`)
                 } else {
                     plugins.beautylog.info(`globally installing ${npmTool} from npm`)
-                    bash(`npm install -q -g ${npmTool}`)
+                    bash(`npm install ${npmTool} -q -g`)
                 }
             }
             done.resolve()
