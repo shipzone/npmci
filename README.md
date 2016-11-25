@@ -63,3 +63,4 @@ npmci publish docker
 npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domain|id|token|ref|name  
 ```
 
+[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
