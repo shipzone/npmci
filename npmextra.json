@@ -1,7 +1,8 @@
 {
     "npmts":{
         "mode":"default",
-        "coverageTreshold": "70"
+        "coverageTreshold": "70",
+        "cli": true
     },
     "npmdocker":{
         "baseImage":"hosttoday/ht-docker-node:npmts"
