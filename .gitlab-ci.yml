@@ -8,7 +8,7 @@ stages:
 
 
 before_script:
-  - npm install npmci --loglevel=silent -g
+  - npm install npmci -q -g
 
 testLTS:
   stage: test

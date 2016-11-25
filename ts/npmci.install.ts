@@ -29,7 +29,7 @@ export let install = (versionArg) => {
         .then(config => {
             for (let npmTool of config.globalNpmTools) {
                 plugins.beautylog.info(`globally installing ${npmTool} from npm`)
-                bash(`npm install --loglevel=silent  -g ${npmTool}`)
+                bash(`npm install -q -g ${npmTool}`)
             }
             done.resolve()
         })
