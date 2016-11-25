@@ -13,7 +13,7 @@ let checkNvm = () => {
 }
 checkNvm()
 
-export let bash = (commandArg: string, retryArg = 2, bareArg = false) => {
+export let bash = (commandArg: string, retryArg = 2, bareArg = false): string => {
     let exitCode: number
     let stdOut: string
     let execResult

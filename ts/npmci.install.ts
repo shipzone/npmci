@@ -28,8 +28,14 @@ export let install = (versionArg) => {
     configModule.getConfig()
         .then(config => {
             for (let npmTool of config.globalNpmTools) {
-                plugins.beautylog.info(`globally installing ${npmTool} from npm`)
-                bash(`npm install -q -g ${npmTool}`)
+                let whichOutput = bash(`which ${npmTool}`)
+                let toolAvailable: boolean = !(/not found/.test(whichOutput))
+                if (toolAvailable) {
+                    plugins.beautylog.log(`Tool ${npmTool} is available`)
+                } else {
+                    plugins.beautylog.info(`globally installing ${npmTool} from npm`)
+                    bash(`npm install -q -g ${npmTool}`)
+                }
             }
             done.resolve()
         })

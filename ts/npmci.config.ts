@@ -8,7 +8,6 @@ export interface INpmciOptions {
 }
 
 export let getConfig = () => {
-    console.log('getting config')
     let done = q.defer<INpmciOptions>()
     let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd)
     let defaultConfig: INpmciOptions = {
