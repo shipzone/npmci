@@ -13,7 +13,10 @@ let checkNvm = () => {
 }
 checkNvm()
 
-export let bash = (commandArg: string, retryArg = 2, bareArg = false): string => {
+/**
+ * bash() allows using bash with nvm in path
+ */
+export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = false): string => {
     let exitCode: number
     let stdOut: string
     let execResult
@@ -28,10 +31,12 @@ export let bash = (commandArg: string, retryArg = 2, bareArg = false): string =>
             }
             exitCode = execResult.code
             stdOut = execResult.stdout
-            if (exitCode !== 0 && i === retryArg) {
+
+            // determine how bash reacts to error and success
+            if (exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted
                 process.exit(1)
-            } else if (exitCode === 0) {
-                i = retryArg + 1 // if everything works out ok retrials are not wanted
+            } else if (exitCode === 0 || retryArg === -1) { // everything went fine, or no error wanted
+                i = retryArg + 1 // retry +1 breaks for loop, if everything works out ok retrials are not wanted
             } else {
                 plugins.beautylog.warn('Something went wrong! Exit Code: ' + exitCode.toString())
                 plugins.beautylog.info('Retry ' + (i + 1).toString() + ' of ' + retryArg.toString())
@@ -43,6 +48,16 @@ export let bash = (commandArg: string, retryArg = 2, bareArg = false): string =>
     return stdOut
 }
 
-export let bashBare = (commandArg, retryArg = 2) => {
+/**
+ * bashBare allows usage of bash without sourcing any files like nvm
+ */
+export let bashBare = (commandArg: string, retryArg: number = 2) => {
     return bash(commandArg, retryArg, true)
+}
+
+/**
+ * bashNoError allows executing stuff without throwing an error
+ */
+export let bashNoError = (commandArg: string) => {
+    return bash(commandArg,-1)
 }

@@ -1,6 +1,6 @@
 import * as plugins from './npmci.plugins'
 import * as configModule from './npmci.config'
-import { bash } from './npmci.bash'
+import { bash, bashNoError } from './npmci.bash'
 import { nvmAvailable } from './npmci.bash'
 export let install = (versionArg) => {
     let done = plugins.q.defer()
@@ -29,7 +29,7 @@ export let install = (versionArg) => {
         .then(configArg => {
             for (let npmTool of configArg.globalNpmTools) {
                 plugins.beautylog.info(`Checking for global "${npmTool}"`)
-                let whichOutput = bash(`which ${npmTool}`)
+                let whichOutput = bashNoError(`which ${npmTool}`)
                 let toolAvailable: boolean = !(/not found/.test(whichOutput))
                 if (toolAvailable) {
                     plugins.beautylog.log(`Tool ${npmTool} is available`)

@@ -1,3 +1,13 @@
 export declare let nvmAvailable: boolean;
+/**
+ * bash() allows using bash with nvm in path
+ */
 export declare let bash: (commandArg: string, retryArg?: number, bareArg?: boolean) => string;
-export declare let bashBare: (commandArg: any, retryArg?: number) => string;
+/**
+ * bashBare allows usage of bash without sourcing any files like nvm
+ */
+export declare let bashBare: (commandArg: string, retryArg?: number) => string;
+/**
+ * bashNoError allows executing stuff without throwing an error
+ */
+export declare let bashNoError: (commandArg: string) => string;
