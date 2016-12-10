@@ -23,10 +23,10 @@ export let install = (versionArg) => {
     };
     bash('node -v')
     bash('npm -v')
-
     // lets look for further config
     configModule.getConfig()
         .then(configArg => {
+            plugins.beautylog.log('Now checking for needed global npm tools...')
             for (let npmTool of configArg.globalNpmTools) {
                 plugins.beautylog.info(`Checking for global "${npmTool}"`)
                 let whichOutput = bashNoError(`which ${npmTool}`)
@@ -38,6 +38,7 @@ export let install = (versionArg) => {
                     bash(`npm install ${npmTool} -q -g`)
                 }
             }
+            plugins.beautylog.success('all global npm tools specified in npmextra.json are now available!')
             done.resolve()
         })
     return done.promise
