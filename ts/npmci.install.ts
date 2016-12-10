@@ -26,8 +26,9 @@ export let install = (versionArg) => {
 
     // lets look for further config
     configModule.getConfig()
-        .then(config => {
-            for (let npmTool of config.globalNpmTools) {
+        .then(configArg => {
+            for (let npmTool of configArg.globalNpmTools) {
+                plugins.beautylog.info(`Checking for global "${npmTool}"`)
                 let whichOutput = bash(`which ${npmTool}`)
                 let toolAvailable: boolean = !(/not found/.test(whichOutput))
                 if (toolAvailable) {
