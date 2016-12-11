@@ -50,8 +50,8 @@ npmci prepare docker-gitlab # will authenticate docker for gitlab container regi
 
 # build containers
 npmci build docker # will build containers
-## all Dockerfiles named DOckerfile* are picked up.
-## specify tags lake this Dockerfile_[tag]
+## all Dockerfiles named Dockerfile* are picked up.
+## specify tags like this Dockerfile_[tag]
 ## uploads all built images as [username]/[reponame]:[tag]_test to GitLab
 ## then test in next step with "npmci test docker"
 
@@ -75,7 +75,7 @@ To configure npmci create a `npmextra.json` file at the root of your project
             "npm-check-updates",
             "protractor",
             "npmts",
-            "gizone"
+            "gitzone"
         ]
     }
 }
@@ -85,6 +85,6 @@ To configure npmci create a `npmextra.json` file at the root of your project
 
 setting | example | description
 --- | --- | ---
-globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and install them if not installed from npm. 
+globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and (if not yet present) install them from npm. 
 
 [![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
