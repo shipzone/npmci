@@ -71,7 +71,7 @@ To configure npmci create a `npmextra.json` file at the root of your project
 ```json
 {
     "npmci": {
-        globalNpmTools: [
+        "globalNpmTools": [
             "npm-check-updates",
             "protractor",
             "npmts",
