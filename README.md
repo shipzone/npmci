@@ -63,4 +63,28 @@ npmci publish docker
 npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domain|id|token|ref|name  
 ```
 
+## Configuration
+npmci supports the use of npmextra.
+
+To configure npmci create a `npmextra.json` file at the root of your project
+
+```json
+{
+    "npmci": {
+        globalNpmTools: [
+            "npm-check-updates",
+            "protractor",
+            "npmts",
+            "gizone"
+        ]
+    }
+}
+```
+
+**Available options**
+
+setting | example | description
+--- | --- | ---
+globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and install them if not installed from npm. 
+
 [![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
