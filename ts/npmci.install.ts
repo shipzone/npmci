@@ -30,7 +30,8 @@ export let install = (versionArg) => {
             for (let npmTool of configArg.globalNpmTools) {
                 plugins.beautylog.info(`Checking for global "${npmTool}"`)
                 let whichOutput = bashNoError(`which ${npmTool}`)
-                let toolAvailable: boolean = !(/not found/.test(whichOutput))
+                console.log(whichOutput)
+                let toolAvailable: boolean = !(/not\sfound/.test(whichOutput))
                 if (toolAvailable) {
                     plugins.beautylog.log(`Tool ${npmTool} is available`)
                 } else {
