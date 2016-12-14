@@ -15,11 +15,18 @@ checkNvm()
 
 /**
  * bash() allows using bash with nvm in path
+ * @param commandArg - The command to execute
+ * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
 export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = false): string => {
     let exitCode: number
     let stdOut: string
     let execResult
+    let failOnError: boolean = true;
+    if(retryArg === -1) {
+        failOnError = false
+        retryArg = 0
+    }
     if (!process.env.NPMTS_TEST) { // NPMTS_TEST is used during testing
         for (let i = 0; i <= retryArg; i++) {
             if (!bareArg) {
@@ -34,8 +41,10 @@ export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = 
 
             // determine how bash reacts to error and success
             if (exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted
-                process.exit(1)
-            } else if (exitCode === 0 || retryArg === -1) { // everything went fine, or no error wanted
+                if (failOnError) {
+                    process.exit(1)
+                }
+            } else if (exitCode === 0) { // everything went fine, or no error wanted
                 i = retryArg + 1 // retry +1 breaks for loop, if everything works out ok retrials are not wanted
             } else {
                 plugins.beautylog.warn('Something went wrong! Exit Code: ' + exitCode.toString())
