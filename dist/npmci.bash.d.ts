@@ -1,6 +1,8 @@
 export declare let nvmAvailable: boolean;
 /**
  * bash() allows using bash with nvm in path
+ * @param commandArg - The command to execute
+ * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
 export declare let bash: (commandArg: string, retryArg?: number, bareArg?: boolean) => string;
 /**
