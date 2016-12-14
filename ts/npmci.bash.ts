@@ -22,8 +22,8 @@ export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = 
     let exitCode: number
     let stdOut: string
     let execResult
-    let failOnError: boolean = true;
-    if(retryArg === -1) {
+    let failOnError: boolean = true
+    if (retryArg === -1) {
         failOnError = false
         retryArg = 0
     }
