@@ -67,6 +67,6 @@ export let bashBare = (commandArg: string, retryArg: number = 2) => {
 /**
  * bashNoError allows executing stuff without throwing an error
  */
-export let bashNoError = (commandArg: string) => {
-    return bash(commandArg,-1)
+export let bashNoError = (commandArg: string): string => {
+    return bash(commandArg, -1)
 }
