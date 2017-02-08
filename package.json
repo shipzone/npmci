@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/pushrocks/npmci.git"
+    "url": "git+ssh://git@gitlab.com/gitzone/npmci.git"
   },
   "author": "Lossless GmbH",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/pushrocks/npmci/issues"
+    "url": "https://gitlab.com/gitzone/npmci/issues"
   },
-  "homepage": "https://gitlab.com/pushrocks/npmci#README",
+  "homepage": "https://gitlab.com/gitzone/npmci#README",
   "devDependencies": {
     "@types/should": "^8.1.30",
     "npmts-g": "^5.2.8",
