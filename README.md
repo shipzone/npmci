@@ -2,17 +2,17 @@
 npmci is your friend when it comes to handling npm packages during CI builds. It is optimized for GitLab CI
 
 ## Availabililty
-[![npm](https://push.rocks/assets/repo-button-npm.svg)](https://www.npmjs.com/package/npmci)
-[![git](https://push.rocks/assets/repo-button-git.svg)](https://gitlab.com/pushrocks/npmci)
-[![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/npmci)
-[![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/npmci/docs)
+[![npm](https://gitzone.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/npmci)
+[![git](https://gitzone.gitlab.io/assets/repo-button-git.svg)](https://gitlab.com/gitzone/npmci)
+[![git](https://gitzone.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/gitzone/npmci)
+[![docs](https://gitzone.gitlab.io/assets/repo-button-docs.svg)](https://gitzone.gitlab.io/npmci/docs)
 
 ## Status for master
-[![build status](https://gitlab.com/pushrocks/npmci/badges/master/build.svg)](https://gitlab.com/pushrocks/npmci/commits/master)
-[![coverage report](https://gitlab.com/pushrocks/npmci/badges/master/coverage.svg)](https://gitlab.com/pushrocks/npmci/commits/master)
-[![Dependency Status](https://david-dm.org/pushrocks/npmci.svg)](https://david-dm.org/pushrocks/npmci)
-[![bitHound Dependencies](https://www.bithound.io/github/pushrocks/npmci/badges/dependencies.svg)](https://www.bithound.io/github/pushrocks/npmci/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/pushrocks/npmci/badges/code.svg)](https://www.bithound.io/github/pushrocks/npmci)
+[![build status](https://gitlab.com/gitzone/npmci/badges/master/build.svg)](https://gitlab.com/gitzone/npmci/commits/master)
+[![coverage report](https://gitlab.com/gitzone/npmci/badges/master/coverage.svg)](https://gitlab.com/gitzone/npmci/commits/master)
+[![Dependency Status](https://david-dm.org/gitzonetools/npmci.svg)](https://david-dm.org/gitzonetools/npmci)
+[![bitHound Dependencies](https://www.bithound.io/github/gitzonetools/npmci/badges/dependencies.svg)](https://www.bithound.io/github/gitzonetools/npmci/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/gitzonetools/npmci/badges/code.svg)](https://www.bithound.io/github/gitzonetools/npmci)
 [![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
 [![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
 
@@ -87,4 +87,4 @@ setting | example | description
 --- | --- | ---
 globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and (if not yet present) install them from npm. 
 
-[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
+[![npm](https://gitzone.gitlab.io/assets/repo-footer.svg)](https://push.rocks)
