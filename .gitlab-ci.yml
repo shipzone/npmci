@@ -14,7 +14,7 @@ testLTS:
   stage: test
   script:
     - npmci install lts
-    - npmci command npm install -g npmts
+    - npmci command npm install -g -q npmts
     - npmci test lts
   tags:
     - docker
@@ -23,7 +23,7 @@ testSTABLE:
   stage: test
   script:
     - npmci install stable
-    - npmci command npm install -g npmts
+    - npmci command npm install -g -q npmts
     - npmci test stable
   tags:
     - docker
@@ -32,7 +32,7 @@ testLEGACY:
   stage: test
   script:
     - npmci install legacy
-    - npmci command npm install -g npmts
+    - npmci command npm install -g -q npmts
     - npmci test legacy
   tags:
     - docker
