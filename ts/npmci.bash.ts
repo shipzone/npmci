@@ -19,7 +19,7 @@ checkNvm()
  * @param commandArg - The command to execute
  * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
-export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = false): string => {
+export let bash = async (commandArg: string, retryArg: number = 2, bareArg: boolean = false): Promise<string> => {
   let exitCode: number
   let stdOut: string
   let execResult
@@ -43,6 +43,7 @@ export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = 
       // determine how bash reacts to error and success
       if (exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted
         if (failOnError) {
+          plugins.beautylog.error('something went wrong and retries are exhausted')
           process.exit(1)
         }
       } else if (exitCode === 0) { // everything went fine, or no error wanted
@@ -55,19 +56,18 @@ export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = 
   } else {
     plugins.beautylog.log('ShellExec would be: ' + commandArg)
   }
-  return stdOut
 }
 
 /**
  * bashBare allows usage of bash without sourcing any files like nvm
  */
-export let bashBare = (commandArg: string, retryArg: number = 2) => {
+export let bashBare = (commandArg: string, retryArg: number = 2): Promise<string> => {
   return bash(commandArg, retryArg, true)
 }
 
 /**
  * bashNoError allows executing stuff without throwing an error
  */
-export let bashNoError = (commandArg: string): string => {
+export let bashNoError = (commandArg: string): Promise<string> => {
   return bash(commandArg, -1)
 }

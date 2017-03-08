@@ -30,7 +30,6 @@
   "dependencies": {
     "@types/lodash": "^4.14.52",
     "@types/node": "^7.0.5",
-    "@types/q": "0.x.x",
     "@types/request": "0.x.x",
     "@types/shelljs": "^0.7.0",
     "@types/through2": "^2.0.32",
@@ -40,7 +39,6 @@
     "lodash": "^4.17.4",
     "npmextra": "^2.0.3",
     "projectinfo": "^3.0.1",
-    "q": "^1.4.1",
     "request": "^2.79.0",
     "shelljs": "^0.7.6",
     "smartcli": "^2.0.1",

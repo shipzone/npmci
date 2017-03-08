@@ -25,7 +25,7 @@ let smartsocketClientConstructorOptions = {
 /**
  * the main run function to submit a service to a servezone
  */
-export let run = (configArg) => {
+export let run = async (configArg) => {
     new plugins.smartsocket.SmartsocketClient(
         smartsocketClientConstructorOptions
     )
