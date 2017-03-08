@@ -19,8 +19,7 @@ checkNvm()
  * @param commandArg - The command to execute
  * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
-export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = false): Promise<string> => {
-  let done = plugins.q.defer<string>()
+export let bash = async (commandArg: string, retryArg: number = 2, bareArg: boolean = false): Promise<string> => {
   let exitCode: number
   let stdOut: string
   let execResult
@@ -57,7 +56,6 @@ export let bash = (commandArg: string, retryArg: number = 2, bareArg: boolean = 
   } else {
     plugins.beautylog.log('ShellExec would be: ' + commandArg)
   }
-  return done.promise
 }
 
 /**

@@ -14,12 +14,12 @@ export let test = async (versionArg): Promise<void> => {
   }
 }
 
-let npmDependencies = async () => {
+let npmDependencies = async ():Promise <void> => {
   plugins.beautylog.info('now installing dependencies:')
   await bash('npm install')
 }
 
-let npmTest = async () => {
+let npmTest = async (): Promise<void> => {
   plugins.beautylog.info('now starting tests:')
   await bash('npm test')
 }
