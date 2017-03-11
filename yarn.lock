@@ -2286,9 +2286,9 @@ smartrequest@^1.0.4:
     smartq "^1.1.0"
     typings-global "^1.0.14"
 
-smartshell@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/smartshell/-/smartshell-1.0.4.tgz#2d73a7b5fea2638d061589779cff5c400b21468a"
+smartshell@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/smartshell/-/smartshell-1.0.5.tgz#6ea0a891b9a71347fb562f29144e9a06d3af008e"
   dependencies:
     "@types/shelljs" "^0.6.0"
     shelljs "^0.7.6"
