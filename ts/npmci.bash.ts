@@ -83,13 +83,13 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
 /**
  * bashBare allows usage of bash without sourcing any files like nvm
  */
-export let bashBare = (commandArg: string, retryArg: number = 2): Promise<string> => {
-  return bash(commandArg, retryArg, true)
+export let bashBare = async(commandArg: string, retryArg: number = 2): Promise<string> => {
+  return await bash(commandArg, retryArg, true)
 }
 
 /**
  * bashNoError allows executing stuff without throwing an error
  */
-export let bashNoError = (commandArg: string): Promise<string> => {
-  return bash(commandArg, -1)
+export let bashNoError = async (commandArg: string): Promise<string> => {
+  return await bash(commandArg, -1)
 }

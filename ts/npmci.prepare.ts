@@ -42,7 +42,7 @@ let docker = async () => {
   let dockerRegexResultArray = dockerRegex.exec(process.env.NPMCI_LOGIN_DOCKER)
   let username = dockerRegexResultArray[1]
   let password = dockerRegexResultArray[2]
-  plugins.shelljs.exec('docker login -u ' + username + ' -p ' + password)
+  await bash('docker login -u ' + username + ' -p ' + password)
   return
 }
 
