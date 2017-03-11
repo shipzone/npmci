@@ -1,5 +1,5 @@
 import * as plugins from './npmci.plugins'
-import { bash } from './npmci.bash'
+import { bash, yarnAvailable } from './npmci.bash'
 import { install } from './npmci.install'
 import * as env from './npmci.env'
 import * as NpmciBuildDocker from './npmci.build.docker'
@@ -14,9 +14,13 @@ export let test = async (versionArg): Promise<void> => {
   }
 }
 
-let npmDependencies = async ():Promise <void> => {
+let npmDependencies = async (): Promise<void> => {
   plugins.beautylog.info('now installing dependencies:')
-  await bash('npm install')
+  if (await yarnAvailable.promise) {
+    await bash('yarn install')
+  } else {
+    await bash('npm install')
+  }
 }
 
 let npmTest = async (): Promise<void> => {
