@@ -42,7 +42,7 @@ export let install = async (versionArg) => {
           plugins.beautylog.log(`Tool ${npmTool} is available`)
         } else {
           plugins.beautylog.info(`globally installing ${npmTool} from npm`)
-          if (await yarnAvailable) {
+          if (await yarnAvailable.promise) {
             await bash(`yarn global add ${npmTool}`)
           } else {
             await bash(`npm install ${npmTool} -q -g`)
