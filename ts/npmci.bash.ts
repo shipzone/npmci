@@ -72,6 +72,7 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
     }
   } else {
     plugins.beautylog.log('ShellExec would be: ' + commandArg)
+    await plugins.smartdelay.delayFor(100)
     execResult = {
       exitCode: 0,
       stdout: 'testOutput'
@@ -83,7 +84,7 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
 /**
  * bashBare allows usage of bash without sourcing any files like nvm
  */
-export let bashBare = async(commandArg: string, retryArg: number = 2): Promise<string> => {
+export let bashBare = async (commandArg: string, retryArg: number = 2): Promise<string> => {
   return await bash(commandArg, retryArg, true)
 }
 

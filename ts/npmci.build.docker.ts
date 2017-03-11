@@ -86,9 +86,9 @@ export let mapDockerfiles = async (sortedArray: Dockerfile[]): Promise<Dockerfil
  * builds the correspoding real docker image for each Dockerfile class instance
  */
 export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
-  sortedArrayArg.forEach(async function (dockerfileArg) {
+  for (let dockerfileArg of sortedArrayArg) {
     await dockerfileArg.build()
-  })
+  }
   return sortedArrayArg
 }
 
@@ -96,9 +96,9 @@ export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
  * pushes the real Dockerfile images to a Docker registry
  */
 export let pushDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
-  sortedArrayArg.forEach(async (dockerfileArg) => {
+  for (let dockerfileArg of sortedArrayArg) {
     await dockerfileArg.push(NpmciEnv.buildStage)
-  })
+  }
   return sortedArrayArg
 }
 
@@ -107,9 +107,9 @@ export let pushDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
  * This is needed if building, testing, and publishing of Docker images is carried out in seperate CI stages.
  */
 export let pullDockerfileImages = async (sortableArrayArg: Dockerfile[], registryArg = 'registry.gitlab.com') => {
-  sortableArrayArg.forEach(async (dockerfileArg) => {
+  for (let dockerfileArg of sortableArrayArg) {
     await dockerfileArg.pull(registryArg)
-  })
+  }
   return sortableArrayArg
 }
 
@@ -118,9 +118,9 @@ export let pullDockerfileImages = async (sortableArrayArg: Dockerfile[], registr
  * @param sortedArrayArg Dockerfile[] that contains all Dockerfiles in cwd
  */
 export let testDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
-  sortedArrayArg.forEach(async (dockerfileArg) => {
+  for (let dockerfileArg of sortedArrayArg) {
     await dockerfileArg.test()
-  })
+  }
   return sortedArrayArg
 }
 
@@ -163,6 +163,7 @@ export class Dockerfile {
     plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag)
     await bashBare('docker build -t ' + this.buildTag + ' -f ' + this.filePath + ' .')
     NpmciEnv.dockerFilesBuilt.push(this)
+    return
   };
 
   /**

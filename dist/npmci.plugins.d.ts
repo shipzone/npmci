@@ -8,6 +8,7 @@ export import projectinfo = require('projectinfo');
 export import q = require('smartq');
 export declare let request: any;
 export import smartcli = require('smartcli');
+export import smartdelay = require('smartdelay');
 export import smartfile = require('smartfile');
 export import shelljs = require('shelljs');
 export import smartparam = require('smartparam');
