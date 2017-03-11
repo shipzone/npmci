@@ -1,7 +1,7 @@
 export import beautylog = require('beautylog');
 export declare let gulp: any;
 export import gulpFunction = require('gulp-function');
-export declare let lodash: any;
+export import lodash = require('lodash');
 export import npmextra = require('npmextra');
 export import path = require('path');
 export import projectinfo = require('projectinfo');
