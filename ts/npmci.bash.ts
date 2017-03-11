@@ -18,12 +18,12 @@ let checkNvm = async () => {
   if (
     (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
   ) {
-    npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh && `])
+    npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh`])
     nvmAvailable.resolve(true)
   } else if (
     (await plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
   ) {
-    npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh && `])
+    npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh`])
     nvmAvailable.resolve(true)
   } else {
     nvmAvailable.resolve(false)
