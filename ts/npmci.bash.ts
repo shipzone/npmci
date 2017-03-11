@@ -1,11 +1,13 @@
 import * as plugins from './npmci.plugins'
+import * as paths from './npmci.paths'
+
 import * as smartq from 'smartq'
 
 /**
  * wether nvm is available or not
  */
 export let nvmAvailable = smartq.defer<boolean>()
-
+export let yarnAvailable = smartq.defer<boolean>()
 /**
  * the smartshell instance for npmci
  */
@@ -14,7 +16,11 @@ let npmciSmartshell = new plugins.smartshell.Smartshell({
   sourceFilePaths: []
 })
 
-let checkNvm = async () => {
+/**
+ * check for tools.
+ */
+let checkToolsAvailable = async () => {
+  // check for nvm
   if (
     (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
   ) {
@@ -28,8 +34,17 @@ let checkNvm = async () => {
   } else {
     nvmAvailable.resolve(false)
   };
+
+  // check for yarn
+  await plugins.smartshell.which('yarn').then(
+    () => {
+      plugins.smartshell.exec(`yarn config set cache-folder ${plugins.path.join(paths.cwd,'.yarn')}`)
+      yarnAvailable.resolve(true)
+    },
+    () => { yarnAvailable.resolve(false) }
+  )
 }
-checkNvm()
+checkToolsAvailable()
 
 
 

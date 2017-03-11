@@ -3,6 +3,7 @@ import * as plugins from './npmci.plugins';
  * wether nvm is available or not
  */
 export declare let nvmAvailable: plugins.q.Deferred<boolean>;
+export declare let yarnAvailable: plugins.q.Deferred<boolean>;
 /**
  * bash() allows using bash with nvm in path
  * @param commandArg - The command to execute

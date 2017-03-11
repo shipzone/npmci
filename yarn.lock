@@ -107,6 +107,10 @@
   dependencies:
     "@types/node" "*"
 
+"@types/which@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@types/which/-/which-1.0.28.tgz#016e387629b8817bed653fe32eab5d11279c8df6"
+
 "@types/yargs@6.x.x":
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-6.6.0.tgz#91f8e2580a8083049f78311c059aa57d6949df6b"
@@ -223,7 +227,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-beautycolor@^1.0.5:
+beautycolor@^1.0.5, beautycolor@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/beautycolor/-/beautycolor-1.0.7.tgz#a4715738ac4c8221371e9cbeb5a6cc6d11ecbf7c"
   dependencies:
@@ -276,7 +280,7 @@ beautylog@^5.0.23:
     smartenv "^1.2.5"
     typings-global "^1.0.13"
 
-beautylog@^6.0.0, beautylog@^6.1.1, beautylog@^6.1.3:
+beautylog@^6.0.0, beautylog@^6.1.1:
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/beautylog/-/beautylog-6.1.3.tgz#0e8640cc429746b1e0c46e8767e9273b6b1902f1"
   dependencies:
@@ -287,6 +291,19 @@ beautylog@^6.0.0, beautylog@^6.1.1, beautylog@^6.1.3:
     ora "^1.1.0"
     smartenv "^2.0.0"
     smartq "^1.0.4"
+    typings-global "^1.0.14"
+
+beautylog@^6.1.5:
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/beautylog/-/beautylog-6.1.5.tgz#5d1eca8d32ca9ed49954a1622134b03ed904c44f"
+  dependencies:
+    "@types/lodash" "^4.14.55"
+    beautycolor "^1.0.7"
+    figlet "^1.2.0"
+    lodash "^4.17.4"
+    ora "^1.1.0"
+    smartenv "^2.0.0"
+    smartq "^1.1.1"
     typings-global "^1.0.14"
 
 beeper@^1.0.0:
@@ -2286,13 +2303,15 @@ smartrequest@^1.0.4:
     smartq "^1.1.0"
     typings-global "^1.0.14"
 
-smartshell@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/smartshell/-/smartshell-1.0.5.tgz#6ea0a891b9a71347fb562f29144e9a06d3af008e"
+smartshell@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/smartshell/-/smartshell-1.0.6.tgz#27b1c79029784abe72ac7e91fe698b7ebecc6629"
   dependencies:
     "@types/shelljs" "^0.6.0"
+    "@types/which" "^1.0.28"
     shelljs "^0.7.6"
     smartq "^1.1.0"
+    which "^1.2.12"
 
 smartsocket@^1.1.7:
   version "1.1.7"
