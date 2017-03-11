@@ -1,3 +1,5 @@
-/// <reference types="q" />
-import * as plugins from './npmci.plugins';
-export declare let install: (versionArg: any) => plugins.q.Promise<{}>;
+/**
+ * Install a specific version of node
+ * @param versionArg
+ */
+export declare let install: (versionArg: any) => Promise<void>;

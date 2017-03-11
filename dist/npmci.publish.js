@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 const plugins = require("./npmci.plugins");
 const npmci_prepare_1 = require("./npmci.prepare");
 const npmci_bash_1 = require("./npmci.bash");
@@ -7,36 +16,35 @@ const NpmciBuildDocker = require("./npmci.build.docker");
  * the main exported publish function.
  * @param pubServiceArg references targeted service to publish to
  */
-exports.publish = (pubServiceArg = 'npm') => {
+exports.publish = (pubServiceArg = 'npm') => __awaiter(this, void 0, void 0, function* () {
     switch (pubServiceArg) {
         case 'npm':
-            return publishNpm();
+            return yield publishNpm();
         case 'docker':
-            return publishDocker();
+            return yield publishDocker();
     }
-};
+});
 /**
  * tries to publish current cwd to NPM registry
  */
-let publishNpm = function () {
-    let done = plugins.q.defer();
-    npmci_prepare_1.prepare('npm')
+let publishNpm = () => __awaiter(this, void 0, void 0, function* () {
+    yield npmci_prepare_1.prepare('npm')
         .then(function () {
-        npmci_bash_1.bash('npm publish');
-        plugins.beautylog.ok('Done!');
-        done.resolve();
+        return __awaiter(this, void 0, void 0, function* () {
+            yield npmci_bash_1.bash('npm publish');
+            plugins.beautylog.ok('Done!');
+        });
     });
-    return done.promise;
-};
+});
 /**
  * tries to pubish current cwd to Docker registry
  */
-let publishDocker = function () {
-    let done = plugins.q.defer();
-    NpmciBuildDocker.readDockerfiles()
+let publishDocker = () => __awaiter(this, void 0, void 0, function* () {
+    return yield NpmciBuildDocker.readDockerfiles()
         .then(NpmciBuildDocker.pullDockerfileImages)
         .then(NpmciBuildDocker.pushDockerfiles)
-        .then(done.resolve);
-    return done.promise;
-};
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucHVibGlzaC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnB1Ymxpc2gudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDJDQUEwQztBQUMxQyxtREFBdUM7QUFDdkMsNkNBQWlDO0FBRWpDLHlEQUF3RDtBQU94RDs7O0dBR0c7QUFDUSxRQUFBLE9BQU8sR0FBRyxDQUFDLGdCQUE2QixLQUFLO0lBQ3BELE1BQU0sQ0FBQyxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUM7UUFDcEIsS0FBSyxLQUFLO1lBQ04sTUFBTSxDQUFDLFVBQVUsRUFBRSxDQUFBO1FBQ3ZCLEtBQUssUUFBUTtZQUNULE1BQU0sQ0FBQyxhQUFhLEVBQUUsQ0FBQTtJQUM5QixDQUFDO0FBQ0wsQ0FBQyxDQUFBO0FBRUQ7O0dBRUc7QUFDSCxJQUFJLFVBQVUsR0FBSTtJQUNkLElBQUksSUFBSSxHQUFHLE9BQU8sQ0FBQyxDQUFDLENBQUMsS0FBSyxFQUFFLENBQUE7SUFDNUIsdUJBQU8sQ0FBQyxLQUFLLENBQUM7U0FDVCxJQUFJLENBQUM7UUFDRixpQkFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFBO1FBQ25CLE9BQU8sQ0FBQyxTQUFTLENBQUMsRUFBRSxDQUFDLE9BQU8sQ0FBQyxDQUFBO1FBQzdCLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQTtJQUNsQixDQUFDLENBQUMsQ0FBQTtJQUNQLE1BQU0sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFBO0FBQ3RCLENBQUMsQ0FBQTtBQUVEOztHQUVHO0FBQ0gsSUFBSSxhQUFhLEdBQUc7SUFDaEIsSUFBSSxJQUFJLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLLEVBQUUsQ0FBQTtJQUN4QixnQkFBZ0IsQ0FBQyxlQUFlLEVBQUU7U0FDakMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLG9CQUFvQixDQUFDO1NBQzNDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxlQUFlLENBQUM7U0FDdEMsSUFBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQTtJQUN2QixNQUFNLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQTtBQUN2QixDQUFDLENBQUEifQ==
+        .then(dockerfileArray => {
+        return dockerfileArray;
+    });
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucHVibGlzaC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnB1Ymxpc2gudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLDJDQUEwQztBQUMxQyxtREFBeUM7QUFDekMsNkNBQW1DO0FBRW5DLHlEQUF3RDtBQU94RDs7O0dBR0c7QUFDUSxRQUFBLE9BQU8sR0FBRyxDQUFPLGdCQUE2QixLQUFLO0lBQzVELE1BQU0sQ0FBQyxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUM7UUFDdEIsS0FBSyxLQUFLO1lBQ1IsTUFBTSxDQUFDLE1BQU0sVUFBVSxFQUFFLENBQUE7UUFDM0IsS0FBSyxRQUFRO1lBQ1gsTUFBTSxDQUFDLE1BQU0sYUFBYSxFQUFFLENBQUE7SUFDaEMsQ0FBQztBQUNILENBQUMsQ0FBQSxDQUFBO0FBRUQ7O0dBRUc7QUFDSCxJQUFJLFVBQVUsR0FBRztJQUNmLE1BQU0sdUJBQU8sQ0FBQyxLQUFLLENBQUM7U0FDakIsSUFBSSxDQUFDOztZQUNKLE1BQU0saUJBQUksQ0FBQyxhQUFhLENBQUMsQ0FBQTtZQUN6QixPQUFPLENBQUMsU0FBUyxDQUFDLEVBQUUsQ0FBQyxPQUFPLENBQUMsQ0FBQTtRQUMvQixDQUFDO0tBQUEsQ0FBQyxDQUFBO0FBQ04sQ0FBQyxDQUFBLENBQUE7QUFFRDs7R0FFRztBQUNILElBQUksYUFBYSxHQUFHO0lBQ2xCLE1BQU0sQ0FBQyxNQUFNLGdCQUFnQixDQUFDLGVBQWUsRUFBRTtTQUM1QyxJQUFJLENBQUMsZ0JBQWdCLENBQUMsb0JBQW9CLENBQUM7U0FDM0MsSUFBSSxDQUFDLGdCQUFnQixDQUFDLGVBQWUsQ0FBQztTQUN0QyxJQUFJLENBQUMsZUFBZTtRQUNuQixNQUFNLENBQUMsZUFBZSxDQUFBO0lBQ3hCLENBQUMsQ0FBQyxDQUFBO0FBQ04sQ0FBQyxDQUFBLENBQUEifQ==

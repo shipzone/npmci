@@ -1,43 +1,41 @@
-/// <reference types="q" />
 /// <reference types="node" />
-import * as plugins from './npmci.plugins';
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
-export declare let build: () => plugins.q.Promise<{}>;
+export declare let build: () => Promise<void>;
 /**
  * creates instance of class Dockerfile for all Dockerfiles in cwd
  * @returns Promise<Dockerfile[]>
  */
-export declare let readDockerfiles: () => plugins.q.Promise<Dockerfile[]>;
+export declare let readDockerfiles: () => Promise<Dockerfile[]>;
 /**
  * sorts Dockerfiles into a dependency chain
  * @param sortableArrayArg an array of instances of class Dockerfile
  * @returns Promise<Dockerfile[]>
  */
-export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => plugins.q.Promise<Dockerfile[]>;
+export declare let sortDockerfiles: (sortableArrayArg: Dockerfile[]) => Promise<Dockerfile[]>;
 /**
  * maps local Dockerfiles dependencies to the correspoding Dockerfile class instances
  */
-export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => plugins.q.Promise<Dockerfile[]>;
+export declare let mapDockerfiles: (sortedArray: Dockerfile[]) => Promise<Dockerfile[]>;
 /**
  * builds the correspoding real docker image for each Dockerfile class instance
  */
-export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let buildDockerfiles: (sortedArrayArg: Dockerfile[]) => Promise<Dockerfile[]>;
 /**
  * pushes the real Dockerfile images to a Docker registry
  */
-export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let pushDockerfiles: (sortedArrayArg: Dockerfile[]) => Promise<Dockerfile[]>;
 /**
  * pulls corresponding real Docker images for instances of Dockerfile from a registry.
  * This is needed if building, testing, and publishing of Docker images is carried out in seperate CI stages.
  */
-export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => plugins.q.Promise<{}>;
+export declare let pullDockerfileImages: (sortableArrayArg: Dockerfile[], registryArg?: string) => Promise<Dockerfile[]>;
 /**
  * tests all Dockerfiles in by calling class Dockerfile.test();
  * @param sortedArrayArg Dockerfile[] that contains all Dockerfiles in cwd
  */
-export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => plugins.q.Promise<{}>;
+export declare let testDockerfiles: (sortedArrayArg: Dockerfile[]) => Promise<Dockerfile[]>;
 /**
  * class Dockerfile represents a Dockerfile on disk in npmci
  */
@@ -62,26 +60,27 @@ export declare class Dockerfile {
     /**
      * builds the Dockerfile
      */
-    build(): plugins.q.Promise<{}>;
+    build(): Promise<void>;
     /**
      * pushes the Dockerfile to a registry
      */
-    push(stageArg: any): plugins.q.Promise<{}>;
+    push(stageArg: any): Promise<void>;
     /**
      * pulls the Dockerfile from a registry
      */
-    pull(registryArg: string): void;
+    pull(registryArg: string): Promise<void>;
     /**
      * tests the Dockerfile;
      */
-    test(): void;
+    test(): Promise<void>;
     /**
      * gets the id of a Dockerfile
      */
-    getId(): string;
+    getId(): Promise<string>;
 }
 /**
- *
+ * returns a version for a docker file
+ * @execution SYNC
  */
 export declare let dockerFileVersion: (dockerfileNameArg: string) => string;
 /**

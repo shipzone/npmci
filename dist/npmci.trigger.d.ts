@@ -1,3 +1,1 @@
-/// <reference types="q" />
-import * as plugins from './npmci.plugins';
-export declare let trigger: () => plugins.q.Promise<{}>;
+export declare let trigger: () => Promise<void>;

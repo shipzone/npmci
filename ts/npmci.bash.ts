@@ -1,18 +1,37 @@
 import * as plugins from './npmci.plugins'
+import * as smartq from 'smartq'
 
-let nvmSourceString: string = ''
-export let nvmAvailable: boolean = false
-let checkNvm = () => {
-  let localExec: any = plugins.shelljs.exec
-  if (localExec(`bash -c "source /usr/local/nvm/nvm.sh"`, { silent: true }).code === 0) {
-    nvmSourceString = `source /usr/local/nvm/nvm.sh && `
-    nvmAvailable = true
-  } else if (localExec(`bash -c "source ~/.nvm/nvm.sh"`, { silent: true }).code === 0) {
-    nvmSourceString = `source ~/.nvm/nvm.sh && `
-    nvmAvailable = true
+/**
+ * wether nvm is available or not
+ */
+export let nvmAvailable = smartq.defer<boolean>()
+
+/**
+ * the smartshell instance for npmci
+ */
+let npmciSmartshell = new plugins.smartshell.Smartshell({
+  executor: 'bash',
+  sourceFilePaths: []
+})
+
+let checkNvm = async () => {
+  if (
+    (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
+  ) {
+    npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh && `])
+    nvmAvailable.resolve(true)
+  } else if (
+    (await plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
+  ) {
+    npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh && `])
+    nvmAvailable.resolve(true)
+  } else {
+    nvmAvailable.resolve(false)
   };
 }
 checkNvm()
+
+
 
 /**
  * bash() allows using bash with nvm in path
@@ -20,42 +39,45 @@ checkNvm()
  * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
 export let bash = async (commandArg: string, retryArg: number = 2, bareArg: boolean = false): Promise<string> => {
-  let exitCode: number
-  let stdOut: string
-  let execResult
+  await nvmAvailable.promise // make sure nvm check has run
+  let execResult: plugins.smartshell.IExecResult
+
+  // determine if we fail
   let failOnError: boolean = true
   if (retryArg === -1) {
     failOnError = false
     retryArg = 0
   }
+
   if (!process.env.NPMTS_TEST) { // NPMTS_TEST is used during testing
     for (let i = 0; i <= retryArg; i++) {
       if (!bareArg) {
-        execResult = plugins.shelljs.exec(
-          `bash -c "${nvmSourceString} ${commandArg}"`
-        )
+        execResult = await npmciSmartshell.execSilent(commandArg)
       } else {
-        execResult = plugins.shelljs.exec(commandArg)
+        execResult = await plugins.smartshell.exec(commandArg)
       }
-      exitCode = execResult.code
-      stdOut = execResult.stdout
 
       // determine how bash reacts to error and success
-      if (exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted
+      if (execResult.exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted
         if (failOnError) {
           plugins.beautylog.error('something went wrong and retries are exhausted')
           process.exit(1)
         }
-      } else if (exitCode === 0) { // everything went fine, or no error wanted
+      } else if (execResult.exitCode === 0) { // everything went fine, or no error wanted
         i = retryArg + 1 // retry +1 breaks for loop, if everything works out ok retrials are not wanted
       } else {
-        plugins.beautylog.warn('Something went wrong! Exit Code: ' + exitCode.toString())
+        plugins.beautylog.warn('Something went wrong! Exit Code: ' + execResult.exitCode.toString())
         plugins.beautylog.info('Retry ' + (i + 1).toString() + ' of ' + retryArg.toString())
       }
     }
   } else {
     plugins.beautylog.log('ShellExec would be: ' + commandArg)
+    execResult = {
+      exitCode: 0,
+      stdout: 'testOutput'
+    }
   }
+  return execResult.stdout
 }
 
 /**

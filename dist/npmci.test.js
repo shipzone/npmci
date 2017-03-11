@@ -1,46 +1,38 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 const plugins = require("./npmci.plugins");
 const npmci_bash_1 = require("./npmci.bash");
 const npmci_install_1 = require("./npmci.install");
 const NpmciBuildDocker = require("./npmci.build.docker");
-exports.test = (versionArg) => {
-    let done = plugins.q.defer();
+exports.test = (versionArg) => __awaiter(this, void 0, void 0, function* () {
     if (versionArg === 'docker') {
-        testDocker()
-            .then(() => {
-            done.resolve();
-        });
+        yield testDocker();
     }
     else {
-        npmci_install_1.install(versionArg)
+        yield npmci_install_1.install(versionArg)
             .then(npmDependencies)
-            .then(npmTest)
-            .then(() => {
-            done.resolve();
-        });
+            .then(npmTest);
     }
-    return done.promise;
-};
-let npmDependencies = function () {
-    let done = plugins.q.defer();
+});
+let npmDependencies = () => __awaiter(this, void 0, void 0, function* () {
     plugins.beautylog.info('now installing dependencies:');
-    npmci_bash_1.bash('npm install');
-    done.resolve();
-    return done.promise;
-};
-let npmTest = () => {
-    let done = plugins.q.defer();
+    yield npmci_bash_1.bash('npm install');
+});
+let npmTest = () => __awaiter(this, void 0, void 0, function* () {
     plugins.beautylog.info('now starting tests:');
-    npmci_bash_1.bash('npm test');
-    done.resolve();
-    return done.promise;
-};
-let testDocker = function () {
-    let done = plugins.q.defer();
-    NpmciBuildDocker.readDockerfiles()
+    yield npmci_bash_1.bash('npm test');
+});
+let testDocker = () => __awaiter(this, void 0, void 0, function* () {
+    return yield NpmciBuildDocker.readDockerfiles()
         .then(NpmciBuildDocker.pullDockerfileImages)
-        .then(NpmciBuildDocker.testDockerfiles)
-        .then(done.resolve);
-    return done.promise;
-};
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kudGVzdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnRlc3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDJDQUEwQztBQUMxQyw2Q0FBaUM7QUFDakMsbURBQXVDO0FBRXZDLHlEQUF3RDtBQUU3QyxRQUFBLElBQUksR0FBRyxDQUFDLFVBQVU7SUFDekIsSUFBSSxJQUFJLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLLEVBQUUsQ0FBQTtJQUM1QixFQUFFLENBQUMsQ0FBQyxVQUFVLEtBQUssUUFBUSxDQUFDLENBQUMsQ0FBQztRQUMxQixVQUFVLEVBQUU7YUFDUCxJQUFJLENBQUM7WUFDRixJQUFJLENBQUMsT0FBTyxFQUFFLENBQUE7UUFDbEIsQ0FBQyxDQUFDLENBQUE7SUFDVixDQUFDO0lBQUMsSUFBSSxDQUFDLENBQUM7UUFDSix1QkFBTyxDQUFDLFVBQVUsQ0FBQzthQUNkLElBQUksQ0FBQyxlQUFlLENBQUM7YUFDckIsSUFBSSxDQUFDLE9BQU8sQ0FBQzthQUNiLElBQUksQ0FBQztZQUNGLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQTtRQUNsQixDQUFDLENBQUMsQ0FBQTtJQUNWLENBQUM7SUFDRCxNQUFNLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQTtBQUN2QixDQUFDLENBQUE7QUFFRCxJQUFJLGVBQWUsR0FBRztJQUNsQixJQUFJLElBQUksR0FBRyxPQUFPLENBQUMsQ0FBQyxDQUFDLEtBQUssRUFBRSxDQUFBO0lBQzVCLE9BQU8sQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLDhCQUE4QixDQUFDLENBQUE7SUFDdEQsaUJBQUksQ0FBQyxhQUFhLENBQUMsQ0FBQTtJQUNuQixJQUFJLENBQUMsT0FBTyxFQUFFLENBQUE7SUFDZCxNQUFNLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQTtBQUN2QixDQUFDLENBQUE7QUFFRCxJQUFJLE9BQU8sR0FBRztJQUNWLElBQUksSUFBSSxHQUFHLE9BQU8sQ0FBQyxDQUFDLENBQUMsS0FBSyxFQUFFLENBQUE7SUFDNUIsT0FBTyxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMscUJBQXFCLENBQUMsQ0FBQTtJQUM3QyxpQkFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFBO0lBQ2hCLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQTtJQUNkLE1BQU0sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFBO0FBQ3ZCLENBQUMsQ0FBQTtBQUVELElBQUksVUFBVSxHQUFHO0lBQ2IsSUFBSSxJQUFJLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLLEVBQUUsQ0FBQTtJQUM1QixnQkFBZ0IsQ0FBQyxlQUFlLEVBQUU7U0FDN0IsSUFBSSxDQUFDLGdCQUFnQixDQUFDLG9CQUFvQixDQUFDO1NBQzNDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxlQUFlLENBQUM7U0FDdEMsSUFBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQTtJQUN2QixNQUFNLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQTtBQUN2QixDQUFDLENBQUEifQ==
+        .then(NpmciBuildDocker.testDockerfiles);
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kudGVzdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnRlc3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLDJDQUEwQztBQUMxQyw2Q0FBbUM7QUFDbkMsbURBQXlDO0FBRXpDLHlEQUF3RDtBQUU3QyxRQUFBLElBQUksR0FBRyxDQUFPLFVBQVU7SUFDakMsRUFBRSxDQUFDLENBQUMsVUFBVSxLQUFLLFFBQVEsQ0FBQyxDQUFDLENBQUM7UUFDNUIsTUFBTSxVQUFVLEVBQUUsQ0FBQTtJQUNwQixDQUFDO0lBQUMsSUFBSSxDQUFDLENBQUM7UUFDTixNQUFNLHVCQUFPLENBQUMsVUFBVSxDQUFDO2FBQ3RCLElBQUksQ0FBQyxlQUFlLENBQUM7YUFDckIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFBO0lBQ2xCLENBQUM7QUFDSCxDQUFDLENBQUEsQ0FBQTtBQUVELElBQUksZUFBZSxHQUFHO0lBQ3BCLE9BQU8sQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLDhCQUE4QixDQUFDLENBQUE7SUFDdEQsTUFBTSxpQkFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFBO0FBQzNCLENBQUMsQ0FBQSxDQUFBO0FBRUQsSUFBSSxPQUFPLEdBQUc7SUFDWixPQUFPLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxxQkFBcUIsQ0FBQyxDQUFBO0lBQzdDLE1BQU0saUJBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQTtBQUN4QixDQUFDLENBQUEsQ0FBQTtBQUVELElBQUksVUFBVSxHQUFHO0lBQ2YsTUFBTSxDQUFDLE1BQU0sZ0JBQWdCLENBQUMsZUFBZSxFQUFFO1NBQzVDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxvQkFBb0IsQ0FBQztTQUMzQyxJQUFJLENBQUMsZ0JBQWdCLENBQUMsZUFBZSxDQUFDLENBQUE7QUFDM0MsQ0FBQyxDQUFBLENBQUEifQ==

@@ -4,7 +4,13 @@
         "coverageTreshold": "70",
         "cli": true
     },
+    "npmci": {
+        "globalNpmTools": [
+            "npmts"
+        ]
+    },
     "npmdocker":{
-        "baseImage":"hosttoday/ht-docker-node:npmts"
+        "baseImage":"hosttoday/ht-docker-node:npmts",
+        "command": "npmci test stable"
     }
 }

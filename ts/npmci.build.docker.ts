@@ -40,7 +40,7 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
  * @param sortableArrayArg an array of instances of class Dockerfile
  * @returns Promise<Dockerfile[]>
  */
-export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): plugins.q.Promise<Dockerfile[]> => {
+export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfile[]> => {
   let done = plugins.q.defer<Dockerfile[]>()
   let sortedArray: Dockerfile[] = []
   let cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg, sortedArray)
@@ -69,7 +69,7 @@ export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): plugins.q.Promise
 /**
  * maps local Dockerfiles dependencies to the correspoding Dockerfile class instances
  */
-export let mapDockerfiles = async (sortedArray: Dockerfile[]): plugins.q.Promise<Dockerfile[]> => {
+export let mapDockerfiles = async (sortedArray: Dockerfile[]): Promise<Dockerfile[]> => {
   sortedArray.forEach((dockerfileArg) => {
     if (dockerfileArg.localBaseImageDependent) {
       sortedArray.forEach((dockfile2: Dockerfile) => {

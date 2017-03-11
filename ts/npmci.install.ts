@@ -19,7 +19,7 @@ export let install = async (versionArg) => {
   } else {
     version = versionArg
   };
-  if (nvmAvailable) {
+  if (await nvmAvailable.promise) {
     await bash(`nvm install ${version} && nvm alias default ${version}`)
     plugins.beautylog.success(`Node version ${version} successfully installed!`)
   } else {

@@ -1,3 +1,1 @@
-/// <reference types="q" />
-import * as plugins from './npmci.plugins';
-export declare let test: (versionArg: any) => plugins.q.Promise<{}>;
+export declare let test: (versionArg: any) => Promise<void>;

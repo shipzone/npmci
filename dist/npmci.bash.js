@@ -1,29 +1,50 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 const plugins = require("./npmci.plugins");
-let nvmSourceString = '';
-exports.nvmAvailable = false;
-let checkNvm = () => {
-    let localExec = plugins.shelljs.exec;
-    if (localExec(`bash -c "source /usr/local/nvm/nvm.sh"`, { silent: true }).code === 0) {
-        nvmSourceString = `source /usr/local/nvm/nvm.sh && `;
-        exports.nvmAvailable = true;
+const smartq = require("smartq");
+/**
+ * wether nvm is available or not
+ */
+exports.nvmAvailable = smartq.defer();
+/**
+ * the smartshell instance for npmci
+ */
+let npmciSmartshell = new plugins.smartshell.Smartshell({
+    executor: 'bash',
+    sourceFilePaths: []
+});
+let checkNvm = () => __awaiter(this, void 0, void 0, function* () {
+    if ((yield plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0) {
+        npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh && `]);
+        exports.nvmAvailable.resolve(true);
     }
-    else if (localExec(`bash -c "source ~/.nvm/nvm.sh"`, { silent: true }).code === 0) {
-        nvmSourceString = `source ~/.nvm/nvm.sh && `;
-        exports.nvmAvailable = true;
+    else if ((yield plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0) {
+        npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh && `]);
+        exports.nvmAvailable.resolve(true);
+    }
+    else {
+        exports.nvmAvailable.resolve(false);
     }
     ;
-};
+});
 checkNvm();
 /**
  * bash() allows using bash with nvm in path
  * @param commandArg - The command to execute
  * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
-exports.bash = (commandArg, retryArg = 2, bareArg = false) => {
-    let exitCode;
-    let stdOut;
+exports.bash = (commandArg, retryArg = 2, bareArg = false) => __awaiter(this, void 0, void 0, function* () {
+    yield exports.nvmAvailable.promise; // make sure nvm check has run
     let execResult;
+    // determine if we fail
     let failOnError = true;
     if (retryArg === -1) {
         failOnError = false;
@@ -32,33 +53,36 @@ exports.bash = (commandArg, retryArg = 2, bareArg = false) => {
     if (!process.env.NPMTS_TEST) {
         for (let i = 0; i <= retryArg; i++) {
             if (!bareArg) {
-                execResult = plugins.shelljs.exec(`bash -c "${nvmSourceString} ${commandArg}"`);
+                execResult = yield npmciSmartshell.execSilent(commandArg);
             }
             else {
-                execResult = plugins.shelljs.exec(commandArg);
+                execResult = yield plugins.smartshell.exec(commandArg);
             }
-            exitCode = execResult.code;
-            stdOut = execResult.stdout;
             // determine how bash reacts to error and success
-            if (exitCode !== 0 && i === retryArg) {
+            if (execResult.exitCode !== 0 && i === retryArg) {
                 if (failOnError) {
+                    plugins.beautylog.error('something went wrong and retries are exhausted');
                     process.exit(1);
                 }
             }
-            else if (exitCode === 0) {
+            else if (execResult.exitCode === 0) {
                 i = retryArg + 1; // retry +1 breaks for loop, if everything works out ok retrials are not wanted
             }
             else {
-                plugins.beautylog.warn('Something went wrong! Exit Code: ' + exitCode.toString());
+                plugins.beautylog.warn('Something went wrong! Exit Code: ' + execResult.exitCode.toString());
                 plugins.beautylog.info('Retry ' + (i + 1).toString() + ' of ' + retryArg.toString());
             }
         }
     }
     else {
         plugins.beautylog.log('ShellExec would be: ' + commandArg);
+        execResult = {
+            exitCode: 0,
+            stdout: 'testOutput'
+        };
     }
-    return stdOut;
-};
+    return execResult.stdout;
+});
 /**
  * bashBare allows usage of bash without sourcing any files like nvm
  */
@@ -71,4 +95,4 @@ exports.bashBare = (commandArg, retryArg = 2) => {
 exports.bashNoError = (commandArg) => {
     return exports.bash(commandArg, -1);
 };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kuYmFzaC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLmJhc2gudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDJDQUEwQztBQUUxQyxJQUFJLGVBQWUsR0FBVyxFQUFFLENBQUE7QUFDckIsUUFBQSxZQUFZLEdBQVksS0FBSyxDQUFBO0FBQ3hDLElBQUksUUFBUSxHQUFHO0lBQ2IsSUFBSSxTQUFTLEdBQVEsT0FBTyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUE7SUFDekMsRUFBRSxDQUFDLENBQUMsU0FBUyxDQUFDLHdDQUF3QyxFQUFFLEVBQUUsTUFBTSxFQUFFLElBQUksRUFBRSxDQUFDLENBQUMsSUFBSSxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDckYsZUFBZSxHQUFHLGtDQUFrQyxDQUFBO1FBQ3BELG9CQUFZLEdBQUcsSUFBSSxDQUFBO0lBQ3JCLENBQUM7SUFBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUMsU0FBUyxDQUFDLGdDQUFnQyxFQUFFLEVBQUUsTUFBTSxFQUFFLElBQUksRUFBRSxDQUFDLENBQUMsSUFBSSxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDcEYsZUFBZSxHQUFHLDBCQUEwQixDQUFBO1FBQzVDLG9CQUFZLEdBQUcsSUFBSSxDQUFBO0lBQ3JCLENBQUM7SUFBQSxDQUFDO0FBQ0osQ0FBQyxDQUFBO0FBQ0QsUUFBUSxFQUFFLENBQUE7QUFFVjs7OztHQUlHO0FBQ1EsUUFBQSxJQUFJLEdBQUcsQ0FBQyxVQUFrQixFQUFFLFdBQW1CLENBQUMsRUFBRSxVQUFtQixLQUFLO0lBQ25GLElBQUksUUFBZ0IsQ0FBQTtJQUNwQixJQUFJLE1BQWMsQ0FBQTtJQUNsQixJQUFJLFVBQVUsQ0FBQTtJQUNkLElBQUksV0FBVyxHQUFZLElBQUksQ0FBQTtJQUMvQixFQUFFLENBQUMsQ0FBQyxRQUFRLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ3BCLFdBQVcsR0FBRyxLQUFLLENBQUE7UUFDbkIsUUFBUSxHQUFHLENBQUMsQ0FBQTtJQUNkLENBQUM7SUFDRCxFQUFFLENBQUMsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQztRQUM1QixHQUFHLENBQUMsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxJQUFJLFFBQVEsRUFBRSxDQUFDLEVBQUUsRUFBRSxDQUFDO1lBQ25DLEVBQUUsQ0FBQyxDQUFDLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztnQkFDYixVQUFVLEdBQUcsT0FBTyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQy9CLFlBQVksZUFBZSxJQUFJLFVBQVUsR0FBRyxDQUM3QyxDQUFBO1lBQ0gsQ0FBQztZQUFDLElBQUksQ0FBQyxDQUFDO2dCQUNOLFVBQVUsR0FBRyxPQUFPLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQTtZQUMvQyxDQUFDO1lBQ0QsUUFBUSxHQUFHLFVBQVUsQ0FBQyxJQUFJLENBQUE7WUFDMUIsTUFBTSxHQUFHLFVBQVUsQ0FBQyxNQUFNLENBQUE7WUFFMUIsaURBQWlEO1lBQ2pELEVBQUUsQ0FBQyxDQUFDLFFBQVEsS0FBSyxDQUFDLElBQUksQ0FBQyxLQUFLLFFBQVEsQ0FBQyxDQUFDLENBQUM7Z0JBQ3JDLEVBQUUsQ0FBQyxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUM7b0JBQ2hCLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUE7Z0JBQ2pCLENBQUM7WUFDSCxDQUFDO1lBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxDQUFDLFFBQVEsS0FBSyxDQUFDLENBQUMsQ0FBQyxDQUFDO2dCQUMxQixDQUFDLEdBQUcsUUFBUSxHQUFHLENBQUMsQ0FBQSxDQUFDLCtFQUErRTtZQUNsRyxDQUFDO1lBQUMsSUFBSSxDQUFDLENBQUM7Z0JBQ04sT0FBTyxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsbUNBQW1DLEdBQUcsUUFBUSxDQUFDLFFBQVEsRUFBRSxDQUFDLENBQUE7Z0JBQ2pGLE9BQU8sQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLFFBQVEsR0FBRyxDQUFDLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxRQUFRLEVBQUUsR0FBRyxNQUFNLEdBQUcsUUFBUSxDQUFDLFFBQVEsRUFBRSxDQUFDLENBQUE7WUFDdEYsQ0FBQztRQUNILENBQUM7SUFDSCxDQUFDO0lBQUMsSUFBSSxDQUFDLENBQUM7UUFDTixPQUFPLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyxzQkFBc0IsR0FBRyxVQUFVLENBQUMsQ0FBQTtJQUM1RCxDQUFDO0lBQ0QsTUFBTSxDQUFDLE1BQU0sQ0FBQTtBQUNmLENBQUMsQ0FBQTtBQUVEOztHQUVHO0FBQ1EsUUFBQSxRQUFRLEdBQUcsQ0FBQyxVQUFrQixFQUFFLFdBQW1CLENBQUM7SUFDN0QsTUFBTSxDQUFDLFlBQUksQ0FBQyxVQUFVLEVBQUUsUUFBUSxFQUFFLElBQUksQ0FBQyxDQUFBO0FBQ3pDLENBQUMsQ0FBQTtBQUVEOztHQUVHO0FBQ1EsUUFBQSxXQUFXLEdBQUcsQ0FBQyxVQUFrQjtJQUMxQyxNQUFNLENBQUMsWUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFBO0FBQzdCLENBQUMsQ0FBQSJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kuYmFzaC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLmJhc2gudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLDJDQUEwQztBQUMxQyxpQ0FBZ0M7QUFFaEM7O0dBRUc7QUFDUSxRQUFBLFlBQVksR0FBRyxNQUFNLENBQUMsS0FBSyxFQUFXLENBQUE7QUFFakQ7O0dBRUc7QUFDSCxJQUFJLGVBQWUsR0FBRyxJQUFJLE9BQU8sQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDO0lBQ3RELFFBQVEsRUFBRSxNQUFNO0lBQ2hCLGVBQWUsRUFBRSxFQUFFO0NBQ3BCLENBQUMsQ0FBQTtBQUVGLElBQUksUUFBUSxHQUFHO0lBQ2IsRUFBRSxDQUFDLENBQ0QsQ0FBQyxNQUFNLE9BQU8sQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLHdDQUF3QyxDQUFDLENBQUMsQ0FBQyxRQUFRLEtBQUssQ0FDL0YsQ0FBQyxDQUFDLENBQUM7UUFDRCxlQUFlLENBQUMsY0FBYyxDQUFDLENBQUMsMkJBQTJCLENBQUMsQ0FBQyxDQUFBO1FBQzdELG9CQUFZLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFBO0lBQzVCLENBQUM7SUFBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQ1IsQ0FBQyxNQUFNLE9BQU8sQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLGdDQUFnQyxDQUFDLENBQUMsQ0FBQyxRQUFRLEtBQUssQ0FDdkYsQ0FBQyxDQUFDLENBQUM7UUFDRCxlQUFlLENBQUMsY0FBYyxDQUFDLENBQUMsbUJBQW1CLENBQUMsQ0FBQyxDQUFBO1FBQ3JELG9CQUFZLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFBO0lBQzVCLENBQUM7SUFBQyxJQUFJLENBQUMsQ0FBQztRQUNOLG9CQUFZLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFBO0lBQzdCLENBQUM7SUFBQSxDQUFDO0FBQ0osQ0FBQyxDQUFBLENBQUE7QUFDRCxR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
