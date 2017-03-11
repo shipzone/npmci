@@ -52,7 +52,7 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
   if (!process.env.NPMTS_TEST) { // NPMTS_TEST is used during testing
     for (let i = 0; i <= retryArg; i++) {
       if (!bareArg) {
-        execResult = await npmciSmartshell.execSilent(commandArg)
+        execResult = await npmciSmartshell.exec(commandArg)
       } else {
         execResult = await plugins.smartshell.exec(commandArg)
       }
