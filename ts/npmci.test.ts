@@ -17,7 +17,7 @@ export let test = async (versionArg): Promise<void> => {
 let npmDependencies = async (): Promise<void> => {
   plugins.beautylog.info('now installing dependencies:')
   if (await yarnAvailable.promise) {
-    await bash('yarn install')
+    await bash('yarn upgrade')
   } else {
     await bash('npm install')
   }

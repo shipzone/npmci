@@ -25,7 +25,7 @@ exports.test = (versionArg) => __awaiter(this, void 0, void 0, function* () {
 let npmDependencies = () => __awaiter(this, void 0, void 0, function* () {
     plugins.beautylog.info('now installing dependencies:');
     if (yield npmci_bash_1.yarnAvailable.promise) {
-        yield npmci_bash_1.bash('yarn install');
+        yield npmci_bash_1.bash('yarn upgrade');
     }
     else {
         yield npmci_bash_1.bash('npm install');
