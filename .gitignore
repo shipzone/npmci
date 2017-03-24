@@ -3,3 +3,4 @@ coverage/
 pages/
 public/
 config.json
+.yarn/
