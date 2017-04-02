@@ -21,28 +21,33 @@ let npmciSmartshell = new plugins.smartshell.Smartshell({
  */
 let checkToolsAvailable = async () => {
   // check for nvm
-  if (
-    (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
-  ) {
-    npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh`])
-    nvmAvailable.resolve(true)
-  } else if (
-    (await plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
-  ) {
-    npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh`])
-    nvmAvailable.resolve(true)
-  } else {
-    nvmAvailable.resolve(false)
-  };
+  if (!process.env.NPMTS_TEST) {
+    if (
+      (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
+    ) {
+      npmciSmartshell.addSourceFiles([ `/usr/local/nvm/nvm.sh` ])
+      nvmAvailable.resolve(true)
+    } else if (
+      (await plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
+    ) {
+      npmciSmartshell.addSourceFiles([ `~/.nvm/nvm.sh` ])
+      nvmAvailable.resolve(true)
+    } else {
+      nvmAvailable.resolve(false)
+    };
 
-  // check for yarn
-  await plugins.smartshell.which('yarn').then(
-    () => {
-      plugins.smartshell.exec(`yarn config set cache-folder ${plugins.path.join(paths.cwd,'.yarn')}`)
-      yarnAvailable.resolve(true)
-    },
-    () => { yarnAvailable.resolve(false) }
-  )
+    // check for yarn
+    await plugins.smartshell.which('yarn').then(
+      () => {
+        plugins.smartshell.exec(`yarn config set cache-folder ${plugins.path.join(paths.cwd, '.yarn')}`)
+        yarnAvailable.resolve(true)
+      },
+      () => { yarnAvailable.resolve(false) }
+    )
+  } else {
+    nvmAvailable.resolve(true)
+    yarnAvailable.resolve(true)
+  }
 }
 checkToolsAvailable()
 

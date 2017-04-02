@@ -74,4 +74,4 @@ tap.test('reset paths', async () => {
   process.cwd = () => {
     return path.join(__dirname, '../')
   }
-})
+}).catch(tap.threw)
