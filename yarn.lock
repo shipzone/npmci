@@ -2102,15 +2102,6 @@ npmextra@^2.0.3:
     smartq "^1.1.1"
     typings-global "^1.0.14"
 
-npmts-g@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/npmts-g/-/npmts-g-6.0.0.tgz#491fd50f110967f1b68f14237e7ea5157bf4ddb3"
-  dependencies:
-    "@types/shelljs" "^0.3.33"
-    semver "^5.3.0"
-    shelljs "^0.7.5"
-    typings-global "^1.0.14"
-
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"

@@ -10,7 +10,7 @@
         ]
     },
     "npmdocker":{
-        "baseImage":"hosttoday/ht-docker-node:npmts",
+        "baseImage":"hosttoday/ht-docker-node:npmci",
         "command": "npmci test stable"
     }
 }

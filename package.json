@@ -22,7 +22,6 @@
   },
   "homepage": "https://gitlab.com/gitzone/npmci#README",
   "devDependencies": {
-    "npmts-g": "^6.0.0",
     "tapbundle": "^1.0.5",
     "typings-test": "^1.0.3"
   },
