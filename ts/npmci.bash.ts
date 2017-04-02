@@ -46,8 +46,6 @@ let checkToolsAvailable = async () => {
 }
 checkToolsAvailable()
 
-
-
 /**
  * bash() allows using bash with nvm in path
  * @param commandArg - The command to execute

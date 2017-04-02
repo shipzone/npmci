@@ -1,6 +1,5 @@
 node_modules/
 coverage/
-pages/
 public/
 config.json
 .yarn/

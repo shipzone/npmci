@@ -133,7 +133,8 @@ export class Dockerfile {
   version: string
   cleanTag: string
   buildTag: string
-  testTag: string
+  gitlabTestTag: string
+  gitlabReleaseTag: string
   releaseTag: string
   containerName: string
   content: string
@@ -146,7 +147,8 @@ export class Dockerfile {
     this.version = dockerFileVersion(plugins.path.parse(options.filePath).base)
     this.cleanTag = this.repo + ':' + this.version
     this.buildTag = this.cleanTag
-    this.testTag = dockerTag('registry.gitlab.com', this.repo, this.version, 'test')
+    this.gitlabTestTag = dockerTag('registry.gitlab.com', this.repo, this.version, 'test')
+    this.gitlabReleaseTag = dockerTag('registry.gitlab.com', this.repo, this.version)
     this.releaseTag = dockerTag(NpmciEnv.dockerRegistry, this.repo, this.version)
     this.containerName = 'dockerfile-' + this.version
     if (options.filePath && options.read) {
@@ -170,25 +172,29 @@ export class Dockerfile {
    * pushes the Dockerfile to a registry
    */
   async push(stageArg) {
-    let pushTag
     switch (stageArg) {
       case 'release':
-        pushTag = this.releaseTag
+        await bashBare(`docker tag ${this.buildTag} ${this.releaseTag}`)
+        await bashBare(`docker push ${this.releaseTag}`)
+
+        // if release registry is different from gitlab
+        if (NpmciEnv.dockerRegistry !== 'registry.gitlab.com') {
+          await bashBare(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
+          await bashBare(`docker push ${this.gitlabReleaseTag}`)
+        }
         break
       case 'test':
       default:
-        pushTag = this.testTag
+        await bashBare(`docker push ${this.gitlabTestTag}`)
         break
     }
-    await bashBare('docker tag ' + this.buildTag + ' ' + pushTag)
-    await bashBare('docker push ' + pushTag)
   };
 
   /**
    * pulls the Dockerfile from a registry
    */
   async pull(registryArg: string) {
-    let pullTag = this.testTag
+    let pullTag = this.gitlabTestTag
     await bashBare('docker pull ' + pullTag)
     await bashBare('docker tag ' + pullTag + ' ' + this.buildTag)
   };
@@ -230,7 +236,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
   let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/
   let regexResultArray = versionRegex.exec(dockerfileNameArg)
   if (regexResultArray && regexResultArray.length === 2) {
-    versionString = regexResultArray[1]
+    versionString = regexResultArray[ 1 ]
   } else {
     versionString = 'latest'
   }
@@ -243,7 +249,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
 export let dockerBaseImage = function (dockerfileContentArg: string) {
   let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/
   let regexResultArray = baseImageRegex.exec(dockerfileContentArg)
-  return regexResultArray[1]
+  return regexResultArray[ 1 ]
 }
 
 /**

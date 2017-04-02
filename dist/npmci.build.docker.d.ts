@@ -45,7 +45,8 @@ export declare class Dockerfile {
     version: string;
     cleanTag: string;
     buildTag: string;
-    testTag: string;
+    gitlabTestTag: string;
+    gitlabReleaseTag: string;
     releaseTag: string;
     containerName: string;
     content: string;

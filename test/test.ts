@@ -1,5 +1,4 @@
-import 'typings-test'
-import * as should from 'should'
+import { tap, expect } from 'tapbundle'
 import * as path from 'path'
 
 // set up environment
@@ -7,7 +6,7 @@ process.env.CI_BUILD_REPO = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.g
 process.env.NPMCI_SSHKEY_1 = 'hostString|somePrivKey|##'
 process.env.NPMTS_TEST = 'true'
 process.cwd = () => {
-    return path.join(__dirname,'assets/')
+  return path.join(__dirname, 'assets/')
 }
 
 // require NPMCI files
@@ -22,79 +21,57 @@ let dockerfile1: NpmciBuildDocker.Dockerfile
 let dockerfile2: NpmciBuildDocker.Dockerfile
 let sortableArray: NpmciBuildDocker.Dockerfile[]
 
-describe('NPMCI',function(){
-    describe('build.docker',function(){
-        it('should return valid Dockerfiles',function(){
-            dockerfile1 = new NpmciBuildDocker.Dockerfile({filePath: './Dockerfile', read: true})
-            dockerfile2 = new NpmciBuildDocker.Dockerfile({filePath: './Dockerfile_sometag1', read: true})
-            should(dockerfile1.version).equal('latest')
-            should(dockerfile2.version).equal('sometag1')
-        })
 
-        it('should read a directory of Dockerfiles',function(done){
-            NpmciBuildDocker.readDockerfiles()
-                .then(function(readDockerfilesArrayArg: NpmciBuildDocker.Dockerfile[]){
-                    should(readDockerfilesArrayArg[1].version).equal('sometag1')
-                    sortableArray = readDockerfilesArrayArg
-                    done()
-                })
-        })
+tap.test('should return valid Dockerfiles', async () => {
+  dockerfile1 = new NpmciBuildDocker.Dockerfile({ filePath: './Dockerfile', read: true })
+  dockerfile2 = new NpmciBuildDocker.Dockerfile({ filePath: './Dockerfile_sometag1', read: true })
+  expect(dockerfile1.version).to.equal('latest')
+  return expect(dockerfile2.version).to.equal('sometag1')
+}).catch(tap.threw)
 
-        it('should sort an array of Dockerfiles',function(done){
-            NpmciBuildDocker.sortDockerfiles(sortableArray)
-                .then(function(sortedArrayArg: NpmciBuildDocker.Dockerfile[]){
-                    console.log(sortedArrayArg)
-                    done()
-                })
-        })
-
-        it('should correctly chain Dockerfile handling', function(done){
-            NpmciBuildDocker.build()
-                .then(() => {
-                    done()
-                })
-        })
+tap.test('should read a directory of Dockerfiles', async () => {
+  return NpmciBuildDocker.readDockerfiles()
+    .then(async (readDockerfilesArrayArg: NpmciBuildDocker.Dockerfile[]) => {
+      sortableArray = readDockerfilesArrayArg
+      return expect(readDockerfilesArrayArg[ 1 ].version).to.equal('sometag1')
     })
+}).catch(tap.threw)
 
-    describe('.publish.docker',function(){
-        it('should publish all built Dockerfiles',function(done){
-            NpmciPublish.publish('docker')
-                .then(() => {
-                    done()
-                })
-        })
+tap.test('should sort an array of Dockerfiles', async () => {
+  return NpmciBuildDocker.sortDockerfiles(sortableArray)
+    .then(async (sortedArrayArg: NpmciBuildDocker.Dockerfile[]) => {
+      console.log(sortedArrayArg)
     })
+}).catch(tap.threw)
 
-    describe('.test.npm',function(){
-        it('should source nvm using bash and install a specific node version, then test it',function(done){
-            NpmciTest.test('legacy')
-                .then(() => {
-                    return NpmciTest.test('lts')
-                })
-                .then(() => {
-                    return NpmciTest.test('stable')
-                })
-                .then(() => {
-                    done()
-                })
-        })
-    })
+tap.test('should correctly chain Dockerfile handling', async () => {
+  return NpmciBuildDocker.build()
+}).catch(tap.threw)
 
-    describe('test.docker',function(){
-        it('should test dockerfiles',function(done){
-            NpmciTest.test('docker')
-                .then(() => {
-                    done()
-                })
-        })
-    })
+tap.test('should publish all built Dockerfiles', async () => {
+  return NpmciPublish.publish('docker')
+}).catch(tap.threw)
 
-    describe('npmci prepare ssh',function(){
-        it('should pick up SSH keys',function(done){
-            NpmciSsh.ssh()
-                .then(() => {
-                    done()
-                })
-        })
+tap.test('should source nvm using bash and install a specific node version, then test it', async () => {
+  return NpmciTest.test('legacy')
+    .then(() => {
+      return NpmciTest.test('lts')
     })
+    .then(() => {
+      return NpmciTest.test('stable')
+    })
+}).catch(tap.threw)
+
+tap.test('should test dockerfiles', async () => {
+  return NpmciTest.test('docker')
+}).catch(tap.threw)
+
+tap.test('should pick up SSH keys', async () => {
+  return NpmciSsh.ssh()
+}).catch(tap.threw)
+
+tap.test('reset paths', async () => {
+  process.cwd = () => {
+    return path.join(__dirname, '../')
+  }
 })
