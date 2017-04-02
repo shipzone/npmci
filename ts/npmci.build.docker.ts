@@ -185,6 +185,7 @@ export class Dockerfile {
         break
       case 'test':
       default:
+        await bashBare(`docker tag ${this.buildTag} ${this.gitlabTestTag}`)
         await bashBare(`docker push ${this.gitlabTestTag}`)
         break
     }
