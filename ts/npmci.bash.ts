@@ -38,8 +38,8 @@ let checkToolsAvailable = async () => {
 
     // check for yarn
     await plugins.smartshell.which('yarn').then(
-      () => {
-        plugins.smartshell.exec(`yarn config set cache-folder ${plugins.path.join(paths.cwd, '.yarn')}`)
+      async () => {
+        await plugins.smartshell.exec(`yarn config set cache-folder ${plugins.path.join(paths.cwd, '.yarn')}`)
         yarnAvailable.resolve(true)
       },
       () => { yarnAvailable.resolve(false) }

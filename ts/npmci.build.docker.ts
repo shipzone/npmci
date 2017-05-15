@@ -28,7 +28,7 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
   console.log(fileTree)
   for (let dockerfilePath of fileTree) {
     let myDockerfile = new Dockerfile({
-      filePath: dockerfilePath,
+      filePath: plugins.path.join(paths.cwd, dockerfilePath),
       read: true
     })
     readDockerfilesArray.push(myDockerfile)
@@ -144,7 +144,7 @@ export class Dockerfile {
   baseImage: string
   localBaseImageDependent: boolean
   localBaseDockerfile: Dockerfile
-  constructor(options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
+  constructor (options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
     this.filePath = options.filePath
     this.repo = NpmciEnv.repo.user + '/' + NpmciEnv.repo.repo
     this.version = dockerFileVersion(plugins.path.parse(options.filePath).base)
@@ -164,9 +164,10 @@ export class Dockerfile {
   /**
    * builds the Dockerfile
    */
-  async build() {
+  async build () {
     plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag)
-    await bashBare('docker build -t ' + this.buildTag + ' -f ' + this.filePath + ' .')
+    let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} .`
+    await bashBare(buildCommand)
     NpmciEnv.dockerFilesBuilt.push(this)
     return
   };
