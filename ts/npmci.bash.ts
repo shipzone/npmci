@@ -34,7 +34,7 @@ let checkToolsAvailable = async () => {
       nvmAvailable.resolve(true)
     } else {
       nvmAvailable.resolve(false)
-    };
+    }
 
     // check for yarn
     await plugins.smartshell.which('yarn').then(
@@ -56,7 +56,7 @@ checkToolsAvailable()
  * @param commandArg - The command to execute
  * @param retryArg - The retryArg: 0 to any positive number will retry, -1 will always succeed, -2 will return undefined
  */
-export let bash = async (commandArg: string, retryArg: number = 2, bareArg: boolean = false): Promise<string> => {
+export let bash = async (commandArg: string, retryArg: number = 2): Promise<string> => {
   await nvmAvailable.promise // make sure nvm check has run
   let execResult: plugins.smartshell.IExecResult
 
@@ -69,11 +69,10 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
 
   if (!process.env.NPMTS_TEST) { // NPMTS_TEST is used during testing
     for (let i = 0; i <= retryArg; i++) {
-      if (!bareArg) {
-        execResult = await npmciSmartshell.exec(commandArg)
-      } else {
-        execResult = await npmciSmartshell.exec(commandArg)
+      if (process.env.DEBUG_NPMCI === 'true') {
+        console.log(commandArg)
       }
+      execResult = await npmciSmartshell.exec(commandArg)
 
       // determine how bash reacts to error and success
       if (execResult.exitCode !== 0 && i === retryArg) { // something went wrong and retries are exhausted

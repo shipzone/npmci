@@ -28,7 +28,7 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
   console.log(fileTree)
   for (let dockerfilePath of fileTree) {
     let myDockerfile = new Dockerfile({
-      filePath: plugins.path.join(paths.cwd, dockerfilePath),
+      filePath: dockerfilePath,
       read: true
     })
     readDockerfilesArray.push(myDockerfile)
