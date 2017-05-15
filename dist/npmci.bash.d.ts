@@ -11,10 +11,6 @@ export declare let yarnAvailable: plugins.q.Deferred<boolean>;
  */
 export declare let bash: (commandArg: string, retryArg?: number, bareArg?: boolean) => Promise<string>;
 /**
- * bashBare allows usage of bash without sourcing any files like nvm
- */
-export declare let bashBare: (commandArg: string, retryArg?: number) => Promise<string>;
-/**
  * bashNoError allows executing stuff without throwing an error
  */
 export declare let bashNoError: (commandArg: string) => Promise<string>;

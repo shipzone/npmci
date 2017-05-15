@@ -1,7 +1,7 @@
 import * as plugins from './npmci.plugins'
 import * as paths from './npmci.paths'
 import * as NpmciEnv from './npmci.env'
-import { bashBare } from './npmci.bash'
+import { bash } from './npmci.bash'
 
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
@@ -167,7 +167,7 @@ export class Dockerfile {
   async build () {
     plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag)
     let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} .`
-    await bashBare(buildCommand)
+    await bash(buildCommand)
     NpmciEnv.dockerFilesBuilt.push(this)
     return
   };
@@ -178,19 +178,19 @@ export class Dockerfile {
   async push(stageArg) {
     switch (stageArg) {
       case 'release':
-        await bashBare(`docker tag ${this.buildTag} ${this.releaseTag}`)
-        await bashBare(`docker push ${this.releaseTag}`)
+        await bash(`docker tag ${this.buildTag} ${this.releaseTag}`)
+        await bash(`docker push ${this.releaseTag}`)
 
         // if release registry is different from gitlab
         if (NpmciEnv.dockerRegistry !== 'registry.gitlab.com') {
-          await bashBare(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
-          await bashBare(`docker push ${this.gitlabReleaseTag}`)
+          await bash(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
+          await bash(`docker push ${this.gitlabReleaseTag}`)
         }
         break
       case 'test':
       default:
-        await bashBare(`docker tag ${this.buildTag} ${this.gitlabTestTag}`)
-        await bashBare(`docker push ${this.gitlabTestTag}`)
+        await bash(`docker tag ${this.buildTag} ${this.gitlabTestTag}`)
+        await bash(`docker push ${this.gitlabTestTag}`)
         break
     }
   };
@@ -200,8 +200,8 @@ export class Dockerfile {
    */
   async pull(registryArg: string) {
     let pullTag = this.gitlabTestTag
-    await bashBare('docker pull ' + pullTag)
-    await bashBare('docker tag ' + pullTag + ' ' + this.buildTag)
+    await bash('docker pull ' + pullTag)
+    await bash('docker tag ' + pullTag + ' ' + this.buildTag)
   };
 
   /**
@@ -212,12 +212,12 @@ export class Dockerfile {
     let testFileExists: boolean = plugins.smartfile.fs.fileExistsSync(testFile)
     if (testFileExists) {
       // run tests
-      await bashBare('docker run --name npmci_test_container ' + this.buildTag + ' mkdir /npmci_test')
-      await bashBare('docker cp ' + testFile + ' npmci_test_container:/npmci_test/test.sh')
-      await bashBare('docker commit npmci_test_container npmci_test_image')
-      await bashBare('docker run npmci_test_image sh /npmci_test/test.sh')
-      await bashBare('docker rm npmci_test_container')
-      await bashBare('docker rmi --force npmci_test_image')
+      await bash('docker run --name npmci_test_container ' + this.buildTag + ' mkdir /npmci_test')
+      await bash('docker cp ' + testFile + ' npmci_test_container:/npmci_test/test.sh')
+      await bash('docker commit npmci_test_container npmci_test_image')
+      await bash('docker run npmci_test_image sh /npmci_test/test.sh')
+      await bash('docker rm npmci_test_container')
+      await bash('docker rmi --force npmci_test_image')
     } else {
       plugins.beautylog.warn('skipping tests for ' + this.cleanTag + ' because no testfile was found!')
     }
@@ -227,7 +227,7 @@ export class Dockerfile {
    * gets the id of a Dockerfile
    */
   async getId() {
-    let containerId = await bashBare('docker inspect --type=image --format=\"{{.Id}}\" ' + this.buildTag)
+    let containerId = await bash('docker inspect --type=image --format=\"{{.Id}}\" ' + this.buildTag)
     return containerId
   };
 }

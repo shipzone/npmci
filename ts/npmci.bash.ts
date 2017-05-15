@@ -72,7 +72,7 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
       if (!bareArg) {
         execResult = await npmciSmartshell.exec(commandArg)
       } else {
-        execResult = await plugins.smartshell.exec(commandArg)
+        execResult = await npmciSmartshell.exec(commandArg)
       }
 
       // determine how bash reacts to error and success
@@ -97,13 +97,6 @@ export let bash = async (commandArg: string, retryArg: number = 2, bareArg: bool
     }
   }
   return execResult.stdout
-}
-
-/**
- * bashBare allows usage of bash without sourcing any files like nvm
- */
-export let bashBare = async (commandArg: string, retryArg: number = 2): Promise<string> => {
-  return await bash(commandArg, retryArg, true)
 }
 
 /**
