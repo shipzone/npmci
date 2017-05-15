@@ -7,6 +7,7 @@ import { bashBare } from './npmci.bash'
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
 export let build = async () => {
+  plugins.beautylog.log('Now building Dockerfiles:')
   await readDockerfiles()
     .then(sortDockerfiles)
     .then(mapDockerfiles)
