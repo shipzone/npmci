@@ -25,6 +25,9 @@ smartcli.addCommand('build')
   .then((argv) => {
     build(argv._[ 1 ])
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+      })
   })
 
 // clean

@@ -45,6 +45,7 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
  */
 export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfile[]> => {
   let done = plugins.q.defer<Dockerfile[]>()
+  plugins.beautylog.info('sorting Dockerfiles:')
   let sortedArray: Dockerfile[] = []
   let cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg, sortedArray)
   let sorterFunctionCounter: number = 0
@@ -53,17 +54,22 @@ export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfil
       let cleanTags = cleanTagsArrayFunction(sortableArrayArg, sortedArray)
       if (cleanTags.indexOf(dockerfileArg.baseImage) === -1 && sortedArray.indexOf(dockerfileArg) === -1) {
         sortedArray.push(dockerfileArg)
-      };
+      }
       if (cleanTagsOriginal.indexOf(dockerfileArg.baseImage) !== -1) {
         dockerfileArg.localBaseImageDependent = true
-      };
+      }
     })
     if (sortableArrayArg.length === sortedArray.length) {
+      let counter = 1
+      for (let dockerfile of sortedArray) {
+        plugins.beautylog.log(`tag ${counter}: -> ${dockerfile.cleanTag}`)
+        counter++
+      }
       done.resolve(sortedArray)
     } else if (sorterFunctionCounter < 10) {
       sorterFunctionCounter++
       sorterFunction()
-    };
+    }
   }
   sorterFunction()
   return done.promise
