@@ -4,7 +4,7 @@ import { GitRepo } from 'smartstring'
 import { Dockerfile } from './npmci.build.docker'
 
 export let repo: GitRepo
-if (process.env.CI_BUILD_REPO) repo = new GitRepo(process.env.CI_BUILD_REPO)
+if (process.env.CI_REPOSITORY_URL) repo = new GitRepo(process.env.CI_REPOSITORY_URL)
 
 export let buildStage: string = process.env.CI_BUILD_STAGE
 
@@ -44,9 +44,8 @@ let configLoad = () => {
     if (!config.project) {
       config.project = plugins.smartfile.fs.toObjectSync(paths.NpmciProjectDir, 'npmci.json')
       plugins.beautylog.ok('project config found!')
-    };
-  }
-  catch (err) {
+    }
+  } catch (err) {
     config.project = {}
     plugins.beautylog.log('no project config found, so proceeding with default behaviour!')
   }

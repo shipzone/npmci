@@ -2,7 +2,7 @@ import { tap, expect } from 'tapbundle'
 import * as path from 'path'
 
 // set up environment
-process.env.CI_BUILD_REPO = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git'
+process.env.CI_REPOSITORY_URL = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git'
 process.env.NPMCI_SSHKEY_1 = 'hostString|somePrivKey|##'
 process.env.NPMTS_TEST = 'true'
 process.cwd = () => {

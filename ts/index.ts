@@ -27,6 +27,7 @@ smartcli.addCommand('build')
       .then(NpmciEnv.configStore)
       .catch(err => {
         console.log(err)
+        process.exit(1)
       })
   })
 
@@ -35,6 +36,10 @@ smartcli.addCommand('clean')
   .then((argv) => {
     clean()
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // command
@@ -42,6 +47,10 @@ smartcli.addCommand('command')
   .then((argv) => {
     command()
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // install
@@ -49,6 +58,10 @@ smartcli.addCommand('install')
   .then((argv) => {
     install(argv._[ 1 ])
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // prepare
@@ -56,6 +69,10 @@ smartcli.addCommand('prepare')
   .then((argv) => {
     prepare(argv._[ 1 ])
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // publish
@@ -63,6 +80,10 @@ smartcli.addCommand('publish')
   .then((argv) => {
     publish(argv._[ 1 ])
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // test
@@ -70,6 +91,10 @@ smartcli.addCommand('test')
   .then((argv) => {
     test(argv._[ 1 ])
       .then(NpmciEnv.configStore)
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   })
 
 // trigger
