@@ -7,7 +7,7 @@ import { bashBare } from './npmci.bash'
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
 export let build = async () => {
-  plugins.beautylog.log('Now building Dockerfiles:')
+  plugins.beautylog.log('now building Dockerfiles...')
   await readDockerfiles()
     .then(sortDockerfiles)
     .then(mapDockerfiles)
@@ -20,10 +20,12 @@ export let build = async () => {
  * @returns Promise<Dockerfile[]>
  */
 export let readDockerfiles = async (): Promise<Dockerfile[]> => {
-  let fileTree = await plugins.smartfile.fs.listFileTree(paths.cwd, './Dockerfile*')
+  let fileTree = await plugins.smartfile.fs.listFileTree(paths.cwd, 'Dockerfile*')
 
   // create the Dockerfile array
   let readDockerfilesArray: Dockerfile[] = []
+  plugins.beautylog.info(`found ${fileTree.length} Dockerfiles:`)
+  console.log(fileTree)
   for (let dockerfilePath of fileTree) {
     let myDockerfile = new Dockerfile({
       filePath: dockerfilePath,
