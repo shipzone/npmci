@@ -22,26 +22,26 @@
   },
   "homepage": "https://gitlab.com/gitzone/npmci#README",
   "devDependencies": {
-    "tapbundle": "^1.0.5",
+    "tapbundle": "^1.0.12",
     "typings-test": "^1.0.3"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.55",
-    "@types/node": "^7.0.8",
+    "@types/lodash": "^4.14.64",
+    "@types/node": "^7.0.18",
     "@types/request": "0.x.x",
-    "@types/shelljs": "^0.7.0",
+    "@types/shelljs": "^0.7.1",
     "@types/through2": "^2.0.32",
-    "beautylog": "^6.1.5",
+    "beautylog": "^6.1.10",
     "gulp": "^3.9.1",
-    "gulp-function": "^2.2.3",
+    "gulp-function": "^2.2.9",
     "lodash": "^4.17.4",
-    "npmextra": "^2.0.3",
+    "npmextra": "^2.0.5",
     "projectinfo": "^3.0.2",
     "request": "^2.81.0",
     "shelljs": "^0.7.7",
-    "smartcli": "^2.0.1",
+    "smartcli": "^2.0.7",
     "smartdelay": "^1.0.1",
-    "smartfile": "^4.1.7",
+    "smartfile": "^4.2.11",
     "smartparam": "^0.1.1",
     "smartq": "^1.1.1",
     "smartshell": "^1.0.6",
@@ -49,6 +49,6 @@
     "smartssh": "^1.2.1",
     "smartstring": "^2.0.24",
     "through2": "^2.0.3",
-    "typings-global": "^1.0.14"
+    "typings-global": "^1.0.16"
   }
 }

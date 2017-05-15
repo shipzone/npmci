@@ -27,7 +27,7 @@ tap.test('should return valid Dockerfiles', async () => {
   dockerfile2 = new NpmciBuildDocker.Dockerfile({ filePath: './Dockerfile_sometag1', read: true })
   expect(dockerfile1.version).to.equal('latest')
   return expect(dockerfile2.version).to.equal('sometag1')
-}).catch(tap.threw)
+})
 
 tap.test('should read a directory of Dockerfiles', async () => {
   return NpmciBuildDocker.readDockerfiles()
@@ -35,22 +35,22 @@ tap.test('should read a directory of Dockerfiles', async () => {
       sortableArray = readDockerfilesArrayArg
       return expect(readDockerfilesArrayArg[ 1 ].version).to.equal('sometag1')
     })
-}).catch(tap.threw)
+})
 
 tap.test('should sort an array of Dockerfiles', async () => {
   return NpmciBuildDocker.sortDockerfiles(sortableArray)
     .then(async (sortedArrayArg: NpmciBuildDocker.Dockerfile[]) => {
       console.log(sortedArrayArg)
     })
-}).catch(tap.threw)
+})
 
 tap.test('should correctly chain Dockerfile handling', async () => {
   return NpmciBuildDocker.build()
-}).catch(tap.threw)
+})
 
 tap.test('should publish all built Dockerfiles', async () => {
   return NpmciPublish.publish('docker')
-}).catch(tap.threw)
+})
 
 tap.test('should source nvm using bash and install a specific node version, then test it', async () => {
   return NpmciTest.test('legacy')
@@ -60,18 +60,20 @@ tap.test('should source nvm using bash and install a specific node version, then
     .then(() => {
       return NpmciTest.test('stable')
     })
-}).catch(tap.threw)
+})
 
 tap.test('should test dockerfiles', async () => {
   return NpmciTest.test('docker')
-}).catch(tap.threw)
+})
 
 tap.test('should pick up SSH keys', async () => {
   return NpmciSsh.ssh()
-}).catch(tap.threw)
+})
 
 tap.test('reset paths', async () => {
   process.cwd = () => {
     return path.join(__dirname, '../')
   }
-}).catch(tap.threw)
+})
+
+tap.start()
