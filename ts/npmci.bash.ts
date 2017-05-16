@@ -89,7 +89,6 @@ export let bash = async (commandArg: string, retryArg: number = 2): Promise<stri
     }
   } else {
     plugins.beautylog.log('ShellExec would be: ' + commandArg)
-    await plugins.smartdelay.delayFor(100)
     execResult = {
       exitCode: 0,
       stdout: 'testOutput'

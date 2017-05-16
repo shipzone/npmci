@@ -42,6 +42,7 @@
     "smartcli": "^2.0.7",
     "smartdelay": "^1.0.1",
     "smartfile": "^4.2.11",
+    "smartmonitor": "^1.0.3",
     "smartparam": "^0.1.1",
     "smartq": "^1.1.1",
     "smartshell": "^1.0.6",
