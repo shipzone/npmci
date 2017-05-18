@@ -1,7 +1,7 @@
-import * as plugins from './npmci.plugins'
-import * as paths from './npmci.paths'
-import * as NpmciEnv from './npmci.env'
-import { bash } from './npmci.bash'
+import * as plugins from './mod.plugins'
+import * as paths from '../npmci.paths'
+import * as NpmciEnv from '../npmci.env'
+import { bash } from '../npmci.bash'
 
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain

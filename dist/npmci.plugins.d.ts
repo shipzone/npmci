@@ -16,6 +16,7 @@ export import smartparam = require('smartparam');
 export import smartq = require('smartq');
 export import smartshell = require('smartshell');
 export import smartsocket = require('smartsocket');
+export import smartsystem = require('smartsystem');
 export import smartssh = require('smartssh');
 export import smartstring = require('smartstring');
 export import through2 = require('through2');

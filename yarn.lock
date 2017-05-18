@@ -29,15 +29,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/fs-extra@0.0.35":
+"@types/fs-extra@0.0.35", "@types/fs-extra@0.x.x":
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-0.0.35.tgz#3ed400c0122fb161db51da23d96ba5040cb9c7d9"
-  dependencies:
-    "@types/node" "*"
-
-"@types/fs-extra@0.x.x":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-0.0.37.tgz#195f11bcd9a1b97d9e412c6b66899b545471a1f7"
   dependencies:
     "@types/node" "*"
 
@@ -79,7 +73,7 @@
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-0.0.32.tgz#bd284e57c84f1325da702babfc82a5328190c0c5"
 
-"@types/q@1.x.x", "@types/q@^1.x.x":
+"@types/q@1.0.0", "@types/q@1.x.x", "@types/q@^1.x.x":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.0.0.tgz#57e5465d665b370d4217e69b344b20faa6b724f5"
 
@@ -1859,17 +1853,13 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.0:
+object-assign@4.1.0, object-assign@^4.0.1:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
 
 object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
-
-object-assign@^4.0.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
 object-component@0.0.3:
   version "0.0.3"
@@ -2540,6 +2530,16 @@ smartstring@2.0.24, smartstring@^2.0.22, smartstring@^2.0.24:
     js-base64 "^2.1.9"
     typings-global "^1.0.14"
 
+smartsystem@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/smartsystem/-/smartsystem-1.0.17.tgz#a74e4cd3a780df7bd339e6f36620be2fa12af5ab"
+  dependencies:
+    "@types/q" "1.0.0"
+    lik "^1.0.30"
+    q "^1.5.0"
+    systemjs "^0.20.12"
+    typings-global "^1.0.16"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
@@ -2711,6 +2711,10 @@ supports-color@^2.0.0:
 symbol-observable@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+
+systemjs@^0.20.12:
+  version "0.20.12"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-0.20.12.tgz#135cc471280448453347829ebb9639a09a67f101"
 
 tapbundle@^1.0.12:
   version "1.0.12"

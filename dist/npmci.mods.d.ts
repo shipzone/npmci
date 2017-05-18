@@ -1,0 +1,17 @@
+import * as _modBuild from './mod_build/index';
+import * as _modClean from './mod_clean/index';
+import * as _modCommand from './mod_command/index';
+import * as _modDocker from './mod_docker/index';
+import * as _modInstall from './mod_install/index';
+import * as _modPublish from './mod_publish/index';
+import * as _modPrepare from './mod_prepare/index';
+import * as _modTrigger from './mod_trigger/index';
+import { LazyModule } from 'smartsystem';
+export declare let modBuild: LazyModule<typeof _modBuild>;
+export declare let modClean: LazyModule<typeof _modClean>;
+export declare let modCommand: LazyModule<typeof _modCommand>;
+export declare let modDocker: LazyModule<typeof _modDocker>;
+export declare let modInstall: LazyModule<typeof _modInstall>;
+export declare let modPublish: LazyModule<typeof _modPublish>;
+export declare let modPrepare: LazyModule<typeof _modPrepare>;
+export declare let modTrigger: LazyModule<typeof _modTrigger>;
