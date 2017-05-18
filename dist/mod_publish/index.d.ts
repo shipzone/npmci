@@ -1,4 +1,3 @@
-import * as NpmciBuildDocker from './npmci.build.docker';
 /**
  * type of supported services
  */
@@ -7,4 +6,4 @@ export declare type TPubService = 'npm' | 'docker';
  * the main exported publish function.
  * @param pubServiceArg references targeted service to publish to
  */
-export declare let publish: (pubServiceArg?: TPubService) => Promise<void | NpmciBuildDocker.Dockerfile[]>;
+export declare let publish: (pubServiceArg?: TPubService) => Promise<any>;

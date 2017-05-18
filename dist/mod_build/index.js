@@ -8,15 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const plugins = require("./npmci.plugins");
-const buildDocker = require("./npmci.build.docker");
+const plugins = require("./mod.plugins");
+const npmciMods = require("../npmci.mods");
 /**
  * builds for a specific service
  */
 exports.build = (commandArg) => __awaiter(this, void 0, void 0, function* () {
     switch (commandArg) {
         case 'docker':
-            yield buildDocker.build();
+            let modDocker = yield npmciMods.modDocker.load();
+            yield modDocker.build();
             break;
         default:
             plugins.beautylog.log('build target ' + commandArg + ' not recognised!');
@@ -24,4 +25,4 @@ exports.build = (commandArg) => __awaiter(this, void 0, void 0, function* () {
     ;
     return;
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kuYnVpbGQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi90cy9ucG1jaS5idWlsZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsMkNBQTBDO0FBRzFDLG9EQUFtRDtBQU9uRDs7R0FFRztBQUNRLFFBQUEsS0FBSyxHQUFHLENBQU8sVUFBVTtJQUNsQyxNQUFNLENBQUMsQ0FBQyxVQUFVLENBQUMsQ0FBQyxDQUFDO1FBQ25CLEtBQUssUUFBUTtZQUNYLE1BQU0sV0FBVyxDQUFDLEtBQUssRUFBRSxDQUFBO1lBQ3pCLEtBQUssQ0FBQTtRQUNQO1lBQ0UsT0FBTyxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsZUFBZSxHQUFHLFVBQVUsR0FBRyxrQkFBa0IsQ0FBQyxDQUFBO0lBQzVFLENBQUM7SUFBQSxDQUFDO0lBQ0YsTUFBTSxDQUFBO0FBQ1IsQ0FBQyxDQUFBLENBQUEifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi90cy9tb2RfYnVpbGQvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHlDQUF3QztBQUd4QywyQ0FBMEM7QUFPMUM7O0dBRUc7QUFDUSxRQUFBLEtBQUssR0FBRyxDQUFPLFVBQVU7SUFDbEMsTUFBTSxDQUFDLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQztRQUNuQixLQUFLLFFBQVE7WUFDWCxJQUFJLFNBQVMsR0FBRyxNQUFNLFNBQVMsQ0FBQyxTQUFTLENBQUMsSUFBSSxFQUFFLENBQUE7WUFDaEQsTUFBTSxTQUFTLENBQUMsS0FBSyxFQUFFLENBQUE7WUFDdkIsS0FBSyxDQUFBO1FBQ1A7WUFDRSxPQUFPLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyxlQUFlLEdBQUcsVUFBVSxHQUFHLGtCQUFrQixDQUFDLENBQUE7SUFDNUUsQ0FBQztJQUFBLENBQUM7SUFDRixNQUFNLENBQUE7QUFDUixDQUFDLENBQUEsQ0FBQSJ9

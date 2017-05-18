@@ -4,6 +4,13 @@ let sshRegex = /^(.*)\|(.*)\|(.*)/
 let sshInstance: plugins.smartssh.SshInstance
 
 /**
+ * checks if not undefined
+ */
+let notUndefined = (stringArg: string) => {
+  return (stringArg && stringArg !== 'undefined' && stringArg !== '##')
+}
+
+/**
  * checks for ENV vars in form of NPMCI_SSHKEY_* and deploys any found ones
  */
 export let ssh = async () => {
@@ -38,11 +45,4 @@ let evaluateSshEnv = async (sshkeyEnvVarArg) => {
 
   sshInstance.addKey(sshKey)
   return
-}
-
-/**
- * checks if not undefined
- */
-let notUndefined = (stringArg: string) => {
-  return (stringArg && stringArg !== 'undefined' && stringArg !== '##')
 }

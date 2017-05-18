@@ -1,10 +1,12 @@
 import * as plugins from './npmci.plugins'
 import * as paths from './npmci.paths'
 import { GitRepo } from 'smartstring'
-import { Dockerfile } from './npmci.build.docker'
+import { Dockerfile } from './mod_docker/index'
 
 export let repo: GitRepo
-if (process.env.CI_REPOSITORY_URL) repo = new GitRepo(process.env.CI_REPOSITORY_URL)
+if (process.env.CI_REPOSITORY_URL) {
+  repo = new GitRepo(process.env.CI_REPOSITORY_URL)
+} 
 
 export let buildStage: string = process.env.CI_BUILD_STAGE
 
@@ -22,7 +24,7 @@ export let config = {
   project: undefined
 }
 
-export let configStore = () => {
+export let configStore = async () => {
   config.dockerRegistry = dockerRegistry
   plugins.smartfile.memory.toFsSync(
     JSON.stringify(config),

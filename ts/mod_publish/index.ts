@@ -34,7 +34,7 @@ let publishNpm = async () => {
 }
 
 /**
- * tries to pubish current cwd to Docker registry
+ * tries to publish current cwd to Docker registry
  */
 let publishDocker = async () => {
   return await NpmciBuildDocker.readDockerfiles()

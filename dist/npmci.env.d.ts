@@ -8,8 +8,8 @@ export declare let dockerFilesBuilt: Dockerfile[];
 export declare let dockerFiles: Dockerfile[];
 export declare let config: {
     dockerRegistry: any;
-    dockerFilesBuilt: Dockerfile[];
-    dockerFiles: Dockerfile[];
+    dockerFilesBuilt: any[];
+    dockerFiles: any[];
     project: any;
 };
 export declare let configStore: () => void;
