@@ -57,10 +57,6 @@
   version "2.0.29"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-2.0.29.tgz#5002e14f75e2d71e564281df0431c8c1b4a2a36a"
 
-"@types/mocha@^2.2.31":
-  version "2.2.41"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.41.tgz#e27cf0817153eb9f2713b2d3f6c68f1e1c3ca608"
-
 "@types/node@*", "@types/node@^7.0.18":
   version "7.0.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.18.tgz#cd67f27d3dc0cfb746f0bdd5e086c4c5d55be173"
@@ -398,6 +394,17 @@ caseless@~0.11.0:
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
+
+cflare@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/cflare/-/cflare-0.0.19.tgz#e7be0790167c3fc0567c80aa76e975e33b071c4c"
+  dependencies:
+    beautylog "^6.1.1"
+    smartdelay "^1.0.1"
+    smartq "^1.1.0"
+    smartrequest "^1.0.4"
+    smartstring "^2.0.22"
+    typings-global "^1.0.14"
 
 chai-as-promised@^6.0.0:
   version "6.0.0"
@@ -2813,19 +2820,12 @@ typed-promisify@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/typed-promisify/-/typed-promisify-0.3.0.tgz#1ba0af5e444c87d8047406f18ce49092a1191853"
 
-typings-global@*, typings-global@^1.0.13, typings-global@^1.0.14, typings-global@^1.0.16, typings-global@^1.0.3, typings-global@^1.0.6:
+typings-global@^1.0.13, typings-global@^1.0.14, typings-global@^1.0.16, typings-global@^1.0.3, typings-global@^1.0.6:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/typings-global/-/typings-global-1.0.16.tgz#489b71781af24268750c2899316400a5e482961f"
   dependencies:
     semver "^5.3.0"
     shelljs "^0.7.7"
-
-typings-test@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/typings-test/-/typings-test-1.0.3.tgz#fbab895eb3f0c44842e73db059f65946b971e369"
-  dependencies:
-    "@types/mocha" "^2.2.31"
-    typings-global "*"
 
 ultron@1.0.x:
   version "1.0.2"

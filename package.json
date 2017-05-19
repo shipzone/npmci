@@ -31,6 +31,7 @@
     "@types/shelljs": "^0.7.1",
     "@types/through2": "^2.0.32",
     "beautylog": "^6.1.10",
+    "cflare": "^0.0.19",
     "gulp": "^3.9.1",
     "gulp-function": "^2.2.9",
     "lodash": "^4.17.4",
