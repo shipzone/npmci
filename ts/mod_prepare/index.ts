@@ -1,7 +1,7 @@
-import * as plugins from './npmci.plugins'
-import { bash } from './npmci.bash'
-import * as env from './npmci.env'
-import * as sshModule from './npmci.ssh'
+import * as plugins from './mod.plugins'
+import { bash } from '../npmci.bash'
+import * as env from '../npmci.env'
+import * as sshModule from '../npmci.ssh'
 
 
 // types

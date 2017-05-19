@@ -1,6 +1,5 @@
-import * as plugins from './npmci.plugins'
-import { prepare } from './npmci.prepare'
-import { bash } from './npmci.bash'
+import * as plugins from './mod.plugins'
+import { bash } from '../npmci.bash'
 
 let triggerValueRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.\-\/]*)/
 
@@ -23,5 +22,8 @@ let evaluateTrigger = async (triggerEnvVarArg) => {
   }
   plugins.beautylog.info('Found Trigger!')
   plugins.beautylog.log('triggering build for ref ' + regexRefName + ' of ' + regexTriggerName)
-  plugins.request.post('https://gitlab.com/api/v3/projects/' + regexProjectId + '/trigger/builds', { form: { token: regexProjectTriggerToken, ref: regexRefName } })
+  plugins.request.post(
+    'https://gitlab.com/api/v3/projects/' + regexProjectId + '/trigger/builds',
+    { form: { token: regexProjectTriggerToken, ref: regexRefName }
+  })
 }

@@ -1,10 +1,10 @@
-import * as plugins from './npmci.plugins'
-import * as configModule from './npmci.config'
+import * as plugins from './mod.plugins'
+import * as configModule from '../npmci.config'
 import {
   bash,
   bashNoError,
   nvmAvailable,
-  yarnAvailable } from './npmci.bash'
+  yarnAvailable } from '../npmci.bash'
 
 /**
  * Install a specific version of node

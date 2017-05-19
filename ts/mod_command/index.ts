@@ -1,5 +1,5 @@
-import * as plugins from './npmci.plugins'
-import { bash } from './npmci.bash'
+import * as plugins from './mod.plugins'
+import { bash } from '../npmci.bash'
 
 export let command = async () => {
   let wrappedCommand: string = ''

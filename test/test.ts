@@ -10,12 +10,11 @@ process.cwd = () => {
 }
 
 // require NPMCI files
-import npmci = require('../dist/index')
-import NpmciBuildDocker = require('../dist/npmci.build.docker')
-import NpmciPublish = require('../dist/npmci.publish')
-import NpmciTest = require('../dist/npmci.test')
+import '../dist/index'
+import NpmciBuildDocker = require('../dist/mod_docker/index')
+import NpmciPublish = require('../dist/mod_publish/index')
+import NpmciTest = require('../dist/mod_test/index')
 import NpmciSsh = require('../dist/npmci.ssh')
-
 
 let dockerfile1: NpmciBuildDocker.Dockerfile
 let dockerfile2: NpmciBuildDocker.Dockerfile
