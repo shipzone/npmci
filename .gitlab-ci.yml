@@ -13,7 +13,7 @@ stages:
 - pages
 
 before_script:
-  - npm install npmci -q -g
+  - yarn global add npmci
 
 testLEGACY:
   stage: test
