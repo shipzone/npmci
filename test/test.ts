@@ -15,6 +15,7 @@ import NpmciBuildDocker = require('../dist/mod_docker/index')
 import NpmciPublish = require('../dist/mod_publish/index')
 import NpmciTest = require('../dist/mod_test/index')
 import NpmciSsh = require('../dist/npmci.ssh')
+import NpmciEnv = require('../dist/npmci.env')
 
 let dockerfile1: NpmciBuildDocker.Dockerfile
 let dockerfile2: NpmciBuildDocker.Dockerfile
@@ -73,6 +74,10 @@ tap.test('reset paths', async () => {
   process.cwd = () => {
     return path.join(__dirname, '../')
   }
+})
+
+tap.test('', async () => {
+  await NpmciEnv.configStore()
 })
 
 tap.start()

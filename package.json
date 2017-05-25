@@ -8,7 +8,7 @@
     "npmci": "dist/cli.js"
   },
   "scripts": {
-    "test": "(npmts) && (npm run testVersion)",
+    "test": "(rm -f config.json) && (npmts) && (npm run testVersion)",
     "testVersion": "(cd test/assets/ && node ../../dist/cli.js -v)"
   },
   "repository": {
