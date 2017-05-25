@@ -1,42 +1,44 @@
+# gitzone standard
 image: hosttoday/ht-docker-node:stable
+
+cache:
+  paths:
+  - .yarn/
+  key: "$CI_BUILD_STAGE"
 
 stages:
 - test
 - release
 - trigger
-- page
-
+- pages
 
 before_script:
   - npm install npmci -q -g
 
-testLTS:
-  stage: test
-  script:
-    - npmci install lts
-    - npmci command npm install -g -q npmts
-    - npmci test lts
-  tags:
-    - docker
-   
-testSTABLE:
-  stage: test
-  script:
-    - npmci install stable
-    - npmci command npm install -g -q npmts
-    - npmci test stable
-  tags:
-    - docker
-    
 testLEGACY:
   stage: test
   script:
-    - npmci install legacy
-    - npmci command npm install -g -q npmts
     - npmci test legacy
+  coverage: /\d+.?\d+?\%\s*coverage/
   tags:
     - docker
   allow_failure: true
+
+testLTS:
+  stage: test
+  script:
+    - npmci test lts
+  coverage: /\d+.?\d+?\%\s*coverage/
+  tags:
+    - docker
+    
+testSTABLE:
+  stage: test
+  script:
+    - npmci test stable
+  coverage: /\d+.?\d+?\%\s*coverage/
+  tags:
+    - docker
 
 release:
   stage: release
@@ -57,15 +59,15 @@ trigger:
     - docker
 
 pages:
-  stage: page
+  image: hosttoday/ht-docker-node:npmci
+  stage: pages
   script:
-    - npmci test stable
-    - npmci command npm install -g -q npmpage
-    - npmci command npmpage --host gitlab
-  only:
-    - tags
+    - npmci command yarn global add npmpage
+    - npmci command npmpage
   tags:
     - docker
+  only:
+    - tags
   artifacts:
     expire_in: 1 week
     paths:
