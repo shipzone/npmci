@@ -5,9 +5,12 @@ import { Smartmonitor } from 'smartmonitor'
 
 export let npmciMonitor = new Smartmonitor()
 
-if(process.env.SMARTMONITOR) {
+let monitorEnvString: string = process.env.NPMCI_MONITOR
+
+if (monitorEnvString) {
+  let npmciMonitorKeys: string[] = monitorEnvString.split('|')
   npmciMonitor.addInstrumental({
-    apiKey: process.env.SMARTMONITOR
+    apiKey: process.env.NPMCI_MONITOR
   })
   plugins.beautylog.info('Monitoring activated')
 } else {

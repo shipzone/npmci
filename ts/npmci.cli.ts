@@ -43,6 +43,15 @@ smartcli.addCommand('command')
     process.exit(1)
   })
 
+// purge
+smartcli.addCommand('purge')
+  .then(async (argvArg) => {
+    let modPurge = await npmciMods.modPurge.load()
+    await modPurge.purge(argvArg)
+  }).catch(err => {
+    console.log(err)
+  })
+
 // install
 smartcli.addCommand('install')
   .then(async (argv) => {
