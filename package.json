@@ -25,13 +25,13 @@
     "tapbundle": "^1.0.14"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.65",
-    "@types/node": "^7.0.29",
+    "@types/lodash": "^4.14.66",
+    "@types/node": "^7.0.31",
     "@types/request": "0.x.x",
     "@types/shelljs": "^0.7.2",
     "@types/through2": "^2.0.33",
     "beautylog": "^6.1.10",
-    "cflare": "^1.0.3",
+    "cflare": "^1.0.5",
     "gulp": "^3.9.1",
     "gulp-function": "^2.2.9",
     "lodash": "^4.17.4",
@@ -51,6 +51,6 @@
     "smartstring": "^2.0.24",
     "smartsystem": "^1.0.17",
     "through2": "^2.0.3",
-    "typings-global": "^1.0.16"
+    "typings-global": "^1.0.17"
   }
 }
