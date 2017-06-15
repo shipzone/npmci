@@ -23,21 +23,9 @@
   version "0.6.33"
   resolved "https://registry.yarnpkg.com/@types/colors/-/colors-0.6.33.tgz#17dada5971c395259490d6c83d7c182cf6e9ce55"
 
-"@types/form-data@*":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-0.0.33.tgz#c9ac85b2a5fd18435b8c85d9ecb50e6d6c893ff8"
-  dependencies:
-    "@types/node" "*"
-
-"@types/fs-extra@0.0.35":
+"@types/fs-extra@0.0.35", "@types/fs-extra@0.x.x":
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-0.0.35.tgz#3ed400c0122fb161db51da23d96ba5040cb9c7d9"
-  dependencies:
-    "@types/node" "*"
-
-"@types/fs-extra@0.x.x":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-0.0.37.tgz#195f11bcd9a1b97d9e412c6b66899b545471a1f7"
   dependencies:
     "@types/node" "*"
 
@@ -83,13 +71,6 @@
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@types/raven/-/raven-1.2.2.tgz#afe52bd98187a3a3d28b8212e363143bd16f23bf"
   dependencies:
-    "@types/node" "*"
-
-"@types/request@0.x.x":
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/@types/request/-/request-0.0.43.tgz#fcc59cfd88e63034e813c6884a0aade2d0f7e935"
-  dependencies:
-    "@types/form-data" "*"
     "@types/node" "*"
 
 "@types/shelljs@^0.3.33":
@@ -1874,17 +1855,13 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.0:
+object-assign@4.1.0, object-assign@^4.0.1:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
 
 object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
-
-object-assign@^4.0.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
 object-component@0.0.3:
   version "0.0.3"

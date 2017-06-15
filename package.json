@@ -27,7 +27,6 @@
   "dependencies": {
     "@types/lodash": "^4.14.66",
     "@types/node": "^7.0.31",
-    "@types/request": "0.x.x",
     "@types/shelljs": "^0.7.2",
     "@types/through2": "^2.0.33",
     "beautylog": "^6.1.10",
