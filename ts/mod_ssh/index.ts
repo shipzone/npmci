@@ -1,4 +1,4 @@
-import * as plugins from './npmci.plugins'
+import * as plugins from './mod.plugins'
 
 let sshRegex = /^(.*)\|(.*)\|(.*)/
 let sshInstance: plugins.smartssh.SshInstance
@@ -20,11 +20,11 @@ export let ssh = async () => {
     sshInstance.writeToDisk()
   } else {
     plugins.beautylog.log('In test mode, so not storing SSH keys to disk!')
-  };
+  }
 }
 
 /**
- * gets called for each found SSH ENV Var and deploys it 
+ * gets called for each found SSH ENV Var and deploys it
  */
 let evaluateSshEnv = async (sshkeyEnvVarArg) => {
   let resultArray = sshRegex.exec(sshkeyEnvVarArg)
@@ -37,11 +37,11 @@ let evaluateSshEnv = async (sshkeyEnvVarArg) => {
   if (notUndefined(resultArray[2])) {
     plugins.beautylog.log('---> privKey defined!')
     sshKey.privKeyBase64 = resultArray[2]
-  };
+  }
   if (notUndefined(resultArray[3])) {
-    '---> pubKey defined!'
+    plugins.beautylog.log('---> pubKey defined!')
     sshKey.pubKeyBase64 = resultArray[3]
-  };
+  }
 
   sshInstance.addKey(sshKey)
   return

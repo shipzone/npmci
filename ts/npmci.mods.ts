@@ -6,6 +6,7 @@ import * as _modInstall from './mod_install/index'
 import * as _modPublish from './mod_publish/index'
 import * as _modPurge from './mod_purge/index'
 import * as _modPrepare from './mod_prepare/index'
+import * as _modSsh from './mod_ssh/index'
 import * as _modTrigger from './mod_trigger/index'
 import * as _modTest from './mod_test/index'
 
@@ -19,5 +20,6 @@ export let modInstall = new LazyModule<typeof _modInstall>('./mod_install/index'
 export let modPublish = new LazyModule<typeof _modPublish>('./mod_publish/index', __dirname)
 export let modPurge = new LazyModule<typeof _modPurge>('./mod_purge/index', __dirname)
 export let modPrepare = new LazyModule<typeof _modPrepare>('./mod_prepare/index', __dirname)
+export let modSsh = new LazyModule<typeof _modSsh>('./mod_ssh/index', __dirname)
 export let modTrigger = new LazyModule<typeof _modTrigger>('./mod_trigger/index', __dirname)
 export let modTest = new LazyModule<typeof _modTest>('./mod_test/index',__dirname)

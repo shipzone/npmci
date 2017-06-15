@@ -1,8 +1,7 @@
 import * as plugins from './mod.plugins'
 import { bash } from '../npmci.bash'
 import * as env from '../npmci.env'
-import * as sshModule from '../npmci.ssh'
-
+import * as npmciMods from '../npmci.mods'
 
 // types
 
@@ -59,6 +58,7 @@ let dockerGitlab = async () => {
  * prepare ssh
  */
 let ssh = async () => {
+  let sshModule = await npmciMods.modSsh.load()
   await sshModule.ssh()
 }
 

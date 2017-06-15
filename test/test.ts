@@ -14,7 +14,7 @@ import '../dist/index'
 import NpmciBuildDocker = require('../dist/mod_docker/index')
 import NpmciPublish = require('../dist/mod_publish/index')
 import NpmciTest = require('../dist/mod_test/index')
-import NpmciSsh = require('../dist/npmci.ssh')
+import NpmciSsh = require('../dist/mod_ssh/index')
 import NpmciEnv = require('../dist/npmci.env')
 
 let dockerfile1: NpmciBuildDocker.Dockerfile
