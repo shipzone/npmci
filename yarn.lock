@@ -47,7 +47,7 @@
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@types/js-base64/-/js-base64-2.1.5.tgz#31b6d36a66a4c59ae3f31b5e16bfd6b832a6eb41"
 
-"@types/lodash@4.x.x", "@types/lodash@^4.14.55", "@types/lodash@^4.14.62", "@types/lodash@^4.14.67":
+"@types/lodash@4.x.x", "@types/lodash@^4.14.55", "@types/lodash@^4.14.67":
   version "4.14.67"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.67.tgz#4714714434da110306b9862fbd36b30b55eb850a"
 
@@ -1521,19 +1521,18 @@ liftoff@^2.1.0:
     resolve "^1.1.7"
 
 lik@^1.0.15, lik@^1.0.30, lik@^1.0.32:
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/lik/-/lik-1.0.32.tgz#41ee6c8edd483eaa11bd089775263955f5555060"
+  version "1.0.36"
+  resolved "https://registry.yarnpkg.com/lik/-/lik-1.0.36.tgz#28eb171e5cae4b5d619de34af1911a2990d378aa"
   dependencies:
-    "@types/lodash" "^4.14.62"
+    "@types/lodash" "^4.14.67"
     "@types/minimatch" "2.x.x"
     "@types/q" "1.x.x"
     lodash "^4.17.4"
-    minimatch "^3.0.3"
+    minimatch "^3.0.4"
     q "^1.5.0"
-    rxjs "^5.3.0"
+    rxjs "^5.4.1"
     smartq "^1.1.1"
-    tapbundle "^1.0.14"
-    typings-global "^1.0.14"
+    typings-global "^1.0.19"
 
 load-json-file@^2.0.0:
   version "2.0.0"
@@ -1761,7 +1760,7 @@ minimatch@^2.0.1:
   dependencies:
     brace-expansion "^1.0.0"
 
-minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
+minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
@@ -2353,7 +2352,7 @@ restore-cursor@^2.0.0:
     onetime "^2.0.0"
     signal-exit "^3.0.2"
 
-rxjs@^5.3.0, rxjs@^5.3.1, rxjs@^5.4.1:
+rxjs@^5.3.1, rxjs@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.4.1.tgz#b62f757f279445d265a18a58fb0a70dc90e91626"
   dependencies:
@@ -2581,15 +2580,14 @@ smartstring@2.0.24, smartstring@^2.0.24:
     js-base64 "^2.1.9"
     typings-global "^1.0.14"
 
-smartsystem@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/smartsystem/-/smartsystem-1.0.17.tgz#a74e4cd3a780df7bd339e6f36620be2fa12af5ab"
+smartsystem@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/smartsystem/-/smartsystem-1.0.18.tgz#f1e9a19d1a6048d3e99c5ee95e64f728147da901"
   dependencies:
-    "@types/q" "1.0.0"
     lik "^1.0.30"
-    q "^1.5.0"
+    smartq "^1.1.1"
     systemjs "^0.20.12"
-    typings-global "^1.0.16"
+    typings-global "^1.0.19"
 
 sntp@1.x.x:
   version "1.0.9"
