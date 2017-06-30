@@ -25,8 +25,8 @@
     "tapbundle": "^1.0.14"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.66",
-    "@types/node": "^7.0.31",
+    "@types/lodash": "^4.14.67",
+    "@types/node": "^8.0.6",
     "@types/shelljs": "^0.7.2",
     "@types/through2": "^2.0.33",
     "beautylog": "^6.1.10",
@@ -44,12 +44,12 @@
     "smartmonitor": "^1.0.3",
     "smartparam": "^0.1.1",
     "smartq": "^1.1.1",
-    "smartshell": "^1.0.6",
+    "smartshell": "^1.0.8",
     "smartsocket": "^1.1.7",
     "smartssh": "^1.2.2",
     "smartstring": "^2.0.24",
     "smartsystem": "^1.0.17",
     "through2": "^2.0.3",
-    "typings-global": "^1.0.17"
+    "typings-global": "^1.0.19"
   }
 }
