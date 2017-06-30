@@ -14,7 +14,7 @@ const npmciMods = require("../npmci.mods");
 let npmDependencies = () => __awaiter(this, void 0, void 0, function* () {
     plugins.beautylog.info('now installing dependencies:');
     if (yield npmci_bash_1.yarnAvailable.promise) {
-        yield npmci_bash_1.bash('yarn upgrade');
+        yield npmci_bash_1.bash('yarn install');
     }
     else {
         yield npmci_bash_1.bash('npm install');

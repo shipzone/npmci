@@ -9,7 +9,7 @@ import { Dockerfile } from '../mod_docker/index'
 let npmDependencies = async (): Promise<void> => {
   plugins.beautylog.info('now installing dependencies:')
   if (await yarnAvailable.promise) {
-    await bash('yarn upgrade')
+    await bash('yarn install')
   } else {
     await bash('npm install')
   }
