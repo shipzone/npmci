@@ -1,5 +1,5 @@
 # npmci
-helps with pushing to npm registry from any CI
+node and docker in gitlab ci on steroids
 
 ## Availabililty
 [![npm](https://gitzone.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/npmci)
