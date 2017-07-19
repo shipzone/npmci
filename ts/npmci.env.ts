@@ -6,8 +6,11 @@ import { Dockerfile } from './mod_docker/index'
 export let repo: GitRepo
 if (process.env.CI_REPOSITORY_URL) {
   repo = new GitRepo(process.env.CI_REPOSITORY_URL)
-} 
+}
 
+/**
+ * the build stage
+ */
 export let buildStage: string = process.env.CI_BUILD_STAGE
 
 // handling config between commands
@@ -17,6 +20,10 @@ export let setDockerRegistry = (dockerRegistryArg: string) => {
 }
 export let dockerFilesBuilt: Dockerfile[] = []
 export let dockerFiles: Dockerfile[] = []
+
+/**
+ * the config
+ */
 export let config = {
   dockerRegistry: undefined, // this will be set later on store
   dockerFilesBuilt: dockerFilesBuilt,
