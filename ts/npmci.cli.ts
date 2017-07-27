@@ -12,7 +12,7 @@ smartcli.addVersion(npmciInfo.version)
 
 // build
 smartcli.addCommand('build')
-  .then(async (argvArg) => {
+  .then(async argvArg => {
     let modBuild = await npmciMods.modBuild.load()
     await modBuild.build(argvArg)
     NpmciEnv.configStore()
