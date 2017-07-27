@@ -12,7 +12,6 @@ export type TBuildService = 'docker'
  * builds for a specific service
  */
 export let build = async (argvArg): Promise<void> => {
-  console.log(argvArg)
   let whatToPublish: string = argvArg._[1]
   switch (whatToPublish) {
     case 'docker':
