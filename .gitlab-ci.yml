@@ -43,7 +43,7 @@ testSTABLE:
 release:
   stage: release
   script:
-    - npmci publish
+    - npmci publish npm
   only:
     - tags
   tags:
