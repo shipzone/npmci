@@ -25,7 +25,7 @@ export let publish = async (argvArg: any) => {
     case 'npm':
       return await publishNpm(argvArg)
     default:
-      plugins.beautylog.info('no publish target sepcified, defaulting to npm...')
+      plugins.beautylog.info('no publish target specified, thus defaulting to npm...')
       return await publishNpm(argvArg)
   }
 }
