@@ -3,10 +3,13 @@ import * as paths from '../npmci.paths'
 import * as NpmciEnv from '../npmci.env'
 import { bash } from '../npmci.bash'
 
+let modArgvArg // will be set through the build command
+
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
-export let build = async () => {
+export let build = async (argvArg: any) => {
+  modArgvArg = argvArg
   plugins.beautylog.log('now building Dockerfiles...')
   await readDockerfiles()
     .then(sortDockerfiles)
@@ -105,8 +108,15 @@ export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
  * pushes the real Dockerfile images to a Docker registry
  */
 export let pushDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
+  let stageArg = (function () {
+    if (modArgvArg._ && modArgvArg._.length >= 3) {
+      return modArgvArg._[2]
+    } else {
+      return NpmciEnv.buildStage
+    }
+  })()
   for (let dockerfileArg of sortedArrayArg) {
-    await dockerfileArg.push(NpmciEnv.buildStage)
+    await dockerfileArg.push(stageArg)
   }
   return sortedArrayArg
 }
@@ -150,7 +160,7 @@ export class Dockerfile {
   baseImage: string
   localBaseImageDependent: boolean
   localBaseDockerfile: Dockerfile
-  constructor (options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
+  constructor(options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
     this.filePath = options.filePath
     this.repo = NpmciEnv.repo.user + '/' + NpmciEnv.repo.repo
     this.version = dockerFileVersion(plugins.path.parse(options.filePath).base)
@@ -181,7 +191,7 @@ export class Dockerfile {
   /**
    * pushes the Dockerfile to a registry
    */
-  async push(stageArg) {
+  async push (stageArg) {
     switch (stageArg) {
       case 'release':
         await bash(`docker tag ${this.buildTag} ${this.releaseTag}`)
@@ -204,7 +214,7 @@ export class Dockerfile {
   /**
    * pulls the Dockerfile from a registry
    */
-  async pull(registryArg: string) {
+  async pull (registryArg: string) {
     let pullTag = this.gitlabTestTag
     await bash('docker pull ' + pullTag)
     await bash('docker tag ' + pullTag + ' ' + this.buildTag)
@@ -213,7 +223,7 @@ export class Dockerfile {
   /**
    * tests the Dockerfile;
    */
-  async test() {
+  async test () {
     let testFile: string = plugins.path.join(paths.NpmciTestDir, 'test_' + this.version + '.sh')
     let testFileExists: boolean = plugins.smartfile.fs.fileExistsSync(testFile)
     if (testFileExists) {
@@ -232,7 +242,7 @@ export class Dockerfile {
   /**
    * gets the id of a Dockerfile
    */
-  async getId() {
+  async getId () {
     let containerId = await bash('docker inspect --type=image --format=\"{{.Id}}\" ' + this.buildTag)
     return containerId
   };
@@ -247,7 +257,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
   let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/
   let regexResultArray = versionRegex.exec(dockerfileNameArg)
   if (regexResultArray && regexResultArray.length === 2) {
-    versionString = regexResultArray[ 1 ]
+    versionString = regexResultArray[1]
   } else {
     versionString = 'latest'
   }
@@ -260,7 +270,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
 export let dockerBaseImage = function (dockerfileContentArg: string) {
   let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/
   let regexResultArray = baseImageRegex.exec(dockerfileContentArg)
-  return regexResultArray[ 1 ]
+  return regexResultArray[1]
 }
 
 /**

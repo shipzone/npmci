@@ -76,9 +76,9 @@ smartcli.addCommand('prepare')
 
 // publish
 smartcli.addCommand('publish')
-  .then(async (argv) => {
+  .then(async (argvArg) => {
     let modPublish = await npmciMods.modPublish.load()
-    await modPublish.publish(argv._[1])
+    await modPublish.publish(argvArg)
     await NpmciEnv.configStore()
 
   }).catch(err => {

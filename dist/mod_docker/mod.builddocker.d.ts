@@ -2,7 +2,7 @@
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
-export declare let build: () => Promise<void>;
+export declare let build: (argvArg: any) => Promise<void>;
 /**
  * creates instance of class Dockerfile for all Dockerfiles in cwd
  * @returns Promise<Dockerfile[]>

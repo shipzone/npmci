@@ -11,14 +11,15 @@ export type TBuildService = 'docker'
 /**
  * builds for a specific service
  */
-export let build = async (commandArg): Promise<void> => {
-  switch (commandArg) {
+export let build = async (argvArg): Promise<void> => {
+  let whatToPublish: string = argvArg._[1]
+  switch (whatToPublish) {
     case 'docker':
       let modDocker = await npmciMods.modDocker.load()
-      await modDocker.build()
+      await modDocker.build(argvArg)
       break
     default:
-      plugins.beautylog.log('build target ' + commandArg + ' not recognised!')
+      plugins.beautylog.log('build target ' + whatToPublish + ' not recognised!')
   };
   return
 }

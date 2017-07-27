@@ -3,6 +3,9 @@ import * as paths from './npmci.paths'
 import { GitRepo } from 'smartstring'
 import { Dockerfile } from './mod_docker/index'
 
+/**
+ * a info instance about the git respoitory at cwd :)
+ */
 export let repo: GitRepo
 if (process.env.CI_REPOSITORY_URL) {
   repo = new GitRepo(process.env.CI_REPOSITORY_URL)
@@ -31,6 +34,9 @@ export let config = {
   project: undefined
 }
 
+/**
+ * the configuration store
+ */
 export let configStore = async () => {
   config.dockerRegistry = dockerRegistry
   plugins.smartfile.memory.toFsSync(
@@ -39,6 +45,9 @@ export let configStore = async () => {
   )
 }
 
+/**
+ * load the config in case a previous run has stored it
+ */
 let configLoad = () => {
   // internal config to transfer information in between npmci shell calls
   try {

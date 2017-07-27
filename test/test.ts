@@ -45,7 +45,7 @@ tap.test('should sort an array of Dockerfiles', async () => {
 })
 
 tap.test('should correctly chain Dockerfile handling', async () => {
-  return NpmciBuildDocker.build()
+  return NpmciBuildDocker.build({})
 })
 
 tap.test('should publish all built Dockerfiles', async () => {
