@@ -20,10 +20,13 @@ export type TPubService = 'npm' | 'docker'
 export let publish = async (argvArg: any) => {
   let whatToPublish = argvArg._[1]
   switch (whatToPublish) {
-    case 'npm':
-      return await publishNpm(argvArg)
     case 'docker':
       return await publishDocker(argvArg)
+    case 'npm':
+      return await publishNpm(argvArg)
+    default:
+      plugins.beautylog.info('no publish target sepcified, defaulting to npm...')
+      return await publishNpm(argvArg)
   }
 }
 
