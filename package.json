@@ -1,6 +1,6 @@
 {
   "name": "npmci",
-  "version": "2.3.77",
+  "version": "2.3.78",
   "description": "node and docker in gitlab ci on steroids",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
