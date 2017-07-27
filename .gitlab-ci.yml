@@ -13,7 +13,7 @@ stages:
 - pages
 
 before_script:
-  - yarn global add npmci@2.3.74
+  - yarn global add npmci@2.4.1
 
 testLEGACY:
   stage: test
