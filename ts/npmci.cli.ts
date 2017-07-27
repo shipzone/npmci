@@ -14,6 +14,7 @@ smartcli.addVersion(npmciInfo.version)
 smartcli.addCommand('build')
   .then(async argvArg => {
     let modBuild = await npmciMods.modBuild.load()
+    console.log(argvArg)
     await modBuild.build(argvArg)
     NpmciEnv.configStore()
   }).catch(err => {
@@ -65,9 +66,9 @@ smartcli.addCommand('install')
 
 // prepare
 smartcli.addCommand('prepare')
-  .then(async (argv) => {
+  .then(async argvArg => {
     let modPrepare = await npmciMods.modPrepare.load()
-    await modPrepare.prepare(argv._[1])
+    await modPrepare.prepare(argvArg._[1])
     await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
@@ -76,7 +77,7 @@ smartcli.addCommand('prepare')
 
 // publish
 smartcli.addCommand('publish')
-  .then(async (argvArg) => {
+  .then(async argvArg => {
     let modPublish = await npmciMods.modPublish.load()
     await modPublish.publish(argvArg)
     await NpmciEnv.configStore()
