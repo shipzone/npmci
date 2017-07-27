@@ -17,19 +17,20 @@ export type TPubService = 'npm' | 'docker'
  * the main exported publish function.
  * @param pubServiceArg references targeted service to publish to 
  */
-export let publish = async (pubServiceArg: TPubService = 'npm') => {
-  switch (pubServiceArg) {
+export let publish = async (argvArg: any) => {
+  let whatToPublish = argvArg._[1]
+  switch (whatToPublish) {
     case 'npm':
-      return await publishNpm()
+      return await publishNpm(argvArg)
     case 'docker':
-      return await publishDocker()
+      return await publishDocker(argvArg)
   }
 }
 
 /**
  * tries to publish current cwd to NPM registry
  */
-let publishNpm = async () => {
+let publishNpm = async (argvArg) => {
   let modPrepare = await npmciMods.modPrepare.load()
   await modPrepare.prepare('npm')
   await bash('npm publish')
@@ -39,9 +40,9 @@ let publishNpm = async () => {
 /**
  * tries to publish current cwd to Docker registry
  */
-let publishDocker = async () => {
+let publishDocker = async (argvArg) => {
   let modDocker = await npmciMods.modDocker.load()
-  return await modDocker.readDockerfiles()
+  return await modDocker.readDockerfiles(argvArg)
     .then(modDocker.pullDockerfileImages)
     .then(modDocker.pushDockerfiles)
     .then(dockerfileArray => {

@@ -12,9 +12,9 @@ smartcli.addVersion(npmciInfo.version)
 
 // build
 smartcli.addCommand('build')
-  .then(async (argv) => {
+  .then(async (argvArg) => {
     let modBuild = await npmciMods.modBuild.load()
-    await modBuild.build(argv._[1])
+    await modBuild.build(argvArg)
     NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
@@ -90,7 +90,7 @@ smartcli.addCommand('publish')
 smartcli.addCommand('test')
   .then(async (argv) => {
     let modTest = await npmciMods.modTest.load()
-    await modTest.test(argv._[1])
+    await modTest.test(argv)
     await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)

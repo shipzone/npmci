@@ -7,7 +7,7 @@ export declare let build: (argvArg: any) => Promise<void>;
  * creates instance of class Dockerfile for all Dockerfiles in cwd
  * @returns Promise<Dockerfile[]>
  */
-export declare let readDockerfiles: () => Promise<Dockerfile[]>;
+export declare let readDockerfiles: (argvArg: any) => Promise<Dockerfile[]>;
 /**
  * sorts Dockerfiles into a dependency chain
  * @param sortableArrayArg an array of instances of class Dockerfile
@@ -85,11 +85,11 @@ export declare class Dockerfile {
  */
 export declare let dockerFileVersion: (dockerfileNameArg: string) => string;
 /**
- *
+ * returns the docker base image for a Dockerfile
  */
 export declare let dockerBaseImage: (dockerfileContentArg: string) => string;
 /**
- *
+ * returns the docker tag
  */
 export declare let dockerTag: (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string) => string;
 /**

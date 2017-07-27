@@ -20,6 +20,6 @@ export let build = async (argvArg): Promise<void> => {
       break
     default:
       plugins.beautylog.log('build target ' + whatToPublish + ' not recognised!')
-  };
+  }
   return
 }

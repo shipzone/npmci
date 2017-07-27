@@ -11,7 +11,7 @@ let modArgvArg // will be set through the build command
 export let build = async (argvArg: any) => {
   modArgvArg = argvArg
   plugins.beautylog.log('now building Dockerfiles...')
-  await readDockerfiles()
+  await readDockerfiles(argvArg)
     .then(sortDockerfiles)
     .then(mapDockerfiles)
     .then(buildDockerfiles)
@@ -22,7 +22,8 @@ export let build = async (argvArg: any) => {
  * creates instance of class Dockerfile for all Dockerfiles in cwd
  * @returns Promise<Dockerfile[]>
  */
-export let readDockerfiles = async (): Promise<Dockerfile[]> => {
+export let readDockerfiles = async (argvArg): Promise<Dockerfile[]> => {
+  modArgvArg = argvArg
   let fileTree = await plugins.smartfile.fs.listFileTree(paths.cwd, 'Dockerfile*')
 
   // create the Dockerfile array
@@ -89,7 +90,7 @@ export let mapDockerfiles = async (sortedArray: Dockerfile[]): Promise<Dockerfil
           dockerfileArg.localBaseDockerfile = dockfile2
         }
       })
-    };
+    }
   })
   return sortedArray
 }
@@ -172,10 +173,10 @@ export class Dockerfile {
     this.containerName = 'dockerfile-' + this.version
     if (options.filePath && options.read) {
       this.content = plugins.smartfile.fs.toStringSync(plugins.path.resolve(options.filePath))
-    };
+    }
     this.baseImage = dockerBaseImage(this.content)
     this.localBaseImageDependent = false
-  };
+  }
 
   /**
    * builds the Dockerfile
@@ -186,7 +187,7 @@ export class Dockerfile {
     await bash(buildCommand)
     NpmciEnv.dockerFilesBuilt.push(this)
     return
-  };
+  }
 
   /**
    * pushes the Dockerfile to a registry
@@ -209,7 +210,7 @@ export class Dockerfile {
         await bash(`docker push ${this.gitlabTestTag}`)
         break
     }
-  };
+  }
 
   /**
    * pulls the Dockerfile from a registry
@@ -218,7 +219,7 @@ export class Dockerfile {
     let pullTag = this.gitlabTestTag
     await bash('docker pull ' + pullTag)
     await bash('docker tag ' + pullTag + ' ' + this.buildTag)
-  };
+  }
 
   /**
    * tests the Dockerfile;
@@ -237,7 +238,7 @@ export class Dockerfile {
     } else {
       plugins.beautylog.warn('skipping tests for ' + this.cleanTag + ' because no testfile was found!')
     }
-  };
+  }
 
   /**
    * gets the id of a Dockerfile
@@ -245,7 +246,7 @@ export class Dockerfile {
   async getId () {
     let containerId = await bash('docker inspect --type=image --format=\"{{.Id}}\" ' + this.buildTag)
     return containerId
-  };
+  }
 }
 
 /**
@@ -265,7 +266,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
 }
 
 /**
- * 
+ * returns the docker base image for a Dockerfile
  */
 export let dockerBaseImage = function (dockerfileContentArg: string) {
   let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/
@@ -274,7 +275,7 @@ export let dockerBaseImage = function (dockerfileContentArg: string) {
 }
 
 /**
- * 
+ * returns the docker tag
  */
 export let dockerTag = function (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string): string {
   let tagString: string
@@ -283,7 +284,7 @@ export let dockerTag = function (registryArg: string, repoArg: string, versionAr
   let version = versionArg
   if (suffixArg) {
     version = versionArg + '_' + suffixArg
-  };
+  }
   tagString = registry + '/' + repo + ':' + version
   return tagString
 }

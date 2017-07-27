@@ -20,9 +20,9 @@ let npmTest = async (): Promise<void> => {
   await bash('npm test')
 }
 
-let testDocker = async (): Promise<Dockerfile[]> => {
+let testDocker = async (argvArg): Promise<Dockerfile[]> => {
   let modDocker = await npmciMods.modDocker.load()
-  return await modDocker.readDockerfiles()
+  return await modDocker.readDockerfiles(argvArg)
     .then(modDocker.pullDockerfileImages)
     .then(modDocker.testDockerfiles)
 }
@@ -31,12 +31,13 @@ let testDocker = async (): Promise<Dockerfile[]> => {
  * the main test function
  * @param versionArg
  */
-export let test = async (versionArg): Promise<void> => {
-  if (versionArg === 'docker') {
-    await testDocker()
+export let test = async (argvArg): Promise<void> => {
+  let whatToTest = argvArg._[1]
+  if (whatToTest === 'docker') {
+    await testDocker(argvArg)
   } else {
     let modInstall = await npmciMods.modInstall.load()
-    await modInstall.install(versionArg)
+    await modInstall.install(whatToTest)
       .then(npmDependencies)
       .then(npmTest)
   }
