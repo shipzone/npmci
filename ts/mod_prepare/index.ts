@@ -32,21 +32,27 @@ let npm = async () => {
  */
 let docker = async () => {
   env.setDockerRegistry('docker.io') // TODO: checkup why we set this here
-  let dockerRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)/
 
-  // Login external reigstry
-  if (!process.env.NPMCI_LOGIN_DOCKER) {
-    plugins.beautylog.warn('You have to specify Login Data to an external Docker Registry')
-    plugins.beautylog.warn('|- As a result only the gitlab registry is availble for this build.')
-  } else {
-    let dockerRegexResultArray = dockerRegex.exec(process.env.NPMCI_LOGIN_DOCKER)
+  // handle other registries
+  plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_LOGIN_DOCKER*', async (envString) => {
+    let dockerRegexResultArray = process.env.NPMCI_LOGIN_DOCKER.split('|')
+    if (dockerRegexResultArray.length !== 3) {
+      plugins.beautylog.error('malformed docker env var...')
+      process.exit(1)
+      return
+    }
+    let registry = dockerRegexResultArray[0]
     let username = dockerRegexResultArray[1]
     let password = dockerRegexResultArray[2]
-    await bash('docker login -u ' + username + ' -p ' + password)
-  }
+    if (registry === 'docker.io') {
+      await bash('docker login -u ' + username + ' -p ' + password)
+    } else {
+      await bash(`docker login -u ${username} -p ${password} ${registry}`)
+    }
+  })
 
   // Always login to GitLab Registry
-  plugins.shelljs.exec('docker login -u gitlab-ci-token -p ' + process.env.CI_BUILD_TOKEN + ' ' + 'registry.gitlab.com')
+  await dockerGitlab()
   return
 }
 
@@ -55,7 +61,7 @@ let docker = async () => {
  */
 let dockerGitlab = async () => {
   env.setDockerRegistry('registry.gitlab.com')
-  plugins.shelljs.exec('docker login -u gitlab-ci-token -p ' + process.env.CI_BUILD_TOKEN + ' ' + 'registry.gitlab.com')
+  await bash(`docker login -u gitlab-ci-token -p ${process.env.CI_BUILD_TOKEN} registry.gitlab.com`)
   return
 }
 
