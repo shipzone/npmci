@@ -33,7 +33,7 @@ let npm = async () => {
 let docker = async () => {
   env.setDockerRegistry('docker.io') // TODO: checkup why we set this here
 
-  // handle other registries
+  // handle registries
   plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_LOGIN_DOCKER*', async (envString) => {
     let dockerRegexResultArray = process.env.NPMCI_LOGIN_DOCKER.split('|')
     if (dockerRegexResultArray.length !== 3) {
@@ -49,6 +49,8 @@ let docker = async () => {
     } else {
       await bash(`docker login -u ${username} -p ${password} ${registry}`)
     }
+    plugins.beautylog.success(`docker authenticated for ${registry}!`)
+    
   })
 
   // Always login to GitLab Registry
