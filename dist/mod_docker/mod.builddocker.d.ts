@@ -91,7 +91,7 @@ export declare let dockerBaseImage: (dockerfileContentArg: string) => string;
 /**
  * returns the docker tag
  */
-export declare let dockerTag: (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string) => string;
+export declare let getDockerTagString: (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string) => string;
 /**
  *
  */

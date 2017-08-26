@@ -62,7 +62,10 @@ let docker = async () => {
  * prepare docker for gitlab registry
  */
 let dockerGitlab = async () => {
-  // env.setDockerRegistry('registry.gitlab.com')
+  if (!process.env.CI_BUILD_TOKEN || process.env.CI_BUILD_TOKEN === '') {
+    plugins.beautylog.error('No registry token specified by gitlab!')
+    process.exit(1)
+  }
   await bash(`docker login -u gitlab-ci-token -p ${process.env.CI_BUILD_TOKEN} registry.gitlab.com`)
   plugins.beautylog.success(`docker authenticated for registry.gitlab.com!`)
   return

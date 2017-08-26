@@ -111,7 +111,7 @@ export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
 export let pushDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
   let stageArg = (function () {
     if (modArgvArg._ && modArgvArg._.length >= 3) {
-      return modArgvArg._[2]
+      return modArgvArg._[ 2 ]
     } else {
       return NpmciEnv.buildStage
     }
@@ -167,9 +167,12 @@ export class Dockerfile {
     this.version = dockerFileVersion(plugins.path.parse(options.filePath).base)
     this.cleanTag = this.repo + ':' + this.version
     this.buildTag = this.cleanTag
-    this.gitlabTestTag = dockerTag('registry.gitlab.com', this.repo, this.version, 'test')
-    this.gitlabReleaseTag = dockerTag('registry.gitlab.com', this.repo, this.version)
-    this.releaseTag = dockerTag('docker.io', this.repo, this.version)
+    this.gitlabTestTag = getDockerTagString('registry.gitlab.com', this.repo, this.version, 'test')
+    this.gitlabReleaseTag = getDockerTagString('registry.gitlab.com', this.repo, this.version)
+
+    // the releaseTag determines where the image gets released
+    this.releaseTag = getDockerTagString('docker.io', this.repo, this.version)
+
     this.containerName = 'dockerfile-' + this.version
     if (options.filePath && options.read) {
       this.content = plugins.smartfile.fs.toStringSync(plugins.path.resolve(options.filePath))
@@ -253,7 +256,7 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
   let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/
   let regexResultArray = versionRegex.exec(dockerfileNameArg)
   if (regexResultArray && regexResultArray.length === 2) {
-    versionString = regexResultArray[1]
+    versionString = regexResultArray[ 1 ]
   } else {
     versionString = 'latest'
   }
@@ -266,21 +269,19 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
 export let dockerBaseImage = function (dockerfileContentArg: string) {
   let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/
   let regexResultArray = baseImageRegex.exec(dockerfileContentArg)
-  return regexResultArray[1]
+  return regexResultArray[ 1 ]
 }
 
 /**
  * returns the docker tag
  */
-export let dockerTag = function (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string): string {
-  let tagString: string
-  let registry = registryArg
-  let repo = repoArg
+export let getDockerTagString = function (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string): string {
+  // determine wether the suffix is needed
   let version = versionArg
   if (suffixArg) {
     version = versionArg + '_' + suffixArg
   }
-  tagString = registry + '/' + repo + ':' + version
+  let tagString = `${registryArg}/${repoArg}:${version}`
   return tagString
 }
 
