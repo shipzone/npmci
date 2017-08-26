@@ -169,7 +169,7 @@ export class Dockerfile {
     this.buildTag = this.cleanTag
     this.gitlabTestTag = dockerTag('registry.gitlab.com', this.repo, this.version, 'test')
     this.gitlabReleaseTag = dockerTag('registry.gitlab.com', this.repo, this.version)
-    this.releaseTag = dockerTag(NpmciEnv.dockerRegistry, this.repo, this.version)
+    this.releaseTag = dockerTag('docker.io', this.repo, this.version)
     this.containerName = 'dockerfile-' + this.version
     if (options.filePath && options.read) {
       this.content = plugins.smartfile.fs.toStringSync(plugins.path.resolve(options.filePath))
@@ -193,16 +193,16 @@ export class Dockerfile {
    * pushes the Dockerfile to a registry
    */
   async push (stageArg) {
+    await bash(`docker tag ${this.buildTag} ${this.releaseTag}`)
+    await bash(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
+    await bash(`docker tag ${this.buildTag} ${this.gitlabTestTag}`)
     switch (stageArg) {
       case 'release':
-        await bash(`docker tag ${this.buildTag} ${this.releaseTag}`)
-        await bash(`docker push ${this.releaseTag}`)
-        await bash(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
         await bash(`docker push ${this.gitlabReleaseTag}`)
+        await bash(`docker push ${this.releaseTag}`)
         break
       case 'test':
       default:
-        await bash(`docker tag ${this.buildTag} ${this.gitlabTestTag}`)
         await bash(`docker push ${this.gitlabTestTag}`)
         break
     }
@@ -212,9 +212,8 @@ export class Dockerfile {
    * pulls the Dockerfile from a registry
    */
   async pull (registryArg: string) {
-    let pullTag = this.gitlabTestTag
-    await bash('docker pull ' + pullTag)
-    await bash('docker tag ' + pullTag + ' ' + this.buildTag)
+    await bash(`docker pull ${this.gitlabTestTag}`)
+    await bash(`docker tag ${this.gitlabTestTag} ${this.buildTag}`)
   }
 
   /**
