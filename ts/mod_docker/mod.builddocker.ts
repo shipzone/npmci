@@ -161,14 +161,14 @@ export class Dockerfile {
   baseImage: string
   localBaseImageDependent: boolean
   localBaseDockerfile: Dockerfile
-  constructor(options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
+  constructor (options: { filePath?: string, fileContents?: string | Buffer, read?: boolean }) {
     this.filePath = options.filePath
     this.repo = NpmciEnv.repo.user + '/' + NpmciEnv.repo.repo
     this.version = dockerFileVersion(plugins.path.parse(options.filePath).base)
     this.cleanTag = this.repo + ':' + this.version
     this.buildTag = this.cleanTag
-    this.gitlabTestTag = getDockerTagString('registry.gitlab.com', this.repo, this.version, 'test')
-    this.gitlabReleaseTag = getDockerTagString('registry.gitlab.com', this.repo, this.version)
+    this.gitlabTestTag = getDockerTagString('docker.io', this.repo, this.version, 'test') // TODO: using docker.io until gitlab is fixed
+    this.gitlabReleaseTag = getDockerTagString('docker.io', this.repo, this.version) // TODO: using docker.io until gitlab is fixed
 
     // the releaseTag determines where the image gets released
     this.releaseTag = getDockerTagString('docker.io', this.repo, this.version)
