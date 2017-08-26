@@ -197,12 +197,8 @@ export class Dockerfile {
       case 'release':
         await bash(`docker tag ${this.buildTag} ${this.releaseTag}`)
         await bash(`docker push ${this.releaseTag}`)
-
-        // if release registry is different from gitlab
-        if (NpmciEnv.dockerRegistry !== 'registry.gitlab.com') {
-          await bash(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
-          await bash(`docker push ${this.gitlabReleaseTag}`)
-        }
+        await bash(`docker tag ${this.buildTag} ${this.gitlabReleaseTag}`)
+        await bash(`docker push ${this.gitlabReleaseTag}`)
         break
       case 'test':
       default:

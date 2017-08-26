@@ -35,7 +35,7 @@ let docker = async () => {
 
   // handle registries
   plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_LOGIN_DOCKER*', async (envString) => {
-    let dockerRegexResultArray = process.env.NPMCI_LOGIN_DOCKER.split('|')
+    let dockerRegexResultArray = envString.split('|')
     if (dockerRegexResultArray.length !== 3) {
       plugins.beautylog.error('malformed docker env var...')
       process.exit(1)
@@ -45,7 +45,8 @@ let docker = async () => {
     let username = dockerRegexResultArray[1]
     let password = dockerRegexResultArray[2]
     if (registry === 'docker.io') {
-      await bash('docker login -u ' + username + ' -p ' + password)
+      await bash(`docker login -u ${username} -p ${password}`)
+      plugins.beautylog.info('Logged in to standard docker hub')
     } else {
       await bash(`docker login -u ${username} -p ${password} ${registry}`)
     }
