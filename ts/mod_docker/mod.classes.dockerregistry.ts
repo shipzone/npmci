@@ -15,6 +15,7 @@ export class DockerRegistry {
     this.registryUrl = optionsArg.registryUrl
     this.username = optionsArg.username
     this.password = optionsArg.password
+    plugins.beautylog.info(`created DockerRegistry for ${this.registryUrl}`)
   }
 
   static fromEnvString (envString: string): DockerRegistry {
@@ -41,6 +42,6 @@ export class DockerRegistry {
     } else {
       await bash(`docker login -u ${this.username} -p ${this.password} ${this.registryUrl}`)
     }
-    plugins.beautylog.success(`docker authenticated for ${this.registryUrl}!`)
+    plugins.beautylog.ok(`docker authenticated for ${this.registryUrl}!`)
   }
 }

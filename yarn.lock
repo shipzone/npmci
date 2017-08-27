@@ -1501,9 +1501,9 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lik@^1.0.30, lik@^1.0.38, lik@^1.0.39:
-  version "1.0.39"
-  resolved "https://registry.yarnpkg.com/lik/-/lik-1.0.39.tgz#20eeaa93167a19f03ba2c9650939145326051ee6"
+lik@^1.0.30, lik@^1.0.38, lik@^1.0.40:
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/lik/-/lik-1.0.40.tgz#2893563950263289899b79eb3a4d3c42609711bd"
   dependencies:
     "@types/lodash" "^4.14.67"
     "@types/minimatch" "2.x.x"
@@ -2434,9 +2434,9 @@ smartparam@0.1.1:
     q "^1.4.1"
     typings-global "^1.0.3"
 
-smartparam@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/smartparam/-/smartparam-1.0.1.tgz#4e383f96abdc46ffdd200e2f6b415522b5086ff3"
+smartparam@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/smartparam/-/smartparam-1.0.2.tgz#6b6a50353b81dbe3353c0d353fbccd02e8963f2c"
   dependencies:
     beautylog "6.1.10"
     is-promise "^2.1.0"

@@ -23,5 +23,6 @@ export class RegistryStorage {
     await this.objectMap.forEach(async registryArg => {
       await registryArg.login()
     })
+    plugins.beautylog.success('logged in successfully into all available DockerRegistries!')
   }
 }

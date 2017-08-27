@@ -1,10 +1,19 @@
 import { tap, expect } from 'tapbundle'
 import * as path from 'path'
 
+// Setup test
+process.env.NPMTS_TEST = 'true'
+
 // set up environment
 process.env.CI_REPOSITORY_URL = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git'
+process.env.CI_BUILD_TOKEN = 'kjlkjfiudofiufs'
+
+// Docker
+process.env.NPMCI_LOGIN_DOCKER = 'docker.io|someuser|somepass'
+
+// SSH env
 process.env.NPMCI_SSHKEY_1 = 'hostString|somePrivKey|##'
-process.env.NPMTS_TEST = 'true'
+
 process.cwd = () => {
   return path.join(__dirname, 'assets/')
 }
@@ -24,6 +33,15 @@ import npmciEnv = require('../ts/npmci.env')
 let dockerfile1: npmciModDocker.Dockerfile
 let dockerfile2: npmciModDocker.Dockerfile
 let sortableArray: npmciModDocker.Dockerfile[]
+
+tap.test('should prepare a Docker file', async () => {
+  await npmciModDocker.handleCli({
+    _: [
+      'docker',
+      'prepare'
+    ]
+  })
+})
 
 tap.test('should return valid Dockerfiles', async () => {
   dockerfile1 = new npmciModDocker.Dockerfile({ filePath: './Dockerfile', read: true })

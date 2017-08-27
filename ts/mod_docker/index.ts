@@ -72,7 +72,7 @@ export let prepare = async () => {
   // Always login to GitLab Registry
   if (!process.env.CI_BUILD_TOKEN || process.env.CI_BUILD_TOKEN === '') {
     plugins.beautylog.error('No registry token specified by gitlab!')
-    return
+    process.exit(1)
   }
   npmciRegistryStorage.addRegistry(new DockerRegistry({
     registryUrl: 'registry.gitlab.com',
@@ -81,7 +81,7 @@ export let prepare = async () => {
   }))
 
   // handle registries
-  plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_LOGIN_DOCKER*', async (envString) => {
+  await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_LOGIN_DOCKER*', async (envString) => {
     npmciRegistryStorage.addRegistry(
       DockerRegistry.fromEnvString(envString)
     )
