@@ -33,6 +33,7 @@
     "cflare": "^1.0.5",
     "gulp": "^3.9.1",
     "gulp-function": "^2.2.9",
+    "lik": "^1.0.39",
     "lodash": "^4.17.4",
     "npmextra": "^2.0.9",
     "projectinfo": "^3.0.2",

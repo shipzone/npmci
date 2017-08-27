@@ -33,7 +33,7 @@ tap.test('should return valid Dockerfiles', async () => {
 })
 
 tap.test('should read a directory of Dockerfiles', async () => {
-  return npmciModDocker.readDockerfiles()
+  return npmciModDocker.helpers.readDockerfiles()
     .then(async (readDockerfilesArrayArg: npmciModDocker.Dockerfile[]) => {
       sortableArray = readDockerfilesArrayArg
       return expect(readDockerfilesArrayArg[1].version).to.equal('sometag1')
@@ -41,7 +41,7 @@ tap.test('should read a directory of Dockerfiles', async () => {
 })
 
 tap.test('should sort an array of Dockerfiles', async () => {
-  return npmciModDocker.sortDockerfiles(sortableArray)
+  return npmciModDocker.helpers.sortDockerfiles(sortableArray)
     .then(async (sortedArrayArg: npmciModDocker.Dockerfile[]) => {
       console.log(sortedArrayArg)
     })
