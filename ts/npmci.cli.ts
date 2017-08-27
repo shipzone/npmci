@@ -10,17 +10,6 @@ import * as npmciMods from './npmci.mods'
 let smartcli = new plugins.smartcli.Smartcli()
 smartcli.addVersion(npmciInfo.version)
 
-// build
-smartcli.addCommand('build')
-  .then(async argvArg => {
-    let modBuild = await npmciMods.modBuild.load()
-    await modBuild.build(argvArg)
-    NpmciEnv.configStore()
-  }).catch(err => {
-    console.log(err)
-    process.exit(1)
-  })
-
 // clean
 smartcli.addCommand('clean')
   .then(async (argv) => {
@@ -31,6 +20,16 @@ smartcli.addCommand('clean')
     console.log(err)
     process.exit(1)
   })
+
+// cloudflare
+smartcli.addCommand('cloudflare')
+.then(async (argvArg) => {
+  let modPurge = await npmciMods.modCloudflare.load()
+  await modPurge.handleCli(argvArg)
+  await NpmciEnv.configStore()
+}).catch(err => {
+  console.log(err)
+})
 
 // command
 smartcli.addCommand('command')
@@ -43,54 +42,42 @@ smartcli.addCommand('command')
     process.exit(1)
   })
 
-// purge
-smartcli.addCommand('purge')
+// build
+smartcli.addCommand('docker')
+  .then(async argvArg => {
+    let modDocker = await npmciMods.modDocker.load()
+    await modDocker.handleCli(argvArg)
+    NpmciEnv.configStore()
+  }).catch(err => {
+    console.log(err)
+    process.exit(1)
+  })
+
+// node
+smartcli.addCommand('node')
   .then(async (argvArg) => {
-    let modPurge = await npmciMods.modPurge.load()
-    await modPurge.purge(argvArg)
-  }).catch(err => {
-    console.log(err)
-  })
-
-// install
-smartcli.addCommand('install')
-  .then(async (argv) => {
-    let modInstall = await npmciMods.modInstall.load()
-    await modInstall.install(argv._[1])
+    let modNode = await npmciMods.modNode.load()
+    await modNode.handleCli(argvArg)
     await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
-    process.exit(1)
   })
 
-// prepare
-smartcli.addCommand('prepare')
-  .then(async argvArg => {
-    let modPrepare = await npmciMods.modPrepare.load()
-    await modPrepare.prepare(argvArg._[1])
+// npm
+smartcli.addCommand('npm')
+  .then(async (argvArg) => {
+    let modNpm = await npmciMods.modNpm.load()
+    await modNpm.handleCli(argvArg)
     await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
-    process.exit(1)
   })
 
-// publish
-smartcli.addCommand('publish')
-  .then(async argvArg => {
-    let modPublish = await npmciMods.modPublish.load()
-    await modPublish.publish(argvArg)
-    await NpmciEnv.configStore()
-
-  }).catch(err => {
-    console.log(err)
-    process.exit(1)
-  })
-
-// test
-smartcli.addCommand('test')
-  .then(async (argv) => {
-    let modTest = await npmciMods.modTest.load()
-    await modTest.test(argv)
+// trigger
+smartcli.addCommand('ssh')
+  .then(async (argvArg) => {
+    let modSsh = await npmciMods.modSsh.load()
+    await modSsh.handleCli(argvArg)
     await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)

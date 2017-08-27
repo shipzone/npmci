@@ -11,85 +11,118 @@ process.cwd = () => {
 
 // require NPMCI files
 import '../ts/index'
-import NpmciBuildDocker = require('../ts/mod_docker/index')
-import NpmciPublish = require('../ts/mod_publish/index')
-import NpmciTest = require('../ts/mod_test/index')
-import NpmciSsh = require('../ts/mod_ssh/index')
-import NpmciEnv = require('../ts/npmci.env')
+import npmciModDocker = require('../ts/mod_docker/index')
+import npmciModNpm = require('../ts/mod_npm/index')
+import npmciModNode = require('../ts/mod_node/index')
+import npmciModSsh = require('../ts/mod_ssh/index')
+import npmciEnv = require('../ts/npmci.env')
 
-let dockerfile1: NpmciBuildDocker.Dockerfile
-let dockerfile2: NpmciBuildDocker.Dockerfile
-let sortableArray: NpmciBuildDocker.Dockerfile[]
+// ======
+// Docker
+// ======
+
+let dockerfile1: npmciModDocker.Dockerfile
+let dockerfile2: npmciModDocker.Dockerfile
+let sortableArray: npmciModDocker.Dockerfile[]
 
 tap.test('should return valid Dockerfiles', async () => {
-  dockerfile1 = new NpmciBuildDocker.Dockerfile({ filePath: './Dockerfile', read: true })
-  dockerfile2 = new NpmciBuildDocker.Dockerfile({ filePath: './Dockerfile_sometag1', read: true })
+  dockerfile1 = new npmciModDocker.Dockerfile({ filePath: './Dockerfile', read: true })
+  dockerfile2 = new npmciModDocker.Dockerfile({ filePath: './Dockerfile_sometag1', read: true })
   expect(dockerfile1.version).to.equal('latest')
   return expect(dockerfile2.version).to.equal('sometag1')
 })
 
 tap.test('should read a directory of Dockerfiles', async () => {
-  return NpmciBuildDocker.readDockerfiles({})
-    .then(async (readDockerfilesArrayArg: NpmciBuildDocker.Dockerfile[]) => {
+  return npmciModDocker.readDockerfiles()
+    .then(async (readDockerfilesArrayArg: npmciModDocker.Dockerfile[]) => {
       sortableArray = readDockerfilesArrayArg
       return expect(readDockerfilesArrayArg[1].version).to.equal('sometag1')
     })
 })
 
 tap.test('should sort an array of Dockerfiles', async () => {
-  return NpmciBuildDocker.sortDockerfiles(sortableArray)
-    .then(async (sortedArrayArg: NpmciBuildDocker.Dockerfile[]) => {
+  return npmciModDocker.sortDockerfiles(sortableArray)
+    .then(async (sortedArrayArg: npmciModDocker.Dockerfile[]) => {
       console.log(sortedArrayArg)
     })
 })
 
-tap.test('should correctly chain Dockerfile handling', async () => {
-  return NpmciBuildDocker.build({})
-})
-
-tap.test('should publish all built Dockerfiles', async () => {
-  return NpmciPublish.publish({
+tap.test('should build all Dockerfiles', async () => {
+  return npmciModDocker.handleCli({
     _: [
-      'test',
-      'docker'
+      'docker',
+      'build'
     ]
   })
 })
 
-tap.test('should source nvm using bash and install a specific node version, then test it', async () => {
-  await NpmciTest.test({
+tap.test('should test all Dockerfiles', async () => {
+  return await npmciModDocker.handleCli({
     _: [
-      'test',
-      'legacy'
-    ]
-  })
-  await NpmciTest.test({
-    _: [
-      'test',
-      'lts'
-    ]
-  })
-  await NpmciTest.test({
-    _: [
-      'test',
-      'stable'
+      'docker',
+      'test'
     ]
   })
 })
 
 tap.test('should test dockerfiles', async () => {
-  return NpmciTest.test({
+  return await npmciModDocker.handleCli({
     _: [
-      'test',
-      'docker'
+      'docker',
+      'test'
     ]
   })
 })
 
-tap.test('should pick up SSH keys', async () => {
-  return NpmciSsh.ssh()
+tap.test('should prepare docker daemon', async () => {
+  return await npmciModDocker.handleCli({
+    _: [
+      'docker',
+      'prepare'
+    ]
+  })
 })
 
+// ===
+// SSH
+// ===
+tap.test('should prepare SSH keys', async () => {
+  return await npmciModSsh.handleCli({
+    _: [
+      'ssh',
+      'prepare'
+    ]
+  })
+})
+
+// ====
+// node
+// ====
+tap.test('should install a certain version of node', async () => {
+  await npmciModNode.handleCli({
+    _: [
+      'node',
+      'install',
+      'stable'
+    ]
+  })
+  await npmciModNode.handleCli({
+    _: [
+      'node',
+      'install',
+      'lts'
+    ]
+  })
+  await npmciModNode.handleCli({
+    _: [
+      'node',
+      'install',
+      'legacy'
+    ]
+  })
+})
+
+// make sure test ends all right
 tap.test('reset paths', async () => {
   process.cwd = () => {
     return path.join(__dirname, '../')
@@ -97,7 +130,7 @@ tap.test('reset paths', async () => {
 })
 
 tap.test('', async () => {
-  await NpmciEnv.configStore()
+  await npmciEnv.configStore()
 })
 
 tap.start()

@@ -1,10 +1,31 @@
-import * as plugins from './mod.plugins'
-import * as configModule from '../npmci.config'
+import * as plugins from '../npmci.plugins'
+import * as npmciConfig from '../npmci.config'
 import {
   bash,
   bashNoError,
   nvmAvailable,
-  yarnAvailable } from '../npmci.bash'
+  yarnAvailable
+} from '../npmci.bash'
+
+/**
+ * handle cli input
+ * @param argvArg
+ */
+export let handleCli = async (argvArg) => {
+  if (argvArg._.length >= 3) {
+    let action: string = argvArg._[1]
+    switch (action) {
+      case 'install':
+        await install(argvArg._[2])
+        break
+      default:
+        plugins.beautylog.error(`>>npmci node ...<< action >>${action}<< not supported`)
+    }
+  } else {
+    plugins.beautylog.error(`>>npmci node ...<< cli arguments invalid... Please read the documentation.`)
+  }
+
+}
 
 /**
  * Install a specific version of node
@@ -21,17 +42,17 @@ export let install = async (versionArg) => {
     version = '6'
   } else {
     version = versionArg
-  };
+  }
   if (await nvmAvailable.promise) {
     await bash(`nvm install ${version} && nvm alias default ${version}`)
     plugins.beautylog.success(`Node version ${version} successfully installed!`)
   } else {
     plugins.beautylog.warn('Nvm not in path so staying at installed node version!')
-  };
+  }
   await bash('node -v')
   await bash('npm -v')
   // lets look for further config
-  await configModule.getConfig()
+  await npmciConfig.getConfig()
     .then(async configArg => {
       plugins.beautylog.log('Now checking for needed global npm tools...')
       for (let npmTool of configArg.globalNpmTools) {
