@@ -12,6 +12,10 @@ export declare let handleCli: (argvArg: any) => Promise<void>;
  */
 export declare let build: () => Promise<void>;
 /**
+ * login to the DockerRegistries
+ */
+export declare let login: () => Promise<void>;
+/**
  * logs in docker
  */
 export declare let prepare: () => Promise<void>;

@@ -34,15 +34,6 @@ let dockerfile1: npmciModDocker.Dockerfile
 let dockerfile2: npmciModDocker.Dockerfile
 let sortableArray: npmciModDocker.Dockerfile[]
 
-tap.test('should prepare a Docker file', async () => {
-  await npmciModDocker.handleCli({
-    _: [
-      'docker',
-      'prepare'
-    ]
-  })
-})
-
 tap.test('should return valid Dockerfiles', async () => {
   dockerfile1 = new npmciModDocker.Dockerfile({ filePath: './Dockerfile', read: true })
   dockerfile2 = new npmciModDocker.Dockerfile({ filePath: './Dockerfile_sometag1', read: true })
@@ -92,11 +83,11 @@ tap.test('should test dockerfiles', async () => {
   })
 })
 
-tap.test('should prepare docker daemon', async () => {
+tap.test('should login docker daemon', async () => {
   return await npmciModDocker.handleCli({
     _: [
       'docker',
-      'prepare'
+      'login'
     ]
   })
 })
@@ -145,10 +136,6 @@ tap.test('reset paths', async () => {
   process.cwd = () => {
     return path.join(__dirname, '../')
   }
-})
-
-tap.test('', async () => {
-  await npmciEnv.configStore()
 })
 
 tap.start()

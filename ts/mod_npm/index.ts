@@ -25,10 +25,10 @@ export let handleCli = async (argvArg) => {
         await test()
         break
       default:
-        plugins.beautylog.error(`>>npmci node ...<< action >>${action}<< not supported`)
+        plugins.beautylog.error(`>>npmci npm ...<< action >>${action}<< not supported`)
     }
   } else {
-    plugins.beautylog.log(`>>npmci node ...<< cli arguments invalid... Please read the documentation.`)
+    plugins.beautylog.log(`>>npmci npm ...<< cli arguments invalid... Please read the documentation.`)
   }
 }
 

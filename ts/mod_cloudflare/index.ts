@@ -11,10 +11,10 @@ export let handleCli = async (argvArg) => {
     let action: string = argvArg._[1]
     switch (action) {
       default:
-        plugins.beautylog.error(`>>npmci node ...<< action >>${action}<< not supported`)
+        plugins.beautylog.error(`>>npmci cloudflare ...<< action >>${action}<< not supported`)
     }
   } else {
-    plugins.beautylog.log(`>>npmci node ...<< cli arguments invalid... Please read the documentation.`)
+    plugins.beautylog.log(`>>npmci cloudflare ...<< cli arguments invalid... Please read the documentation.`)
   }
 }
 

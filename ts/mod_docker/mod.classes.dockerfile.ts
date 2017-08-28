@@ -42,7 +42,6 @@ export class Dockerfile {
     plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag)
     let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} .`
     await bash(buildCommand)
-    NpmciEnv.dockerFilesBuilt.push(this)
     return
   }
 

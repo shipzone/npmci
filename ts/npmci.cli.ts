@@ -15,7 +15,6 @@ smartcli.addCommand('clean')
   .then(async (argv) => {
     let modClean = await npmciMods.modClean.load()
     await modClean.clean()
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
     process.exit(1)
@@ -26,7 +25,6 @@ smartcli.addCommand('cloudflare')
 .then(async (argvArg) => {
   let modPurge = await npmciMods.modCloudflare.load()
   await modPurge.handleCli(argvArg)
-  await NpmciEnv.configStore()
 }).catch(err => {
   console.log(err)
 })
@@ -36,7 +34,6 @@ smartcli.addCommand('command')
   .then(async (argv) => {
     let modCommand = await npmciMods.modCommand.load()
     await modCommand.command()
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
     process.exit(1)
@@ -47,7 +44,6 @@ smartcli.addCommand('docker')
   .then(async argvArg => {
     let modDocker = await npmciMods.modDocker.load()
     await modDocker.handleCli(argvArg)
-    NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
     process.exit(1)
@@ -58,7 +54,6 @@ smartcli.addCommand('node')
   .then(async (argvArg) => {
     let modNode = await npmciMods.modNode.load()
     await modNode.handleCli(argvArg)
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
   })
@@ -68,7 +63,6 @@ smartcli.addCommand('npm')
   .then(async (argvArg) => {
     let modNpm = await npmciMods.modNpm.load()
     await modNpm.handleCli(argvArg)
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
   })
@@ -78,7 +72,6 @@ smartcli.addCommand('ssh')
   .then(async (argvArg) => {
     let modSsh = await npmciMods.modSsh.load()
     await modSsh.handleCli(argvArg)
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
     process.exit(1)
@@ -89,7 +82,6 @@ smartcli.addCommand('trigger')
   .then(async (argv) => {
     let modTrigger = await npmciMods.modTrigger.load()
     await modTrigger.trigger()
-    await NpmciEnv.configStore()
   }).catch(err => {
     console.log(err)
     process.exit(1)
