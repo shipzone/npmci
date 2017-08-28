@@ -40,7 +40,8 @@ export class Dockerfile {
    */
   async build () {
     plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag)
-    let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} .`
+    let buildArgsString = await helpers.getDockerBuildArgs()
+    let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`
     await bash(buildCommand)
     return
   }

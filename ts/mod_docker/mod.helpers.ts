@@ -153,6 +153,15 @@ export let getDockerTagString = (registryArg: string, repoArg: string, versionAr
   return tagString
 }
 
+export let getDockerBuildArgs = async (): Promise<string> => {
+  plugins.beautylog.info('checking for env vars to be supplied to the docker build')
+  let buildArgsString: string = ''
+  for (let key in NpmciConfig.configObject.dockerEnvBuildargMap) {
+    // TODO
+  }
+  return buildArgsString
+} 
+
 /**
  * 
  */

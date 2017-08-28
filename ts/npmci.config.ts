@@ -10,6 +10,7 @@ import { KeyValueStore } from 'npmextra'
 export interface INpmciOptions {
   npmGlobalTools: string[]
   dockerRegistryRepoMap: any
+  dockerEnvBuildargMap: any
 }
 
 // instantiate a kvStorage for the current directory
@@ -19,7 +20,8 @@ export let kvStorage = new KeyValueStore('custom', `${repo.user}_${repo.repo}`)
 let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd)
 let defaultConfig: INpmciOptions = {
   npmGlobalTools: [],
-  dockerRegistryRepoMap: {}
+  dockerRegistryRepoMap: {},
+  dockerEnvBuildargMap: {}
 }
 export let configObject = npmciNpmextra.dataFor<INpmciOptions>('npmci', defaultConfig)
 
