@@ -57,7 +57,7 @@ export let install = async (versionArg) => {
   await npmciConfig.getConfig()
     .then(async configArg => {
       plugins.beautylog.log('Now checking for needed global npm tools...')
-      for (let npmTool of configArg.globalNpmTools) {
+      for (let npmTool of configArg.npmGlobalTools) {
         plugins.beautylog.info(`Checking for global "${npmTool}"`)
         let whichOutput: string = await bashNoError(`which ${npmTool}`)
         let toolAvailable: boolean = !((/not\sfound/.test(whichOutput)) || whichOutput === '')

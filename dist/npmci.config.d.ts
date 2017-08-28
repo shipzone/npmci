@@ -1,6 +1,7 @@
 import { KeyValueStore } from 'npmextra';
 export interface INpmciOptions {
-    globalNpmTools: string[];
+    npmGlobalTools: string[];
+    dockerRegistryRepoMap: any;
 }
 export declare let kvStorage: KeyValueStore;
 export declare let getConfig: () => Promise<INpmciOptions>;

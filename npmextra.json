@@ -7,6 +7,9 @@
     "npmci": {
         "globalNpmTools": [
             "npmts"
+        ],
+        "npmGlobalTools": [
+            "npmts"
         ]
     },
     "npmdocker":{

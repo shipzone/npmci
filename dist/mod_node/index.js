@@ -64,7 +64,7 @@ exports.install = (versionArg) => __awaiter(this, void 0, void 0, function* () {
     yield npmciConfig.getConfig()
         .then((configArg) => __awaiter(this, void 0, void 0, function* () {
         plugins.beautylog.log('Now checking for needed global npm tools...');
-        for (let npmTool of configArg.globalNpmTools) {
+        for (let npmTool of configArg.npmGlobalTools) {
             plugins.beautylog.info(`Checking for global "${npmTool}"`);
             let whichOutput = yield npmci_bash_1.bashNoError(`which ${npmTool}`);
             let toolAvailable = !((/not\sfound/.test(whichOutput)) || whichOutput === '');
