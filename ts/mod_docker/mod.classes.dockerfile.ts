@@ -59,6 +59,7 @@ export class Dockerfile {
    */
   async pull (registryArg: DockerRegistry, versionSuffixArg: string = null) {
     let pullTag = helpers.getDockerTagString(registryArg.registryUrl,this.repo, this.version, versionSuffixArg)
+    await bash(`docker pull ${pullTag}`)
     await bash(`docker tag ${pullTag} ${this.buildTag}`)
   }
 
