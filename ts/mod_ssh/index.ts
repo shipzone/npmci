@@ -10,7 +10,11 @@ export let handleCli = async (argvArg) => {
         break
       default:
         plugins.beautylog.error(`action >>${action}<< not supported`)
+        process.exit(1)
     }
+  } else {
+    plugins.beautylog.error(`>>npmci ssh ...<< please specify an action!`)
+    process.exit(1)
   }
 }
 

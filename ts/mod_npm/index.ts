@@ -29,9 +29,11 @@ export let handleCli = async (argvArg) => {
         break
       default:
         plugins.beautylog.error(`>>npmci npm ...<< action >>${action}<< not supported`)
+        process.exit(1)
     }
   } else {
     plugins.beautylog.log(`>>npmci npm ...<< cli arguments invalid... Please read the documentation.`)
+    process.exit(1)
   }
 }
 

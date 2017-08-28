@@ -20,9 +20,11 @@ export let handleCli = async (argvArg) => {
         break
       default:
         plugins.beautylog.error(`>>npmci node ...<< action >>${action}<< not supported`)
+        process.exit(1)
     }
   } else {
     plugins.beautylog.error(`>>npmci node ...<< cli arguments invalid... Please read the documentation.`)
+    process.exit(1)
   }
 
 }
