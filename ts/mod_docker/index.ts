@@ -127,7 +127,7 @@ export let pull = async (argvArg) => {
     .then(helpers.sortDockerfiles)
     .then(helpers.mapDockerfiles)
   for (let dockerfile of dockerfileArray) {
-    dockerfile.pull(localDockerRegistry, suffix)
+    await dockerfile.pull(localDockerRegistry, suffix)
   }
 }
 
