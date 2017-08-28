@@ -24,6 +24,9 @@ export let handleCli = async (argvArg) => {
       case 'test':
         await test()
         break
+      case 'publish':
+        await publish()
+        break
       default:
         plugins.beautylog.error(`>>npmci npm ...<< action >>${action}<< not supported`)
     }
@@ -47,6 +50,10 @@ let prepare = async () => {
   }
   plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc')
   return
+}
+
+let publish = async () => {
+  await bash('npm publish')
 }
 
 let install = async (): Promise<void> => {
