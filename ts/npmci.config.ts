@@ -15,12 +15,14 @@ export interface INpmciOptions {
 // instantiate a kvStorage for the current directory
 export let kvStorage = new KeyValueStore('custom', `${repo.user}_${repo.repo}`)
 
+// handle config retrival
+let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd)
+let defaultConfig: INpmciOptions = {
+  npmGlobalTools: [],
+  dockerRegistryRepoMap: {}
+}
+export let configObject = npmciNpmextra.dataFor<INpmciOptions>('npmci', defaultConfig)
+
 export let getConfig = async (): Promise<INpmciOptions> => {
-  let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd)
-  let defaultConfig: INpmciOptions = {
-    npmGlobalTools: [],
-    dockerRegistryRepoMap: {}
-  }
-  let npmciConfig = npmciNpmextra.dataFor<INpmciOptions>('npmci', defaultConfig)
-  return npmciConfig
+  return configObject
 }

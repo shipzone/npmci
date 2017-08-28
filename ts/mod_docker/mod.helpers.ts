@@ -1,6 +1,7 @@
 import * as plugins from './mod.plugins'
 import * as paths from '../npmci.paths'
 import * as NpmciEnv from '../npmci.env'
+import * as NpmciConfig from '../npmci.config'
 import { bash } from '../npmci.bash'
 
 import { Dockerfile } from './mod.classes.dockerfile'
@@ -130,13 +131,25 @@ export let dockerBaseImage = function (dockerfileContentArg: string) {
 /**
  * returns the docker tag
  */
-export let getDockerTagString = function (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string): string {
-  // determine wether the suffix is needed
+export let getDockerTagString = (registryArg: string, repoArg: string, versionArg: string, suffixArg?: string): string => {
+
+  // determine wether the repo should be mapped accordingly to the registry
+  let mappedRepo = NpmciConfig.configObject.dockerRegistryRepoMap[registryArg]
+  let repo = (() => {
+    if (mappedRepo) {
+      return mappedRepo
+    } else {
+      return repoArg
+    }
+  })()
+
+  // determine wether the version contais a suffix
   let version = versionArg
   if (suffixArg) {
     version = versionArg + '_' + suffixArg
   }
-  let tagString = `${registryArg}/${repoArg}:${version}`
+
+  let tagString = `${registryArg}/${repo}:${version}`
   return tagString
 }
 

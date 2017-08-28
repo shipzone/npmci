@@ -4,4 +4,5 @@ export interface INpmciOptions {
     dockerRegistryRepoMap: any;
 }
 export declare let kvStorage: KeyValueStore;
+export declare let configObject: INpmciOptions;
 export declare let getConfig: () => Promise<INpmciOptions>;
