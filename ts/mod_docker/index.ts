@@ -111,7 +111,7 @@ export let push = async (argvArg) => {
     process.exit(1)
   }
   for (let dockerfile of dockerfileArray) {
-    dockerfile.push(localDockerRegistry, suffix)
+    await dockerfile.push(localDockerRegistry, suffix)
   }
 }
 
