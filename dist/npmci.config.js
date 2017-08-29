@@ -19,7 +19,7 @@ let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd);
 let defaultConfig = {
     npmGlobalTools: [],
     dockerRegistryRepoMap: {},
-    dockerEnvBuildargMap: {}
+    dockerBuildargEnvMap: {}
 };
 exports.configObject = npmciNpmextra.dataFor('npmci', defaultConfig);
 exports.getConfig = () => __awaiter(this, void 0, void 0, function* () {
