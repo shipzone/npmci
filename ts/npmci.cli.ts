@@ -1,5 +1,7 @@
 import * as plugins from './npmci.plugins'
 import * as paths from './npmci.paths'
+
+// Get Info about npmci itself
 let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot)
 plugins.beautylog.log('npmci version: ' + npmciInfo.version)
 
@@ -38,6 +40,16 @@ smartcli.addCommand('command')
     console.log(err)
     process.exit(1)
   })
+
+// command
+smartcli.addCommand('git')
+.then(async (argvArg) => {
+  let modGit = await npmciMods.modGit.load()
+  await modGit.handleCli(argvArg)
+}).catch(err => {
+  console.log(err)
+  process.exit(1)
+})
 
 // build
 smartcli.addCommand('docker')

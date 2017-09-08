@@ -12,7 +12,6 @@ export import smartcli = require('smartcli');
 export import smartdelay = require('smartdelay');
 export import smartfile = require('smartfile');
 export import shelljs = require('shelljs');
-export import smartmonitor = require('smartmonitor');
 export import smartparam = require('smartparam');
 export import smartq = require('smartq');
 export import smartshell = require('smartshell');

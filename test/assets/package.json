@@ -1,0 +1,33 @@
+{
+  "name": "sandbox-npmts",
+  "version": "1.0.1",
+  "description": "a cool test repo for npmts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "(npmts)",
+    "testDev": "node ../../pushrocks/npmts/dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/sandboxzone/sandbox-npmts.git"
+  },
+  "author": "Lossless GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/sandboxzone/sandbox-npmts/issues"
+  },
+  "homepage": "https://gitlab.com/sandboxzone/sandbox-npmts#README",
+  "dependencies": {
+    "smartchai": "^1.0.3",
+    "smartci": "^1.0.2",
+    "smartq": "^1.1.6"
+  },
+  "devDependencies": {
+    "qenv": "^1.1.7",
+    "tapbundle": "^1.1.1"
+  }
+}

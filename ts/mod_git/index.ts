@@ -1,4 +1,6 @@
 import * as plugins from './mod.plugins'
+import { bash } from '../npmci.bash'
+import { repo } from '../npmci.env'
 
 /**
  * handle cli input
@@ -20,5 +22,14 @@ export let handleCli = async (argvArg) => {
 }
 
 export let mirror = async () => {
-
+  let githubToken = process.env.NPMCI_GIT_GITHUBTOKEN
+  let githubUser = process.env.NPMCI_GIT_GITHUBGROUP || repo.user
+  let githubRepo = process.env.NPMCI_GIT_GITHUB || repo.repo
+  if (githubToken) {
+    plugins.beautylog.info('found github token.')
+    plugins.beautylog.log('attempting the mirror the repository to GitHub')
+    // add the mirror
+    bash(`git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`)
+    bash(`git push mirror`)
+  }
 }

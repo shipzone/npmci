@@ -1,20 +1,16 @@
 import * as plugins from './npmci.plugins'
 import * as env from './npmci.env'
 
-import { Smartmonitor } from 'smartmonitor'
+import { Analytics } from 'smartanalytics'
 
-export let npmciMonitor = new Smartmonitor()
+export let npmciAnalytics = new Analytics({
+  apiEndPoint: 'https://pubapi-1.lossless.one/analytics',
+  projectId: 'gitzone',
+  appName: 'npmci'
+})
 
-let monitorEnvString: string = process.env.NPMCI_MONITOR
-
-if (monitorEnvString) {
-  let npmciMonitorKeys: string[] = monitorEnvString.split('|')
-  npmciMonitor.addInstrumental({
-    apiKey: process.env.NPMCI_MONITOR
-  })
-  plugins.beautylog.info('Monitoring activated')
-} else {
-  plugins.beautylog.warn('Monitoring could not be enabled due to missing API-KEY')
-}
-
-npmciMonitor.increment('lossless-ci.builds', 1)
+npmciAnalytics.recordEvent('npmToolExecution', {
+  
+}).catch(err => {
+  plugins.beautylog.warn('Lossless Analytics API not available...')
+})
