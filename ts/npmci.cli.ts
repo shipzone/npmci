@@ -1,5 +1,7 @@
 import * as plugins from './npmci.plugins'
 import * as paths from './npmci.paths'
+import * as npmciMonitor from './npmci.monitor'
+npmciMonitor.run()
 
 // Get Info about npmci itself
 let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot)

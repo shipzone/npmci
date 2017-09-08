@@ -6,7 +6,8 @@ import { Dockerfile } from './mod_docker/index'
 /**
  * a info instance about the git respoitory at cwd :)
  */
-export let repo: GitRepo
-if (process.env.CI_REPOSITORY_URL) {
-  repo = new GitRepo(process.env.CI_REPOSITORY_URL)
+let repoString: string = process.env.CI_REPOSITORY_URL
+if (!repoString) {
+  repoString = 'https://undefined:undefined@github.com/undefined/undefined.git'
 }
+export let repo = new GitRepo(repoString)

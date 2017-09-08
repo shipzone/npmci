@@ -9,8 +9,12 @@ export let npmciAnalytics = new Analytics({
   appName: 'npmci'
 })
 
-npmciAnalytics.recordEvent('npmToolExecution', {
-  
-}).catch(err => {
-  plugins.beautylog.warn('Lossless Analytics API not available...')
-})
+export let run = async () => {
+  npmciAnalytics.recordEvent('npmToolExecution', {
+    host: env.repo.host,
+    user: env.repo.user,
+    repo: env.repo.repo
+  }).catch(err => {
+    plugins.beautylog.warn('Lossless Analytics API not available...')
+  })
+}
