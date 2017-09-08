@@ -14,7 +14,7 @@ stages:
 - pages
 
 before_script:
-  - yarn install npmci@latest
+  - yarn global add npmci@latest
 
 mirror:
   stage: mirror
