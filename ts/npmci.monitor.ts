@@ -4,7 +4,7 @@ import * as env from './npmci.env'
 import { Analytics } from 'smartanalytics'
 
 export let npmciAnalytics = new Analytics({
-  apiEndPoint: 'https://pubapi-1.lossless.one/analytics',
+  apiEndPoint: 'https://pubapi.lossless.one/analytics',
   projectId: 'gitzone',
   appName: 'npmci'
 })
