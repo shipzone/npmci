@@ -1,62 +1,74 @@
 # gitzone standard
-image: hosttoday/ht-docker-node:stable
+image: hosttoday/ht-docker-node:npmci
 
 cache:
   paths:
   - .yarn/
   key: "$CI_BUILD_STAGE"
 
+mirror:
+  stage: mirror
+  script:
+  - npmci git mirror
+  tags:
+  - docker
+
 stages:
+- mirror
 - test
 - release
 - trigger
 - pages
 
-before_script:
-  - yarn global add npmci@2.4.1
-
 testLEGACY:
   stage: test
   script:
-    - npmci test legacy
+  - npmci node install legacy
+  - npmci npm install
+  - npmci npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
-    - docker
+  - docker
   allow_failure: true
 
 testLTS:
   stage: test
   script:
-    - npmci test lts
+  - npmci node install lts
+  - npmci npm install
+  - npmci npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
-    - docker
+  - docker
     
 testSTABLE:
   stage: test
   script:
-    - npmci test stable
+  - npmci node install stable
+  - npmci npm install
+  - npmci npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
-    - docker
+  - docker
 
 release:
   stage: release
   script:
-    - npmci publish npm
+  - npmci npm prepare
+  - npmci npm publish
   only:
-    - tags
+  - tags
   tags:
-    - docker
+  - docker
 
 trigger:
   stage: trigger
   script:
-    - npmci trigger
+  - npmci trigger
   only:
-    - tags
+  - tags
   tags:
-    - docker
+  - docker
 
 pages:
   image: hosttoday/ht-docker-node:npmci
