@@ -30,7 +30,10 @@ export let mirror = async () => {
     plugins.beautylog.log('attempting the mirror the repository to GitHub')
     // add the mirror
     await bash(`git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`)
-    await bash(`git push mirror`)
+    await bash(`git push mirror --all`)
+    plugins.beautylog.ok('pushed all branches to mirror!')
+    await bash(`git push mirror --tags`)
+    plugins.beautylog.ok('pushed all tags to mirror!')
   } else {
     plugins.beautylog.error(`cannot find NPMCI_GIT_GITHUBTOKEN env var!`)
     process.exit(1)
