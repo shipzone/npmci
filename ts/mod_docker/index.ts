@@ -32,6 +32,7 @@ export let handleCli = async (argvArg) => {
         await build()
         break
       case 'login':
+      case 'prepare':
         await login()
         break
       case 'test':
