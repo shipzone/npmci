@@ -39,9 +39,9 @@ export let install = async (versionArg) => {
   if (versionArg === 'stable') {
     version = 'stable'
   } else if (versionArg === 'lts') {
-    version = '6'
+    version = '8'
   } else if (versionArg === 'legacy') {
-    version = '6'
+    version = '8'
   } else {
     version = versionArg
   }
