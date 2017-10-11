@@ -75,9 +75,9 @@ export class Dockerfile {
       await bash(`docker run --name npmci_test_container --entrypoint="bash" ${this.buildTag} -c "mkdir /npmci_test"`)
       await bash(`docker cp ${testFile} npmci_test_container:/npmci_test/test.sh`)
       await bash(`docker commit npmci_test_container npmci_test_image`)
-      await bash('docker run --entrypoint="bash" npmci_test_image -x /npmci_test/test.sh')
-      await bash('docker rm npmci_test_container')
-      await bash('docker rmi --force npmci_test_image')
+      await bash(`docker run --entrypoint="bash" npmci_test_image -x /npmci_test/test.sh`)
+      await bash(`docker rm npmci_test_container`)
+      await bash(`docker rmi --force npmci_test_image`)
     } else {
       plugins.beautylog.warn('skipping tests for ' + this.cleanTag + ' because no testfile was found!')
     }

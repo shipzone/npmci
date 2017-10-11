@@ -74,9 +74,9 @@ class Dockerfile {
                 yield npmci_bash_1.bash(`docker run --name npmci_test_container --entrypoint="bash" ${this.buildTag} -c "mkdir /npmci_test"`);
                 yield npmci_bash_1.bash(`docker cp ${testFile} npmci_test_container:/npmci_test/test.sh`);
                 yield npmci_bash_1.bash(`docker commit npmci_test_container npmci_test_image`);
-                yield npmci_bash_1.bash('docker run --entrypoint="bash" npmci_test_image -x /npmci_test/test.sh');
-                yield npmci_bash_1.bash('docker rm npmci_test_container');
-                yield npmci_bash_1.bash('docker rmi --force npmci_test_image');
+                yield npmci_bash_1.bash(`docker run --entrypoint="bash" npmci_test_image -x /npmci_test/test.sh`);
+                yield npmci_bash_1.bash(`docker rm npmci_test_container`);
+                yield npmci_bash_1.bash(`docker rmi --force npmci_test_image`);
             }
             else {
                 plugins.beautylog.warn('skipping tests for ' + this.cleanTag + ' because no testfile was found!');
