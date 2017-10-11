@@ -72,10 +72,10 @@ export class Dockerfile {
     let testFileExists: boolean = plugins.smartfile.fs.fileExistsSync(testFile)
     if (testFileExists) {
       // run tests
-      await bash('docker run --name npmci_test_container ' + this.buildTag + ' --entrypoint="mkdir" /npmci_test')
-      await bash('docker cp ' + testFile + ' npmci_test_container:/npmci_test/test.sh')
-      await bash('docker commit npmci_test_container npmci_test_image')
-      await bash('docker run npmci_test_image --entrypoint="sh" /npmci_test/test.sh')
+      await bash(`docker run --name npmci_test_container --entrypoint="bash" ${this.buildTag} -c "mkdir /npmci_test"`)
+      await bash(`docker cp ${testFile} npmci_test_container:/npmci_test/test.sh`)
+      await bash(`docker commit npmci_test_container npmci_test_image`)
+      await bash('docker run --entrypoint="bash" npmci_test_image -x /npmci_test/test.sh')
       await bash('docker rm npmci_test_container')
       await bash('docker rmi --force npmci_test_image')
     } else {
