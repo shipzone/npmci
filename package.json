@@ -49,7 +49,6 @@
     "smartssh": "^1.2.2",
     "smartstring": "^2.0.24",
     "smartsystem": "^2.0.2",
-    "through2": "^2.0.3",
-    "typings-global": "^1.0.20"
+    "through2": "^2.0.3"
   }
 }

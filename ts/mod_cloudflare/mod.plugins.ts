@@ -1,7 +1,5 @@
-export * from '../npmci.plugins'
+export * from '../npmci.plugins';
 
-import * as cflare from 'cflare'
+import * as cflare from 'cflare';
 
-export {
-    cflare
-}
+export { cflare };

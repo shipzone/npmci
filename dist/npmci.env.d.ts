@@ -1,2 +1,2 @@
-import { GitRepo } from 'smartstring';
-export declare let repo: GitRepo;
+import * as plugins from './npmci.plugins';
+export declare let repo: plugins.smartstring.GitRepo;

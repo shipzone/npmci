@@ -1,2 +1,1 @@
-import './npmci.cli'
-
+import './npmci.cli';

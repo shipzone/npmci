@@ -1,1 +1,1 @@
-export * from '../npmci.plugins'
+export * from '../npmci.plugins';

@@ -7,19 +7,25 @@ cache:
   key: "$CI_BUILD_STAGE"
 
 stages:
-- mirror
+- security
 - test
 - release
 - trigger
 - pages
 
-before_script:
-  - yarn global add npmci@latest
-
 mirror:
-  stage: mirror
+  stage: security
   script:
   - npmci git mirror
+  tags:
+  - docker
+
+snyk:
+  stage: security
+  script:
+    - npmci command yarn global add snyk
+    - npmci command yarn install --ignore-scripts
+    - npmci command snyk test
   tags:
   - docker
 

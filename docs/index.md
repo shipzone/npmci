@@ -1,13 +1,16 @@
 # npmci
+
 node and docker in gitlab ci on steroids
 
 ## Availabililty
+
 [![npm](https://gitzone.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/npmci)
 [![git](https://gitzone.gitlab.io/assets/repo-button-git.svg)](https://GitLab.com/gitzone/npmci)
 [![git](https://gitzone.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/gitzone/npmci)
 [![docs](https://gitzone.gitlab.io/assets/repo-button-docs.svg)](https://gitzone.gitlab.io/npmci/)
 
 ## Status for master
+
 [![build status](https://GitLab.com/gitzone/npmci/badges/master/build.svg)](https://GitLab.com/gitzone/npmci/commits/master)
 [![coverage report](https://GitLab.com/gitzone/npmci/badges/master/coverage.svg)](https://GitLab.com/gitzone/npmci/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/npmci.svg)](https://www.npmjs.com/package/npmci)
@@ -19,6 +22,7 @@ node and docker in gitlab ci on steroids
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Usage
+
 Use TypeScript for best in class instellisense.
 
 npmci is designed to work in docker CI environments. The following docker images come with npmci presinstalled:
@@ -26,11 +30,12 @@ npmci is designed to work in docker CI environments. The following docker images
 Docker Hub:
 
 * [hosttoday/ht-docker-node:npmci](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
-has LTS node version and npmci preinstalled.
+  has LTS node version and npmci preinstalled.
 * [hosttoday/ht-docker-dbase](https://hub.docker.com/r/hosttoday/ht-docker-dbase/)  
-based on docker:git, can be used to build docker images in conjunction with docker:dind
+  based on docker:git, can be used to build docker images in conjunction with docker:dind
 
 npmci can be called from commandline:
+
 ```shell
 # Install any node version:
 npmci install lts # will install latest LTS node version and update PATH for node and npm versions
@@ -68,32 +73,28 @@ npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domai
 ```
 
 ## Configuration
+
 npmci supports the use of npmextra.
 
 To configure npmci create a `npmextra.json` file at the root of your project
 
 ```json
 {
-    "npmci": {
-        "globalNpmTools": [
-            "npm-check-updates",
-            "protractor",
-            "npmts",
-            "gitzone"
-        ]
-    }
+  "npmci": {
+    "globalNpmTools": ["npm-check-updates", "protractor", "npmts", "gitzone"]
+  }
 }
 ```
 
 **Available options**
 
-setting | example | description
---- | --- | ---
-globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and (if not yet present) install them from npm. 
+| setting        | example                       | description                                                                                       |
+| -------------- | ----------------------------- | ------------------------------------------------------------------------------------------------- |
+| globalNpmTools | "globalNpmTools": ["gitbook"] | Will look for the specified package names locally and (if not yet present) install them from npm. |
 
 For further information read the linked docs at the top of this README.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
-| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
+> | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
 
 [![repo-footer](https://gitzone.gitlab.io/assets/repo-footer.svg)](https://push.rocks)
