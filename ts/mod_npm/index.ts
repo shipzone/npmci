@@ -51,6 +51,9 @@ let prepare = async () => {
   return;
 };
 
+/**
+ * publish a package to npm
+ */
 let publish = async () => {
   let npmAccessCliString = ``;
   const config = await configModule.getConfig();

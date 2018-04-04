@@ -1,7 +1,4 @@
-import 'typings-global';
 export import beautylog = require('beautylog');
-export let gulp = require('gulp');
-export import gulpFunction = require('gulp-function');
 export import lodash = require('lodash');
 export import npmextra = require('npmextra');
 export import path = require('path');

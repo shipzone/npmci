@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("typings-global");
 exports.beautylog = require("beautylog");
-exports.gulp = require('gulp');
-exports.gulpFunction = require("gulp-function");
 exports.lodash = require("lodash");
 exports.npmextra = require("npmextra");
 exports.path = require("path");
@@ -22,4 +19,4 @@ exports.smartsystem = require("smartsystem");
 exports.smartssh = require("smartssh");
 exports.smartstring = require("smartstring");
 exports.through2 = require("through2");
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucGx1Z2lucy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnBsdWdpbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSwwQkFBd0I7QUFDeEIseUNBQStDO0FBQ3BDLFFBQUEsSUFBSSxHQUFHLE9BQU8sQ0FBQyxNQUFNLENBQUMsQ0FBQztBQUNsQyxnREFBc0Q7QUFDdEQsbUNBQXlDO0FBQ3pDLHVDQUE2QztBQUM3QywrQkFBcUM7QUFDckMsNkNBQW1EO0FBQ25ELDhCQUFvQztBQUN6QixRQUFBLE9BQU8sR0FBRyxPQUFPLENBQUMsU0FBUyxDQUFDLENBQUM7QUFDeEMsdUNBQTZDO0FBQzdDLDJDQUFpRDtBQUNqRCx5Q0FBK0M7QUFDL0MscUNBQTJDO0FBQzNDLDJDQUFpRDtBQUNqRCxtQ0FBeUM7QUFDekMsMkNBQWlEO0FBQ2pELDZDQUFtRDtBQUNuRCw2Q0FBbUQ7QUFDbkQsdUNBQTZDO0FBQzdDLDZDQUFtRDtBQUNuRCx1Q0FBNkMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibnBtY2kucGx1Z2lucy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL25wbWNpLnBsdWdpbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSx5Q0FBK0M7QUFDL0MsbUNBQXlDO0FBQ3pDLHVDQUE2QztBQUM3QywrQkFBcUM7QUFDckMsNkNBQW1EO0FBQ25ELDhCQUFvQztBQUN6QixRQUFBLE9BQU8sR0FBRyxPQUFPLENBQUMsU0FBUyxDQUFDLENBQUM7QUFDeEMsdUNBQTZDO0FBQzdDLDJDQUFpRDtBQUNqRCx5Q0FBK0M7QUFDL0MscUNBQTJDO0FBQzNDLDJDQUFpRDtBQUNqRCxtQ0FBeUM7QUFDekMsMkNBQWlEO0FBQ2pELDZDQUFtRDtBQUNuRCw2Q0FBbUQ7QUFDbkQsdUNBQTZDO0FBQzdDLDZDQUFtRDtBQUNuRCx1Q0FBNkMifQ==
