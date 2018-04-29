@@ -7,7 +7,7 @@ cache:
   key: "$CI_BUILD_STAGE"
 
 before_script:
-  - yarn global add npmci@3.0.29
+  - yarn global add npmci@3.0.28
   - npmci docker login
 
 stages:
