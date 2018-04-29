@@ -6,6 +6,10 @@ cache:
   - .yarn/
   key: "$CI_BUILD_STAGE"
 
+before_script:
+  - yarn global add npmci@3.0.29
+  - npmci docker login
+
 stages:
 - security
 - test
@@ -64,6 +68,8 @@ release:
   stage: release
   script:
   - npmci npm prepare
+  - npmci command npm install
+  - npmci command npmts
   - npmci npm publish
   only:
   - tags
