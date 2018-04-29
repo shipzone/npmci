@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "(rm -f config.json) && (npmts) && (npm run testVersion)",
+    "build": "(rm -f config.json) && (npmts) && (npm run testVersion)",
     "testVersion": "(cd test/assets/ && node ../../dist/cli.js -v)"
   },
   "repository": {

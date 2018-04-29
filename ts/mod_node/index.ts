@@ -33,7 +33,7 @@ export let install = async versionArg => {
   plugins.beautylog.log(`now installing node version ${versionArg}`);
   let version: string;
   if (versionArg === 'stable') {
-    version = 'stable';
+    version = '9';
   } else if (versionArg === 'lts') {
     version = '8';
   } else if (versionArg === 'legacy') {

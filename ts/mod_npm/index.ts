@@ -57,12 +57,22 @@ let prepare = async () => {
 let publish = async () => {
   let npmAccessCliString = ``;
   const config = await configModule.getConfig();
+
+  // -> configure package access level
   if (
     config.npmAccessLevel &&
     (config.npmAccessLevel === 'public' || config.npmAccessLevel === 'private')
   ) {
     npmAccessCliString = `--access=${config.npmAccessLevel}`;
   }
+
+  // -> build it
+  await bash(`yarn run build`);
+
+  // -> make sure npm is authenticated
+  prepare();
+
+  // -> publish it
   await bash(`npm publish ${npmAccessCliString}`);
 };
 
