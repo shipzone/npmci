@@ -10,7 +10,8 @@
         ],
         "npmGlobalTools": [
             "npmts"
-        ]
+        ],
+        "npmAccessLevel": "public"
     },
     "npmdocker":{
         "baseImage":"hosttoday/ht-docker-node:npmci",
