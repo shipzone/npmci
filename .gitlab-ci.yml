@@ -76,7 +76,7 @@ testLTS:
 testSTABLE:
   stage: test
   script:
-  - npmci node install stable
+  - npmci node install lts
   - npmci npm install
   - npmci npm test
   coverage: /\d+.?\d+?\%\s*coverage/

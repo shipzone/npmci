@@ -66,13 +66,18 @@ let publish = async () => {
     npmAccessCliString = `--access=${config.npmAccessLevel}`;
   }
 
+  // -> preparing
+  plugins.beautylog.log(`noe preparing environment:`);
+  prepare();
+  await bash(`npm install -g npm`);
+  await bash(`npm -v`);
+
   // -> build it
   await bash(`yarn install`);
   await bash(`yarn run build`);
-  await bash(`rm -r node_modules`);
 
   // -> publish it
-  plugins.beautylog.log(`now invking npm to publish the package!`);
+  plugins.beautylog.log(`now invoking npm to publish the package!`);
   await bash(`npm publish ${npmAccessCliString}`);
   plugins.beautylog.success(`Package was successfully published!`);
 };
