@@ -69,12 +69,12 @@ let publish = async () => {
   // -> build it
   await bash(`yarn install`);
   await bash(`yarn run build`);
-  await bash (`rm -r node_modules`)
+  await bash(`rm -r node_modules`);
 
   // -> publish it
-  plugins.beautylog.log(`now invking npm to publish the package!`)
+  plugins.beautylog.log(`now invking npm to publish the package!`);
   await bash(`npm publish ${npmAccessCliString}`);
-  plugins.beautylog.success(`Package was successfully published!`)
+  plugins.beautylog.success(`Package was successfully published!`);
 };
 
 let install = async (): Promise<void> => {

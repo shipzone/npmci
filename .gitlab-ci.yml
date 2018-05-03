@@ -19,6 +19,7 @@ mirror:
   - npmci git mirror
   tags:
   - docker
+  - notpriv
 
 snyk:
   stage: security
@@ -28,6 +29,26 @@ snyk:
     - npmci command snyk test
   tags:
   - docker
+  - notpriv
+
+codequality:
+  stage: security
+  image: docker:stable
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+        --env SOURCE_CODE="$PWD"
+        --volume "$PWD":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    paths: [codeclimate.json]
+  tags:
+  - docker
+  - priv
 
 testLEGACY:
   stage: test
@@ -38,6 +59,7 @@ testLEGACY:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
+  - notpriv
   allow_failure: true
 
 testLTS:
@@ -49,6 +71,7 @@ testLTS:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
+  - notpriv
     
 testSTABLE:
   stage: test
@@ -59,6 +82,7 @@ testSTABLE:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
+  - notpriv
 
 release:
   stage: release
@@ -70,6 +94,7 @@ release:
   - tags
   tags:
   - docker
+  - notpriv
 
 trigger:
   stage: trigger
@@ -79,6 +104,7 @@ trigger:
   - tags
   tags:
   - docker
+  - notpriv
 
 pages:
   image: hosttoday/ht-docker-node:npmci
@@ -88,6 +114,7 @@ pages:
     - npmci command npmpage
   tags:
     - docker
+    - notpriv
   only:
     - tags
   artifacts:
