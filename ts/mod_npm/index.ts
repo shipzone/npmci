@@ -67,14 +67,21 @@ let publish = async () => {
   }
 
   // -> preparing
-  plugins.beautylog.log(`noe preparing environment:`);
+  plugins.beautylog.log(`now preparing environment:`);
   prepare();
-  await bash(`npm install -g npm`);
   await bash(`npm -v`);
 
   // -> build it
   await bash(`yarn install`);
   await bash(`yarn run build`);
+
+  plugins.beautylog.success(`Nice!!! The build for the publication was successfull!`);
+  plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`)
+  // -> clean up before we publish stuff
+  await bash(`rm -r .yarn`);
+  await bash(`rm -r node_modules`);
+
+  plugins.beautylog.success(`Cleaned up!:`);
 
   // -> publish it
   plugins.beautylog.log(`now invoking npm to publish the package!`);
