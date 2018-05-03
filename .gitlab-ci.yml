@@ -63,6 +63,7 @@ testSTABLE:
 release:
   stage: release
   script:
+  - npmci node install stable
   - npmci npm prepare
   - npmci npm publish
   only:

@@ -5,11 +5,8 @@
         "cli": true
     },
     "npmci": {
-        "globalNpmTools": [
-            "npmts"
-        ],
         "npmGlobalTools": [
-            "npmts"
+            "@gitzone/npmts"
         ],
         "npmAccessLevel": "public"
     },
