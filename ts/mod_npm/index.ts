@@ -70,9 +70,6 @@ let publish = async () => {
   await bash(`yarn install`);
   await bash(`yarn run build`);
 
-  // -> make sure npm is authenticated
-  prepare();
-
   // -> publish it
   await bash(`npm publish ${npmAccessCliString}`);
 };
