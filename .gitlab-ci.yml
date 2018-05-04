@@ -87,7 +87,7 @@ testSTABLE:
 release:
   stage: release
   script:
-  - npmci node install lts
+  - npmci node install stable
   - npmci npm prepare
   - npmci npm publish
   only:

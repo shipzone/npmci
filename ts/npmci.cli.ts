@@ -11,112 +11,104 @@ import * as NpmciEnv from './npmci.env';
 
 import * as npmciMods from './npmci.mods';
 
-let smartcli = new plugins.smartcli.Smartcli();
-smartcli.addVersion(npmciInfo.version);
+const npmciSmartcli = new plugins.smartcli.Smartcli();
+npmciSmartcli.addVersion(npmciInfo.version);
 
 // clean
-smartcli
+npmciSmartcli
   .addCommand('clean')
-  .then(async argv => {
+  .subscribe(async argv => {
     let modClean = await npmciMods.modClean.load();
     await modClean.clean();
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
 // cloudflare
-smartcli
+npmciSmartcli
   .addCommand('cloudflare')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modPurge = await npmciMods.modCloudflare.load();
     await modPurge.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
   });
 
 // command
-smartcli
+npmciSmartcli
   .addCommand('command')
-  .then(async argv => {
+  .subscribe(async argv => {
     let modCommand = await npmciMods.modCommand.load();
     await modCommand.command();
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
 // command
-smartcli
+npmciSmartcli
   .addCommand('git')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modGit = await npmciMods.modGit.load();
     await modGit.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
 // build
-smartcli
+npmciSmartcli
   .addCommand('docker')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modDocker = await npmciMods.modDocker.load();
     await modDocker.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
 // node
-smartcli
+npmciSmartcli
   .addCommand('node')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modNode = await npmciMods.modNode.load();
     await modNode.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
+    process.exit(1);
   });
 
 // npm
-smartcli
+npmciSmartcli
   .addCommand('npm')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modNpm = await npmciMods.modNpm.load();
     await modNpm.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
   });
 
 // trigger
-smartcli
+npmciSmartcli
   .addCommand('ssh')
-  .then(async argvArg => {
+  .subscribe(async argvArg => {
     let modSsh = await npmciMods.modSsh.load();
     await modSsh.handleCli(argvArg);
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
 // trigger
-smartcli
+npmciSmartcli
   .addCommand('trigger')
-  .then(async argv => {
+  .subscribe(async argv => {
     let modTrigger = await npmciMods.modTrigger.load();
     await modTrigger.trigger();
-  })
-  .catch(err => {
+  }, err => {
     console.log(err);
     process.exit(1);
   });
 
-smartcli.startParse();
+npmciSmartcli.startParse();

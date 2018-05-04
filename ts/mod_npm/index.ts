@@ -76,7 +76,7 @@ let publish = async () => {
   await bash(`yarn run build`);
 
   plugins.beautylog.success(`Nice!!! The build for the publication was successfull!`);
-  plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`)
+  plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`);
   // -> clean up before we publish stuff
   await bash(`rm -r .yarn`);
   await bash(`rm -r node_modules`);
