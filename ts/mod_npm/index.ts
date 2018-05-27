@@ -78,8 +78,8 @@ let publish = async () => {
   plugins.beautylog.success(`Nice!!! The build for the publication was successfull!`);
   plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`);
   // -> clean up before we publish stuff
-  await bashNoError(`rm -r .npmci_cache`);
-  await bash(`rm -r node_modules`);
+  await bashNoError(`rm -r ./.npmci_cache`);
+  await bash(`rm -r ./node_modules`);
 
   plugins.beautylog.success(`Cleaned up!:`);
 

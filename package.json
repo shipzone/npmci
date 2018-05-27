@@ -50,5 +50,5 @@
     "smartsystem": "^2.0.2",
     "through2": "^2.0.3"
   },
-  "private": true
+  "private": false
 }
