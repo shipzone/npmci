@@ -1,6 +1,7 @@
 import * as plugins from '../npmci.plugins';
+import * as paths from '../npmci.paths';
 import * as npmciConfig from '../npmci.config';
-import { bash, bashNoError, nvmAvailable, yarnAvailable } from '../npmci.bash';
+import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
 
 /**
  * handle cli input
@@ -49,6 +50,7 @@ export let install = async versionArg => {
   }
   await bash('node -v');
   await bash('npm -v');
+  await bash(`npm config set cache ${paths.NpmciCacheDir}  --global `);
   // lets look for further config
   await npmciConfig.getConfig().then(async configArg => {
     plugins.beautylog.log('Now checking for needed global npm tools...');
@@ -60,11 +62,7 @@ export let install = async versionArg => {
         plugins.beautylog.log(`Tool ${npmTool} is available`);
       } else {
         plugins.beautylog.info(`globally installing ${npmTool} from npm`);
-        if (await yarnAvailable.promise) {
-          await bash(`yarn global add ${npmTool}`);
-        } else {
-          await bash(`npm install ${npmTool} -q -g`);
-        }
+        await bash(`npm install ${npmTool} -q -g`);
       }
     }
     plugins.beautylog.success('all global npm tools specified in npmextra.json are now available!');

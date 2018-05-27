@@ -1,6 +1,6 @@
 import * as plugins from './mod.plugins';
 import * as configModule from '../npmci.config';
-import { bash, bashNoError, nvmAvailable, yarnAvailable } from '../npmci.bash';
+import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
 
 /**
  * handle cli input
@@ -72,13 +72,13 @@ let publish = async () => {
   await bash(`npm -v`);
 
   // -> build it
-  await bash(`yarn install`);
-  await bash(`yarn run build`);
+  await bash(`npm install`);
+  await bash(`npm run build`);
 
   plugins.beautylog.success(`Nice!!! The build for the publication was successfull!`);
   plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`);
   // -> clean up before we publish stuff
-  await bash(`rm -r .yarn`);
+  await bashNoError(`rm -r .npmci_cache`);
   await bash(`rm -r node_modules`);
 
   plugins.beautylog.success(`Cleaned up!:`);
@@ -91,14 +91,10 @@ let publish = async () => {
 
 let install = async (): Promise<void> => {
   plugins.beautylog.info('now installing dependencies:');
-  if (await yarnAvailable.promise) {
-    await bash('yarn install');
-  } else {
-    await bash('npm install');
-  }
+  await bash('npm install');
 };
 
 export let test = async (): Promise<void> => {
   plugins.beautylog.info('now starting tests:');
-  await bash('yarn test');
+  await bash('npm test');
 };

@@ -6,3 +6,4 @@ export let NpmciPackageRoot = plugins.path.join(__dirname, '../');
 export let NpmciPackageConfig = plugins.path.join(NpmciPackageRoot, './config.json');
 export let NpmciProjectDir = cwd;
 export let NpmciTestDir = plugins.path.join(cwd, './test');
+export let NpmciCacheDir = plugins.path.join(cwd, './.npmci_cache');

@@ -7,7 +7,6 @@ import * as smartq from 'smartq';
  * wether nvm is available or not
  */
 export let nvmAvailable = smartq.defer<boolean>();
-export let yarnAvailable = smartq.defer<boolean>();
 /**
  * the smartshell instance for npmci
  */
@@ -35,22 +34,8 @@ let checkToolsAvailable = async () => {
     } else {
       nvmAvailable.resolve(false);
     }
-
-    // check for yarn
-    await plugins.smartshell.which('yarn').then(
-      async () => {
-        await plugins.smartshell.exec(
-          `yarn config set cache-folder ${plugins.path.join(paths.cwd, '.yarn')}`
-        );
-        yarnAvailable.resolve(true);
-      },
-      () => {
-        yarnAvailable.resolve(false);
-      }
-    );
   } else {
     nvmAvailable.resolve(true);
-    yarnAvailable.resolve(true);
   }
 };
 checkToolsAvailable();
