@@ -1,12 +1,12 @@
 import * as plugins from './npmci.plugins';
 import * as paths from './npmci.paths';
 
-import * as smartq from 'smartq';
+import * as smartpromise from '@pushrocks/smartpromise';
 
 /**
  * wether nvm is available or not
  */
-export let nvmAvailable = smartq.defer<boolean>();
+export let nvmAvailable = smartpromise.defer<boolean>();
 /**
  * the smartshell instance for npmci
  */
