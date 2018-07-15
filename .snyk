@@ -6,10 +6,23 @@ ignore:
     - shelljs:
         reason: None given
         expires: '2018-06-02T22:48:10.660Z'
+      smartshell > shelljs:
+        reason: None given
+        expires: '2018-08-14T21:49:25.248Z'
     - smartshell > shelljs:
         reason: None given
         expires: '2018-06-02T22:48:10.660Z'
+      smartssh > shelljs:
+        reason: None given
+        expires: '2018-08-14T21:49:25.248Z'
     - smartssh > shelljs:
         reason: None given
         expires: '2018-06-02T22:48:10.660Z'
+      shelljs:
+        reason: None given
+        expires: '2018-08-14T21:49:25.248Z'
+  'npm:stringstream:20180511':
+    - request > stringstream:
+        reason: None given
+        expires: '2018-08-14T21:49:25.248Z'
 patch: {}
