@@ -34,7 +34,7 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
  * @returns Promise<Dockerfile[]>
  */
 export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfile[]> => {
-  let done = plugins.q.defer<Dockerfile[]>();
+  let done = plugins.smartpromise.defer<Dockerfile[]>();
   plugins.beautylog.info('sorting Dockerfiles:');
   let sortedArray: Dockerfile[] = [];
   let cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg, sortedArray);

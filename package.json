@@ -8,7 +8,7 @@
     "npmci": "dist/cli.js"
   },
   "scripts": {
-    "test": "(rm -f config.json) && (npmts) && (npm run testVersion)",
+    "test": "(rm -f config.json) && tsrun test/test.ts",
     "build": "(rm -f config.json) && (npmts) && (npm run testVersion)",
     "testVersion": "(cd test/assets/ && node ../../dist/cli.js -v)"
   },
@@ -23,12 +23,15 @@
   },
   "homepage": "https://gitlab.com/gitzone/npmci#README",
   "devDependencies": {
-    "tapbundle": "^2.0.2"
+    "@gitzone/tsrun": "^1.1.9",
+    "@pushrocks/tapbundle": "^3.0.1"
   },
   "dependencies": {
     "@pushrocks/smartcli": "^3.0.2",
-    "@pushrocks/smartpromise": "^2.0.2",
-    "@types/lodash": "^4.14.110",
+    "@pushrocks/smartdelay": "^2.0.1",
+    "@pushrocks/smartfile": "^6.0.3",
+    "@pushrocks/smartpromise": "^2.0.5",
+    "@types/lodash": "^4.14.112",
     "@types/shelljs": "^0.8.0",
     "@types/through2": "^2.0.33",
     "beautylog": "^6.1.10",
@@ -40,8 +43,6 @@
     "request": "^2.87.0",
     "shelljs": "^0.8.2",
     "smartanalytics": "^2.0.9",
-    "smartdelay": "^1.0.4",
-    "smartfile": "^4.2.20",
     "smartparam": "^1.0.2",
     "smartshell": "^1.0.19",
     "smartsocket": "^1.1.19",

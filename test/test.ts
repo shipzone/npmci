@@ -1,4 +1,4 @@
-import { tap, expect } from 'tapbundle';
+import { tap, expect } from '@pushrocks/tapbundle';
 import * as path from 'path';
 
 // Setup test
