@@ -29,9 +29,9 @@ npmci is designed to work in docker CI environments. The following docker images
 
 Docker Hub:
 
-* [hosttoday/ht-docker-node:npmci](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
+- [hosttoday/ht-docker-node:npmci](https://hub.docker.com/r/hosttoday/ht-docker-node/)  
   has LTS node version and npmci preinstalled.
-* [hosttoday/ht-docker-dbase](https://hub.docker.com/r/hosttoday/ht-docker-dbase/)  
+- [hosttoday/ht-docker-dbase](https://hub.docker.com/r/hosttoday/ht-docker-dbase/)  
   based on docker:git, can be used to build docker images in conjunction with docker:dind
 
 npmci can be called from commandline and handle a lot of tasks durug ci:
@@ -71,7 +71,7 @@ npmci publish npm # will look vor $NPMCI_TOKEN_NPM env var and push any module i
 npmci publish docker
 
 # trigger webhooks
-npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domain|id|token|ref|name  
+npmci trigger # will look for NPMCI_TRIGGER_1 to NPMCI_TRIGGER_100 in form domain|id|token|ref|name
 ```
 
 ## Configuration

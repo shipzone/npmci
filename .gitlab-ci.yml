@@ -3,7 +3,7 @@ image: hosttoday/ht-docker-node:npmci
 
 cache:
   paths:
-  - .yarn/
+  - .npmci_cache/
   key: "$CI_BUILD_STAGE"
 
 stages:
@@ -26,8 +26,8 @@ mirror:
 snyk:
   stage: security
   script:
-    - npmci command yarn global add snyk
-    - npmci command yarn install --ignore-scripts
+    - npmci command npm install -g snyk
+    - npmci command npm install --ignore-scripts
     - npmci command snyk test
   tags:
   - docker
@@ -117,8 +117,9 @@ pages:
   image: hosttoday/ht-docker-node:npmci
   stage: metadata
   script:
-    - npmci command yarn global add npmpage
-    - npmci command npmpage
+    - npmci command npm install -g typedoc typescript
+    - npmci npm install
+    - npmci command typedoc --module "commonjs" --target "ES2016" --out public/ ts/
   tags:
     - docker
     - notpriv
@@ -128,3 +129,14 @@ pages:
     expire_in: 1 week
     paths:
     - public
+  allow_failure: true
+
+windowsCompatibility:
+  image: stefanscherer/node-windows:10-build-tools
+  stage: metadata
+  script:
+  - npm install & npm test
+  coverage: /\d+.?\d+?\%\s*coverage/
+  tags:
+  - windows
+  allow_failure: true
