@@ -5,12 +5,12 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "bin": {
-    "npmci": "dist/cli.js"
+    "npmci": "cli.js"
   },
   "scripts": {
     "test": "(rm -f config.json) && tstest test/",
     "build": "(rm -f config.json) && tsbuild && (npm run testVersion)",
-    "testVersion": "(cd test/assets/ && node ../../dist/cli.js -v)"
+    "testVersion": "(cd test/assets/ && node ../../cli.js -v)"
   },
   "repository": {
     "type": "git",
