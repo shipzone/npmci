@@ -22,7 +22,20 @@ let evaluateTrigger = async triggerEnvVarArg => {
   }
   plugins.beautylog.info('Found Trigger!');
   plugins.beautylog.log('triggering build for ref ' + regexRefName + ' of ' + regexTriggerName);
-  plugins.request.post('https://gitlab.com/api/v3/projects/' + regexProjectId + '/trigger/builds', {
-    form: { token: regexProjectTriggerToken, ref: regexRefName }
-  });
+  plugins.request.postFormData(
+    'https://gitlab.com/api/v3/projects/' + regexProjectId + '/trigger/builds',
+    {},
+    [
+      {
+        name: 'token',
+        payload: regexProjectTriggerToken,
+        type: 'string'
+      },
+      {
+        name: 'ref',
+        payload: regexRefName,
+        type: 'string'
+      }
+    ]
+  );
 };

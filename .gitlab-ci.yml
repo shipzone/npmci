@@ -26,6 +26,7 @@ mirror:
 snyk:
   stage: security
   script:
+    - npmci npm prepare
     - npmci command npm install -g snyk
     - npmci command npm install --ignore-scripts
     - npmci command snyk test
@@ -39,6 +40,7 @@ snyk:
 testLEGACY:
   stage: test
   script:
+  - npmci npm prepare
   - npmci node install legacy
   - npmci npm install
   - npmci npm test
@@ -51,6 +53,7 @@ testLEGACY:
 testLTS:
   stage: test
   script:
+  - npmci npm prepare
   - npmci node install lts
   - npmci npm install
   - npmci npm test
@@ -62,6 +65,7 @@ testLTS:
 testSTABLE:
   stage: test
   script:
+  - npmci npm prepare
   - npmci node install stable
   - npmci npm install
   - npmci npm test
@@ -118,6 +122,7 @@ pages:
   stage: metadata
   script:
     - npmci command npm install -g typedoc typescript
+    - npmci npm prepare
     - npmci npm install
     - npmci command typedoc --module "commonjs" --target "ES2016" --out public/ ts/
   tags:
