@@ -22,14 +22,14 @@ let checkToolsAvailable = async () => {
   // check for nvm
   if (!process.env.NPMTS_TEST) {
     if (
-      (await plugins.smartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
+      (await npmciSmartshell.execSilent(`bash -c "source /usr/local/nvm/nvm.sh"`)).exitCode === 0
     ) {
-      npmciSmartshell.addSourceFiles([`/usr/local/nvm/nvm.sh`]);
+      npmciSmartshell.shellEnv.addSourceFiles([`/usr/local/nvm/nvm.sh`]);
       nvmAvailable.resolve(true);
     } else if (
-      (await plugins.smartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
+      (await npmciSmartshell.execSilent(`bash -c "source ~/.nvm/nvm.sh"`)).exitCode === 0
     ) {
-      npmciSmartshell.addSourceFiles([`~/.nvm/nvm.sh`]);
+      npmciSmartshell.shellEnv.addSourceFiles([`~/.nvm/nvm.sh`]);
       nvmAvailable.resolve(true);
     } else {
       nvmAvailable.resolve(false);

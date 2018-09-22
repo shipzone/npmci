@@ -5,7 +5,7 @@ import * as paths from './npmci.paths';
 
 import { repo } from './npmci.env';
 
-import { KeyValueStore } from 'npmextra';
+import { KeyValueStore } from '@pushrocks/npmextra';
 
 export interface INpmciOptions {
   npmGlobalTools: string[];

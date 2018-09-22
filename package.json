@@ -8,8 +8,8 @@
     "npmci": "dist/cli.js"
   },
   "scripts": {
-    "test": "(rm -f config.json) && tsrun test/test.ts",
-    "build": "(rm -f config.json) && (npmts) && (npm run testVersion)",
+    "test": "(rm -f config.json) && tstest test/",
+    "build": "(rm -f config.json) && tsbuild && (npm run testVersion)",
     "testVersion": "(cd test/assets/ && node ../../dist/cli.js -v)"
   },
   "repository": {
@@ -23,32 +23,33 @@
   },
   "homepage": "https://gitlab.com/gitzone/npmci#README",
   "devDependencies": {
-    "@gitzone/tsrun": "^1.1.9",
-    "@pushrocks/tapbundle": "^3.0.1"
+    "@gitzone/tsbuild": "^2.0.22",
+    "@gitzone/tsrun": "^1.1.12",
+    "@gitzone/tstest": "^1.0.15",
+    "@pushrocks/tapbundle": "^3.0.7",
+    "@types/node": "^10.10.3"
   },
   "dependencies": {
-    "@pushrocks/smartcli": "^3.0.2",
-    "@pushrocks/smartdelay": "^2.0.1",
-    "@pushrocks/smartfile": "^6.0.3",
+    "@pushrocks/lik": "^3.0.1",
+    "@pushrocks/npmextra": "^3.0.1",
+    "@pushrocks/projectinfo": "^4.0.2",
+    "@pushrocks/smartcli": "^3.0.4",
+    "@pushrocks/smartdelay": "^2.0.2",
+    "@pushrocks/smartfile": "^6.0.8",
+    "@pushrocks/smartparam": "^1.0.4",
     "@pushrocks/smartpromise": "^2.0.5",
-    "@types/lodash": "^4.14.112",
+    "@pushrocks/smartrequest": "^1.1.14",
+    "@pushrocks/smartshell": "^2.0.6",
+    "@pushrocks/smartssh": "^1.2.3",
+    "@pushrocks/smartstring": "^3.0.4",
+    "@types/lodash": "^4.14.116",
     "@types/shelljs": "^0.8.0",
-    "@types/through2": "^2.0.33",
+    "@types/through2": "^2.0.34",
     "beautylog": "^6.1.10",
     "cflare": "^1.0.5",
-    "lik": "^2.0.5",
-    "lodash": "^4.17.10",
-    "npmextra": "^2.0.9",
-    "projectinfo": "^3.0.4",
-    "request": "^2.87.0",
-    "shelljs": "^0.8.2",
+    "lodash": "^4.17.11",
     "smartanalytics": "^2.0.9",
-    "smartparam": "^1.0.2",
-    "smartshell": "^1.0.19",
     "smartsocket": "^1.1.19",
-    "smartssh": "^1.2.2",
-    "smartstring": "^2.0.28",
-    "smartsystem": "^2.0.2",
     "through2": "^2.0.3"
   },
   "private": false
