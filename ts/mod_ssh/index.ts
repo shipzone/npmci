@@ -1,19 +1,20 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 let sshInstance: plugins.smartssh.SshInstance;
 
 export let handleCli = async argvArg => {
   if (argvArg._.length >= 2) {
-    let action: string = argvArg._[1];
+    const action: string = argvArg._[1];
     switch (action) {
       case 'prepare':
         await prepare();
         break;
       default:
-        plugins.beautylog.error(`action >>${action}<< not supported`);
+        logger.log('error', `action >>${action}<< not supported`);
         process.exit(1);
     }
   } else {
-    plugins.beautylog.error(`>>npmci ssh ...<< please specify an action!`);
+    logger.log('error', `>>npmci ssh ...<< please specify an action!`);
     process.exit(1);
   }
 };
@@ -21,7 +22,7 @@ export let handleCli = async argvArg => {
 /**
  * checks if not undefined
  */
-let notUndefined = (stringArg: string) => {
+const notUndefined = (stringArg: string) => {
   return stringArg && stringArg !== 'undefined' && stringArg !== '##';
 };
 
@@ -34,27 +35,27 @@ export let prepare = async () => {
   if (!process.env.NPMTS_TEST) {
     sshInstance.writeToDisk();
   } else {
-    plugins.beautylog.log('In test mode, so not storing SSH keys to disk!');
+    logger.log('info', 'In test mode, so not storing SSH keys to disk!');
   }
 };
 
 /**
  * gets called for each found SSH ENV Var and deploys it
  */
-let evaluateSshEnv = async (sshkeyEnvVarArg: string) => {
-  let sshEnvArray = sshkeyEnvVarArg.split('|');
-  let sshKey = new plugins.smartssh.SshKey();
-  plugins.beautylog.info('Found SSH identity for ' + sshEnvArray[1]);
+const evaluateSshEnv = async (sshkeyEnvVarArg: string) => {
+  const sshEnvArray = sshkeyEnvVarArg.split('|');
+  const sshKey = new plugins.smartssh.SshKey();
+  logger.log('info', 'Found SSH identity for ' + sshEnvArray[1]);
   if (notUndefined(sshEnvArray[0])) {
-    plugins.beautylog.log('---> host defined!');
+    logger.log('info', '---> host defined!');
     sshKey.host = sshEnvArray[0];
   }
   if (notUndefined(sshEnvArray[1])) {
-    plugins.beautylog.log('---> privKey defined!');
+    logger.log('info', '---> privKey defined!');
     sshKey.privKeyBase64 = sshEnvArray[1];
   }
   if (notUndefined(sshEnvArray[2])) {
-    plugins.beautylog.log('---> pubKey defined!');
+    logger.log('info', '---> pubKey defined!');
     sshKey.pubKeyBase64 = sshEnvArray[2];
   }
 

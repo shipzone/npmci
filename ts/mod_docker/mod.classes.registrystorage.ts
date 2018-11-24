@@ -1,5 +1,6 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
-import { Objectmap } from 'lik';
+import { Objectmap } from '@pushrocks/lik';
 
 import { DockerRegistry } from './mod.classes.dockerregistry';
 
@@ -23,6 +24,6 @@ export class RegistryStorage {
     await this.objectMap.forEach(async registryArg => {
       await registryArg.login();
     });
-    plugins.beautylog.success('logged in successfully into all available DockerRegistries!');
+    logger.log('success', 'logged in successfully into all available DockerRegistries!');
   }
 }

@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 import * as NpmciEnv from '../npmci.env';
 import { bash } from '../npmci.bash';
@@ -10,16 +11,16 @@ import * as helpers from './mod.helpers';
  * class Dockerfile represents a Dockerfile on disk in npmci
  */
 export class Dockerfile {
-  filePath: string;
-  repo: string;
-  version: string;
-  cleanTag: string;
-  buildTag: string;
-  containerName: string;
-  content: string;
-  baseImage: string;
-  localBaseImageDependent: boolean;
-  localBaseDockerfile: Dockerfile;
+  public filePath: string;
+  public repo: string;
+  public version: string;
+  public cleanTag: string;
+  public buildTag: string;
+  public containerName: string;
+  public content: string;
+  public baseImage: string;
+  public localBaseImageDependent: boolean;
+  public localBaseDockerfile: Dockerfile;
   constructor(options: { filePath?: string; fileContents?: string | Buffer; read?: boolean }) {
     this.filePath = options.filePath;
     this.repo = NpmciEnv.repo.user + '/' + NpmciEnv.repo.repo;
@@ -38,10 +39,10 @@ export class Dockerfile {
   /**
    * builds the Dockerfile
    */
-  async build() {
-    plugins.beautylog.info('now building Dockerfile for ' + this.cleanTag);
-    let buildArgsString = await helpers.getDockerBuildArgs();
-    let buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
+  public async build() {
+    logger.log('info', 'now building Dockerfile for ' + this.cleanTag);
+    const buildArgsString = await helpers.getDockerBuildArgs();
+    const buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
     await bash(buildCommand);
     return;
   }
@@ -49,8 +50,8 @@ export class Dockerfile {
   /**
    * pushes the Dockerfile to a registry
    */
-  async push(dockerRegistryArg: DockerRegistry, versionSuffix: string = null) {
-    let pushTag = helpers.getDockerTagString(
+  public async push(dockerRegistryArg: DockerRegistry, versionSuffix: string = null) {
+    const pushTag = helpers.getDockerTagString(
       dockerRegistryArg.registryUrl,
       this.repo,
       this.version,
@@ -63,8 +64,8 @@ export class Dockerfile {
   /**
    * pulls the Dockerfile from a registry
    */
-  async pull(registryArg: DockerRegistry, versionSuffixArg: string = null) {
-    let pullTag = helpers.getDockerTagString(
+  public async pull(registryArg: DockerRegistry, versionSuffixArg: string = null) {
+    const pullTag = helpers.getDockerTagString(
       registryArg.registryUrl,
       this.repo,
       this.version,
@@ -77,9 +78,9 @@ export class Dockerfile {
   /**
    * tests the Dockerfile;
    */
-  async test() {
-    let testFile: string = plugins.path.join(paths.NpmciTestDir, 'test_' + this.version + '.sh');
-    let testFileExists: boolean = plugins.smartfile.fs.fileExistsSync(testFile);
+  public async test() {
+    const testFile: string = plugins.path.join(paths.NpmciTestDir, 'test_' + this.version + '.sh');
+    const testFileExists: boolean = plugins.smartfile.fs.fileExistsSync(testFile);
     if (testFileExists) {
       // run tests
       await bash(
@@ -93,17 +94,15 @@ export class Dockerfile {
       await bash(`docker rm npmci_test_container`);
       await bash(`docker rmi --force npmci_test_image`);
     } else {
-      plugins.beautylog.warn(
-        'skipping tests for ' + this.cleanTag + ' because no testfile was found!'
-      );
+      logger.log('warn', 'skipping tests for ' + this.cleanTag + ' because no testfile was found!');
     }
   }
 
   /**
    * gets the id of a Dockerfile
    */
-  async getId() {
-    let containerId = await bash('docker inspect --type=image --format="{{.Id}}" ' + this.buildTag);
+  public async getId() {
+    const containerId = await bash('docker inspect --type=image --format="{{.Id}}" ' + this.buildTag);
     return containerId;
   }
 }

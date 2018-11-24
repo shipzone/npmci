@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 import * as paths from '../npmci.paths';
 import * as NpmciEnv from '../npmci.env';
@@ -11,14 +12,14 @@ import { Dockerfile } from './mod.classes.dockerfile';
  * @returns Promise<Dockerfile[]>
  */
 export let readDockerfiles = async (): Promise<Dockerfile[]> => {
-  let fileTree = await plugins.smartfile.fs.listFileTree(paths.cwd, 'Dockerfile*');
+  const fileTree = await plugins.smartfile.fs.listFileTree(paths.cwd, 'Dockerfile*');
 
   // create the Dockerfile array
-  let readDockerfilesArray: Dockerfile[] = [];
-  plugins.beautylog.info(`found ${fileTree.length} Dockerfiles:`);
+  const readDockerfilesArray: Dockerfile[] = [];
+  logger.log('info', `found ${fileTree.length} Dockerfiles:`);
   console.log(fileTree);
-  for (let dockerfilePath of fileTree) {
-    let myDockerfile = new Dockerfile({
+  for (const dockerfilePath of fileTree) {
+    const myDockerfile = new Dockerfile({
       filePath: dockerfilePath,
       read: true
     });
@@ -34,14 +35,14 @@ export let readDockerfiles = async (): Promise<Dockerfile[]> => {
  * @returns Promise<Dockerfile[]>
  */
 export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfile[]> => {
-  let done = plugins.smartpromise.defer<Dockerfile[]>();
-  plugins.beautylog.info('sorting Dockerfiles:');
-  let sortedArray: Dockerfile[] = [];
-  let cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg, sortedArray);
+  const done = plugins.smartpromise.defer<Dockerfile[]>();
+  logger.log('info', 'sorting Dockerfiles:');
+  const sortedArray: Dockerfile[] = [];
+  const cleanTagsOriginal = cleanTagsArrayFunction(sortableArrayArg, sortedArray);
   let sorterFunctionCounter: number = 0;
-  let sorterFunction = function() {
+  const sorterFunction = () => {
     sortableArrayArg.forEach(dockerfileArg => {
-      let cleanTags = cleanTagsArrayFunction(sortableArrayArg, sortedArray);
+      const cleanTags = cleanTagsArrayFunction(sortableArrayArg, sortedArray);
       if (
         cleanTags.indexOf(dockerfileArg.baseImage) === -1 &&
         sortedArray.indexOf(dockerfileArg) === -1
@@ -54,8 +55,8 @@ export let sortDockerfiles = (sortableArrayArg: Dockerfile[]): Promise<Dockerfil
     });
     if (sortableArrayArg.length === sortedArray.length) {
       let counter = 1;
-      for (let dockerfile of sortedArray) {
-        plugins.beautylog.log(`tag ${counter}: -> ${dockerfile.cleanTag}`);
+      for (const dockerfile of sortedArray) {
+        logger.log('info', `tag ${counter}: -> ${dockerfile.cleanTag}`);
         counter++;
       }
       done.resolve(sortedArray);
@@ -88,7 +89,7 @@ export let mapDockerfiles = async (sortedArray: Dockerfile[]): Promise<Dockerfil
  * builds the correspoding real docker image for each Dockerfile class instance
  */
 export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
-  for (let dockerfileArg of sortedArrayArg) {
+  for (const dockerfileArg of sortedArrayArg) {
     await dockerfileArg.build();
   }
   return sortedArrayArg;
@@ -99,7 +100,7 @@ export let buildDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
  * @param sortedArrayArg Dockerfile[] that contains all Dockerfiles in cwd
  */
 export let testDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
-  for (let dockerfileArg of sortedArrayArg) {
+  for (const dockerfileArg of sortedArrayArg) {
     await dockerfileArg.test();
   }
   return sortedArrayArg;
@@ -111,8 +112,8 @@ export let testDockerfiles = async (sortedArrayArg: Dockerfile[]) => {
  */
 export let dockerFileVersion = (dockerfileNameArg: string): string => {
   let versionString: string;
-  let versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/;
-  let regexResultArray = versionRegex.exec(dockerfileNameArg);
+  const versionRegex = /Dockerfile_([a-zA-Z0-9\.]*)$/;
+  const regexResultArray = versionRegex.exec(dockerfileNameArg);
   if (regexResultArray && regexResultArray.length === 2) {
     versionString = regexResultArray[1];
   } else {
@@ -124,9 +125,9 @@ export let dockerFileVersion = (dockerfileNameArg: string): string => {
 /**
  * returns the docker base image for a Dockerfile
  */
-export let dockerBaseImage = function(dockerfileContentArg: string) {
-  let baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/;
-  let regexResultArray = baseImageRegex.exec(dockerfileContentArg);
+export let dockerBaseImage = (dockerfileContentArg: string) => {
+  const baseImageRegex = /FROM\s([a-zA-z0-9\/\-\:]*)\n?/;
+  const regexResultArray = baseImageRegex.exec(dockerfileContentArg);
   return regexResultArray[1];
 };
 
@@ -140,8 +141,8 @@ export let getDockerTagString = (
   suffixArg?: string
 ): string => {
   // determine wether the repo should be mapped accordingly to the registry
-  let mappedRepo = NpmciConfig.configObject.dockerRegistryRepoMap[registryArg];
-  let repo = (() => {
+  const mappedRepo = NpmciConfig.configObject.dockerRegistryRepoMap[registryArg];
+  const repo = (() => {
     if (mappedRepo) {
       return mappedRepo;
     } else {
@@ -155,15 +156,15 @@ export let getDockerTagString = (
     version = versionArg + '_' + suffixArg;
   }
 
-  let tagString = `${registryArg}/${repo}:${version}`;
+  const tagString = `${registryArg}/${repo}:${version}`;
   return tagString;
 };
 
 export let getDockerBuildArgs = async (): Promise<string> => {
-  plugins.beautylog.info('checking for env vars to be supplied to the docker build');
+  logger.log('info', 'checking for env vars to be supplied to the docker build');
   let buildArgsString: string = '';
-  for (let key in NpmciConfig.configObject.dockerBuildargEnvMap) {
-    let targetValue = process.env[NpmciConfig.configObject.dockerBuildargEnvMap[key]];
+  for (const key in NpmciConfig.configObject.dockerBuildargEnvMap) {
+    const targetValue = process.env[NpmciConfig.configObject.dockerBuildargEnvMap[key]];
     buildArgsString = `${buildArgsString} --build-arg ${key}=${targetValue}`;
   }
   return buildArgsString;
@@ -172,12 +173,12 @@ export let getDockerBuildArgs = async (): Promise<string> => {
 /**
  *
  */
-export let cleanTagsArrayFunction = function(
+export let cleanTagsArrayFunction = (
   dockerfileArrayArg: Dockerfile[],
   trackingArrayArg: Dockerfile[]
-): string[] {
-  let cleanTagsArray: string[] = [];
-  dockerfileArrayArg.forEach(function(dockerfileArg) {
+): string[] => {
+  const cleanTagsArray: string[] = [];
+  dockerfileArrayArg.forEach((dockerfileArg) => {
     if (trackingArrayArg.indexOf(dockerfileArg) === -1) {
       cleanTagsArray.push(dockerfileArg.cleanTag);
     }

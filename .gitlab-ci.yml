@@ -135,13 +135,3 @@ pages:
     paths:
     - public
   allow_failure: true
-
-windowsCompatibility:
-  image: stefanscherer/node-windows:10-build-tools
-  stage: metadata
-  script:
-  - npm install & npm test
-  coverage: /\d+.?\d+?\%\s*coverage/
-  tags:
-  - windows
-  allow_failure: true

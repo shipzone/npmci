@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from '../npmci.plugins';
 import * as paths from '../npmci.paths';
 import * as npmciConfig from '../npmci.config';
@@ -9,17 +10,18 @@ import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
  */
 export let handleCli = async argvArg => {
   if (argvArg._.length >= 3) {
-    let action: string = argvArg._[1];
+    const action: string = argvArg._[1];
     switch (action) {
       case 'install':
         await install(argvArg._[2]);
         break;
       default:
-        plugins.beautylog.error(`>>npmci node ...<< action >>${action}<< not supported`);
+        logger.log('error', `>>npmci node ...<< action >>${action}<< not supported`);
         process.exit(1);
     }
   } else {
-    plugins.beautylog.error(
+    logger.log(
+      'error',
       `>>npmci node ...<< cli arguments invalid... Please read the documentation.`
     );
     process.exit(1);
@@ -31,7 +33,7 @@ export let handleCli = async argvArg => {
  * @param versionArg
  */
 export let install = async versionArg => {
-  plugins.beautylog.log(`now installing node version ${versionArg}`);
+  logger.log('info', `now installing node version ${versionArg}`);
   let version: string;
   if (versionArg === 'stable') {
     version = '10';
@@ -44,27 +46,27 @@ export let install = async versionArg => {
   }
   if (await nvmAvailable.promise) {
     await bash(`nvm install ${version} && nvm alias default ${version}`);
-    plugins.beautylog.success(`Node version ${version} successfully installed!`);
+    logger.log('success', `Node version ${version} successfully installed!`);
   } else {
-    plugins.beautylog.warn('Nvm not in path so staying at installed node version!');
+    logger.log('warn', 'Nvm not in path so staying at installed node version!');
   }
   await bash('node -v');
   await bash('npm -v');
   await bash(`npm config set cache ${paths.NpmciCacheDir}  --global `);
   // lets look for further config
   await npmciConfig.getConfig().then(async configArg => {
-    plugins.beautylog.log('Now checking for needed global npm tools...');
-    for (let npmTool of configArg.npmGlobalTools) {
-      plugins.beautylog.info(`Checking for global "${npmTool}"`);
-      let whichOutput: string = await bashNoError(`which ${npmTool}`);
-      let toolAvailable: boolean = !(/not\sfound/.test(whichOutput) || whichOutput === '');
+    logger.log('info', 'Now checking for needed global npm tools...');
+    for (const npmTool of configArg.npmGlobalTools) {
+      logger.log('info', `Checking for global "${npmTool}"`);
+      const whichOutput: string = await bashNoError(`which ${npmTool}`);
+      const toolAvailable: boolean = !(/not\sfound/.test(whichOutput) || whichOutput === '');
       if (toolAvailable) {
-        plugins.beautylog.log(`Tool ${npmTool} is available`);
+        logger.log('info', `Tool ${npmTool} is available`);
       } else {
-        plugins.beautylog.info(`globally installing ${npmTool} from npm`);
+        logger.log('info', `globally installing ${npmTool} from npm`);
         await bash(`npm install ${npmTool} -q -g`);
       }
     }
-    plugins.beautylog.success('all global npm tools specified in npmextra.json are now available!');
+    logger.log('success', 'all global npm tools specified in npmextra.json are now available!');
   });
 };

@@ -1,5 +1,3 @@
-import * as q from 'q';
-
 import * as plugins from './npmci.plugins';
 import * as paths from './npmci.paths';
 
@@ -18,8 +16,8 @@ export interface INpmciOptions {
 export let kvStorage = new KeyValueStore('custom', `${repo.user}_${repo.repo}`);
 
 // handle config retrival
-let npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd);
-let defaultConfig: INpmciOptions = {
+const npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd);
+const defaultConfig: INpmciOptions = {
   npmGlobalTools: [],
   dockerRegistryRepoMap: {},
   dockerBuildargEnvMap: {}

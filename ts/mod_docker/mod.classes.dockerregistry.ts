@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 import { bash } from '../npmci.bash';
 
@@ -8,26 +9,26 @@ export interface IDockerRegistryConstructorOptions {
 }
 
 export class DockerRegistry {
-  registryUrl: string;
-  username: string;
-  password: string;
+  public registryUrl: string;
+  public username: string;
+  public password: string;
   constructor(optionsArg: IDockerRegistryConstructorOptions) {
     this.registryUrl = optionsArg.registryUrl;
     this.username = optionsArg.username;
     this.password = optionsArg.password;
-    plugins.beautylog.info(`created DockerRegistry for ${this.registryUrl}`);
+    logger.log('info', `created DockerRegistry for ${this.registryUrl}`);
   }
 
-  static fromEnvString(envString: string): DockerRegistry {
-    let dockerRegexResultArray = envString.split('|');
+  public static fromEnvString(envString: string): DockerRegistry {
+    const dockerRegexResultArray = envString.split('|');
     if (dockerRegexResultArray.length !== 3) {
-      plugins.beautylog.error('malformed docker env var...');
+      logger.log('error', 'malformed docker env var...');
       process.exit(1);
       return;
     }
-    let registryUrl = dockerRegexResultArray[0];
-    let username = dockerRegexResultArray[1];
-    let password = dockerRegexResultArray[2];
+    const registryUrl = dockerRegexResultArray[0];
+    const username = dockerRegexResultArray[1];
+    const password = dockerRegexResultArray[2];
     return new DockerRegistry({
       registryUrl: registryUrl,
       username: username,
@@ -35,13 +36,13 @@ export class DockerRegistry {
     });
   }
 
-  async login() {
+  public async login() {
     if (this.registryUrl === 'docker.io') {
       await bash(`docker login -u ${this.username} -p ${this.password}`);
-      plugins.beautylog.info('Logged in to standard docker hub');
+      logger.log('info', 'Logged in to standard docker hub');
     } else {
       await bash(`docker login -u ${this.username} -p ${this.password} ${this.registryUrl}`);
     }
-    plugins.beautylog.ok(`docker authenticated for ${this.registryUrl}!`);
+    logger.log('ok', `docker authenticated for ${this.registryUrl}!`);
   }
 }

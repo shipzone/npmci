@@ -1,11 +1,12 @@
+import { logger } from './npmci.logging';
 import * as plugins from './npmci.plugins';
 import * as paths from './npmci.paths';
 import * as npmciMonitor from './npmci.monitor';
 npmciMonitor.run();
 
 // Get Info about npmci itself
-let npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
-plugins.beautylog.log('npmci version: ' + npmciInfo.version);
+const npmciInfo = new plugins.projectinfo.ProjectinfoNpm(paths.NpmciPackageRoot);
+logger.log('info', 'npmci version: ' + npmciInfo.version);
 
 import * as NpmciEnv from './npmci.env';
 
@@ -15,7 +16,7 @@ npmciSmartcli.addVersion(npmciInfo.version);
 // clean
 npmciSmartcli.addCommand('clean').subscribe(
   async argv => {
-    let modClean = await import('./mod_clean/index');
+    const modClean = await import('./mod_clean/index');
     await modClean.clean();
   },
   err => {
@@ -27,7 +28,7 @@ npmciSmartcli.addCommand('clean').subscribe(
 // command
 npmciSmartcli.addCommand('command').subscribe(
   async argv => {
-    let modCommand = await import('./mod_command/index');
+    const modCommand = await import('./mod_command/index');
     await modCommand.command();
   },
   err => {
@@ -39,7 +40,7 @@ npmciSmartcli.addCommand('command').subscribe(
 // command
 npmciSmartcli.addCommand('git').subscribe(
   async argvArg => {
-    let modGit = await import('./mod_git/index');
+    const modGit = await import('./mod_git/index');
     await modGit.handleCli(argvArg);
   },
   err => {
@@ -51,7 +52,7 @@ npmciSmartcli.addCommand('git').subscribe(
 // build
 npmciSmartcli.addCommand('docker').subscribe(
   async argvArg => {
-    let modDocker = await import('./mod_docker/index');
+    const modDocker = await import('./mod_docker/index');
     await modDocker.handleCli(argvArg);
   },
   err => {
@@ -63,7 +64,7 @@ npmciSmartcli.addCommand('docker').subscribe(
 // node
 npmciSmartcli.addCommand('node').subscribe(
   async argvArg => {
-    let modNode = await import('./mod_node/index');
+    const modNode = await import('./mod_node/index');
     await modNode.handleCli(argvArg);
   },
   err => {
@@ -75,7 +76,7 @@ npmciSmartcli.addCommand('node').subscribe(
 // npm
 npmciSmartcli.addCommand('npm').subscribe(
   async argvArg => {
-    let modNpm = await import('./mod_npm/index');
+    const modNpm = await import('./mod_npm/index');
     await modNpm.handleCli(argvArg);
   },
   err => {
@@ -86,7 +87,7 @@ npmciSmartcli.addCommand('npm').subscribe(
 // trigger
 npmciSmartcli.addCommand('ssh').subscribe(
   async argvArg => {
-    let modSsh = await import('./mod_ssh/index');
+    const modSsh = await import('./mod_ssh/index');
     await modSsh.handleCli(argvArg);
   },
   err => {
@@ -98,7 +99,7 @@ npmciSmartcli.addCommand('ssh').subscribe(
 // trigger
 npmciSmartcli.addCommand('trigger').subscribe(
   async argv => {
-    let modTrigger = await import('./mod_trigger/index');
+    const modTrigger = await import('./mod_trigger/index');
     await modTrigger.trigger();
   },
   err => {

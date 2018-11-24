@@ -1,3 +1,4 @@
+import { logger } from './npmci.logging';
 import * as plugins from './npmci.plugins';
 import * as env from './npmci.env';
 
@@ -17,6 +18,6 @@ export let run = async () => {
       repo: env.repo.repo
     })
     .catch(err => {
-      plugins.beautylog.warn('Lossless Analytics API not available...');
+      logger.log('warn', 'Lossless Analytics API not available...');
     });
 };

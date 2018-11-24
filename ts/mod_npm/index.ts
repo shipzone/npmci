@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 import * as configModule from '../npmci.config';
 import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
@@ -8,7 +9,7 @@ import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
  */
 export let handleCli = async argvArg => {
   if (argvArg._.length >= 2) {
-    let action: string = argvArg._[1];
+    const action: string = argvArg._[1];
     switch (action) {
       case 'install':
         await install();
@@ -23,13 +24,11 @@ export let handleCli = async argvArg => {
         await publish();
         break;
       default:
-        plugins.beautylog.error(`>>npmci npm ...<< action >>${action}<< not supported`);
+        logger.log('error', `>>npmci npm ...<< action >>${action}<< not supported`);
         process.exit(1);
     }
   } else {
-    plugins.beautylog.log(
-      `>>npmci npm ...<< cli arguments invalid... Please read the documentation.`
-    );
+    logger.log('info', `>>npmci npm ...<< cli arguments invalid... Please read the documentation.`);
     process.exit(1);
   }
 };
@@ -37,14 +36,14 @@ export let handleCli = async argvArg => {
 /**
  * authenticates npm with token from env var
  */
-let prepare = async () => {
-  let npmrcPrefix: string = '//registry.npmjs.org/:_authToken=';
-  let npmToken: string = process.env.NPMCI_TOKEN_NPM;
-  let npmrcFileString: string = npmrcPrefix + npmToken;
+const prepare = async () => {
+  const npmrcPrefix: string = '//registry.npmjs.org/:_authToken=';
+  const npmToken: string = process.env.NPMCI_TOKEN_NPM;
+  const npmrcFileString: string = npmrcPrefix + npmToken;
   if (npmToken) {
-    plugins.beautylog.info('found access token');
+    logger.log('info', 'found access token');
   } else {
-    plugins.beautylog.error('no access token found! Exiting!');
+    logger.log('error', 'no access token found! Exiting!');
     process.exit(1);
   }
   plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc');
@@ -54,7 +53,7 @@ let prepare = async () => {
 /**
  * publish a package to npm
  */
-let publish = async () => {
+const publish = async () => {
   let npmAccessCliString = ``;
   const config = await configModule.getConfig();
 
@@ -67,7 +66,7 @@ let publish = async () => {
   }
 
   // -> preparing
-  plugins.beautylog.log(`now preparing environment:`);
+  logger.log('info', `now preparing environment:`);
   prepare();
   await bash(`npm -v`);
 
@@ -75,26 +74,26 @@ let publish = async () => {
   await bash(`npm install`);
   await bash(`npm run build`);
 
-  plugins.beautylog.success(`Nice!!! The build for the publication was successfull!`);
-  plugins.beautylog.log(`Lets clean up so we don't publish any packages that don't belong to us:`);
+  logger.log('success', `Nice!!! The build for the publication was successfull!`);
+  logger.log('info', `Lets clean up so we don't publish any packages that don't belong to us:`);
   // -> clean up before we publish stuff
   await bashNoError(`rm -r ./.npmci_cache`);
   await bash(`rm -r ./node_modules`);
 
-  plugins.beautylog.success(`Cleaned up!:`);
+  logger.log('success', `Cleaned up!:`);
 
   // -> publish it
-  plugins.beautylog.log(`now invoking npm to publish the package!`);
+  logger.log('info', `now invoking npm to publish the package!`);
   await bash(`npm publish ${npmAccessCliString}`);
-  plugins.beautylog.success(`Package was successfully published!`);
+  logger.log('success', `Package was successfully published!`);
 };
 
-let install = async (): Promise<void> => {
-  plugins.beautylog.info('now installing dependencies:');
+const install = async (): Promise<void> => {
+  logger.log('info', 'now installing dependencies:');
   await bash('npm install');
 };
 
 export let test = async (): Promise<void> => {
-  plugins.beautylog.info('now starting tests:');
+  logger.log('info', 'now starting tests:');
   await bash('npm test');
 };

@@ -1,21 +1,43 @@
 // node native
-export import path = require('path');
+import * as path from 'path';
+
+export { path };
 
 // @pushrocks
-export import beautylog = require('beautylog');
-export import projectinfo = require('@pushrocks/projectinfo');
-export import npmextra = require('@pushrocks/npmextra');
-export import smartdelay = require('@pushrocks/smartdelay');
-export import smartfile = require('@pushrocks/smartfile');
-export import smartcli = require('@pushrocks/smartcli');
-export import smartparam = require('smartparam');
-export import smartpromise = require('@pushrocks/smartpromise');
-export import smartshell = require('@pushrocks/smartshell');
-export import smartsocket = require('smartsocket');
-export import smartssh = require('@pushrocks/smartssh');
-export import smartstring = require('@pushrocks/smartstring');
+import * as projectinfo from '@pushrocks/projectinfo';
+import * as npmextra from '@pushrocks/npmextra';
+import * as smartdelay from '@pushrocks/smartdelay';
+import * as smartfile from '@pushrocks/smartfile';
+import * as smartcli from '@pushrocks/smartcli';
+import * as smartlog from '@pushrocks/smartlog';
+import * as smartlogDestinationLocal from '@pushrocks/smartlog-destination-local';
+import * as smartparam from '@pushrocks/smartparam';
+import * as smartpromise from '@pushrocks/smartpromise';
+import * as smartrequest from '@pushrocks/smartrequest';
+import * as smartshell from '@pushrocks/smartshell';
+import * as smartsocket from 'smartsocket';
+import * as smartssh from '@pushrocks/smartssh';
+import * as smartstring from '@pushrocks/smartstring';
+
+export {
+  projectinfo,
+  npmextra,
+  smartdelay,
+  smartfile,
+  smartcli,
+  smartlog,
+  smartlogDestinationLocal,
+  smartparam,
+  smartpromise,
+  smartrequest,
+  smartshell,
+  smartsocket,
+  smartssh,
+  smartstring
+};
 
 // third party
-export import lodash = require('lodash');
-export import through2 = require('through2');
-export import request = require('@pushrocks/smartrequest');
+import * as lodash from 'lodash';
+import * as through2 from 'through2';
+
+export { lodash, through2 };

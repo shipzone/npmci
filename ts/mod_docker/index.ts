@@ -1,3 +1,4 @@
+import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 import * as paths from '../npmci.paths';
 import { bash } from '../npmci.bash';
@@ -10,7 +11,7 @@ import { DockerRegistry } from './mod.classes.dockerregistry';
 import { RegistryStorage } from './mod.classes.registrystorage';
 
 // instances
-let npmciRegistryStorage = new RegistryStorage();
+const npmciRegistryStorage = new RegistryStorage();
 
 export { Dockerfile, helpers };
 
@@ -23,7 +24,7 @@ export let modArgvArg; // will be set through the build command
 export let handleCli = async argvArg => {
   modArgvArg = argvArg;
   if (argvArg._.length >= 2) {
-    let action: string = argvArg._[1];
+    const action: string = argvArg._[1];
     switch (action) {
       case 'build':
         await build();
@@ -42,10 +43,11 @@ export let handleCli = async argvArg => {
         await pull(argvArg);
         break;
       default:
-        plugins.beautylog.error(`>>npmci docker ...<< action >>${action}<< not supported`);
+        logger.log('error', `>>npmci docker ...<< action >>${action}<< not supported`);
     }
   } else {
-    plugins.beautylog.log(
+    logger.log(
+      'info',
       `>>npmci docker ...<< cli arguments invalid... Please read the documentation.`
     );
   }
@@ -56,7 +58,7 @@ export let handleCli = async argvArg => {
  */
 export let build = async () => {
   await prepare();
-  plugins.beautylog.log('now building Dockerfiles...');
+  logger.log('info', 'now building Dockerfiles...');
   await helpers
     .readDockerfiles()
     .then(helpers.sortDockerfiles)
@@ -78,7 +80,7 @@ export let login = async () => {
 export let prepare = async () => {
   // Always login to GitLab Registry
   if (!process.env.CI_BUILD_TOKEN || process.env.CI_BUILD_TOKEN === '') {
-    plugins.beautylog.error('No registry token specified by gitlab!');
+    logger.log('error', 'No registry token specified by gitlab!');
     process.exit(1);
   }
   npmciRegistryStorage.addRegistry(
@@ -98,40 +100,41 @@ export let prepare = async () => {
 
 export let push = async argvArg => {
   await prepare();
-  let registryUrlArg = argvArg._[2];
+  const registryUrlArg = argvArg._[2];
   let suffix = null;
   if (argvArg._.length >= 4) {
     suffix = argvArg._[3];
   }
-  let dockerfileArray = await helpers
+  const dockerfileArray = await helpers
     .readDockerfiles()
     .then(helpers.sortDockerfiles)
     .then(helpers.mapDockerfiles);
-  let localDockerRegistry = npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
+  const localDockerRegistry = npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
   if (!localDockerRegistry) {
-    plugins.beautylog.error(
+    logger.log(
+      'error',
       `Cannot push to registry ${registryUrlArg}, because it was not found in the authenticated registry list.`
     );
     process.exit(1);
   }
-  for (let dockerfile of dockerfileArray) {
+  for (const dockerfile of dockerfileArray) {
     await dockerfile.push(localDockerRegistry, suffix);
   }
 };
 
 export let pull = async argvArg => {
   await prepare();
-  let registryUrlArg = argvArg._[2];
+  const registryUrlArg = argvArg._[2];
   let suffix = null;
   if (argvArg._.length >= 4) {
     suffix = argvArg._[3];
   }
-  let localDockerRegistry = npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
-  let dockerfileArray = await helpers
+  const localDockerRegistry = npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
+  const dockerfileArray = await helpers
     .readDockerfiles()
     .then(helpers.sortDockerfiles)
     .then(helpers.mapDockerfiles);
-  for (let dockerfile of dockerfileArray) {
+  for (const dockerfile of dockerfileArray) {
     await dockerfile.pull(localDockerRegistry, suffix);
   }
 };

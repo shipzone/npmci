@@ -1,3 +1,4 @@
+import { logger } from './npmci.logging';
 import * as plugins from './npmci.plugins';
 import * as paths from './npmci.paths';
 
@@ -10,7 +11,7 @@ export let nvmAvailable = smartpromise.defer<boolean>();
 /**
  * the smartshell instance for npmci
  */
-let npmciSmartshell = new plugins.smartshell.Smartshell({
+const npmciSmartshell = new plugins.smartshell.Smartshell({
   executor: 'bash',
   sourceFilePaths: []
 });
@@ -18,7 +19,7 @@ let npmciSmartshell = new plugins.smartshell.Smartshell({
 /**
  * check for tools.
  */
-let checkToolsAvailable = async () => {
+const checkToolsAvailable = async () => {
   // check for nvm
   if (!process.env.NPMTS_TEST) {
     if (
@@ -68,21 +69,19 @@ export let bash = async (commandArg: string, retryArg: number = 2): Promise<stri
       if (execResult.exitCode !== 0 && i === retryArg) {
         // something went wrong and retries are exhausted
         if (failOnError) {
-          plugins.beautylog.error('something went wrong and retries are exhausted');
+          logger.log('error', 'something went wrong and retries are exhausted');
           process.exit(1);
         }
       } else if (execResult.exitCode === 0) {
         // everything went fine, or no error wanted
         i = retryArg + 1; // retry +1 breaks for loop, if everything works out ok retrials are not wanted
       } else {
-        plugins.beautylog.warn(
-          'Something went wrong! Exit Code: ' + execResult.exitCode.toString()
-        );
-        plugins.beautylog.info('Retry ' + (i + 1).toString() + ' of ' + retryArg.toString());
+        logger.log('warn', 'Something went wrong! Exit Code: ' + execResult.exitCode.toString());
+        logger.log('info', 'Retry ' + (i + 1).toString() + ' of ' + retryArg.toString());
       }
     }
   } else {
-    plugins.beautylog.log('ShellExec would be: ' + commandArg);
+    logger.log('info', 'ShellExec would be: ' + commandArg);
     execResult = {
       exitCode: 0,
       stdout: 'testOutput'
