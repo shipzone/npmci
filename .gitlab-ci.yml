@@ -37,18 +37,6 @@ snyk:
 # ====================
 # test stage
 # ====================
-testLEGACY:
-  stage: test
-  script:
-  - npmci npm prepare
-  - npmci node install legacy
-  - npmci npm install
-  - npmci npm test
-  coverage: /\d+.?\d+?\%\s*coverage/
-  tags:
-  - docker
-  - notpriv
-  allow_failure: true
 
 testLTS:
   stage: test

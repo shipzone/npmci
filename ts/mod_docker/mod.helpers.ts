@@ -178,7 +178,7 @@ export let cleanTagsArrayFunction = (
   trackingArrayArg: Dockerfile[]
 ): string[] => {
   const cleanTagsArray: string[] = [];
-  dockerfileArrayArg.forEach((dockerfileArg) => {
+  dockerfileArrayArg.forEach(dockerfileArg => {
     if (trackingArrayArg.indexOf(dockerfileArg) === -1) {
       cleanTagsArray.push(dockerfileArg.cleanTag);
     }

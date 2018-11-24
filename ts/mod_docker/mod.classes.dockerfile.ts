@@ -42,7 +42,9 @@ export class Dockerfile {
   public async build() {
     logger.log('info', 'now building Dockerfile for ' + this.cleanTag);
     const buildArgsString = await helpers.getDockerBuildArgs();
-    const buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
+    const buildCommand = `docker build -t ${this.buildTag} -f ${
+      this.filePath
+    } ${buildArgsString} .`;
     await bash(buildCommand);
     return;
   }
@@ -102,7 +104,9 @@ export class Dockerfile {
    * gets the id of a Dockerfile
    */
   public async getId() {
-    const containerId = await bash('docker inspect --type=image --format="{{.Id}}" ' + this.buildTag);
+    const containerId = await bash(
+      'docker inspect --type=image --format="{{.Id}}" ' + this.buildTag
+    );
     return containerId;
   }
 }
