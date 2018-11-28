@@ -29,7 +29,7 @@
     "@pushrocks/tapbundle": "^3.0.7",
     "@types/node": "^10.12.10",
     "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.16.0"
+    "tslint-config-prettier": "^1.17.0"
   },
   "dependencies": {
     "@pushrocks/lik": "^3.0.2",
@@ -45,11 +45,10 @@
     "@pushrocks/smartrequest": "^1.1.14",
     "@pushrocks/smartshell": "^2.0.11",
     "@pushrocks/smartssh": "^1.2.3",
-    "@pushrocks/smartstring": "^3.0.4",
+    "@pushrocks/smartstring": "^3.0.5",
     "@types/lodash": "^4.14.118",
     "@types/shelljs": "^0.8.0",
     "@types/through2": "^2.0.34",
-    "cflare": "^1.0.5",
     "lodash": "^4.17.11",
     "smartanalytics": "^2.0.9",
     "smartsocket": "^1.1.19",

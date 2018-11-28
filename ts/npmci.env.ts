@@ -1,6 +1,6 @@
 import * as plugins from './npmci.plugins';
 import * as paths from './npmci.paths';
-import { GitRepo } from 'smartstring';
+import { GitRepo } from '@pushrocks/smartstring';
 import { Dockerfile } from './mod_docker/index';
 
 /**
