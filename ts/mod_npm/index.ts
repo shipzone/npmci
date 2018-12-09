@@ -54,7 +54,7 @@ const prepare = async () => {
 
   plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc');
   logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
-  await bash(`npm set registry https:${config.npmRegistryUrl}`);
+  await bash(`npm set registry https://${config.npmRegistryUrl}`);
   return;
 };
 
