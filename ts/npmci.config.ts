@@ -8,6 +8,7 @@ import { KeyValueStore } from '@pushrocks/npmextra';
 export interface INpmciOptions {
   npmGlobalTools: string[];
   npmAccessLevel?: 'private' | 'public';
+  npmRegistryUrl?: string;
   dockerRegistryRepoMap: any;
   dockerBuildargEnvMap: any;
 }
