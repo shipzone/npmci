@@ -6,7 +6,8 @@
     },
     "npmci": {
         "npmGlobalTools": [],
-        "npmAccessLevel": "public"
+        "npmAccessLevel": "public",
+        "npmRegistryUrl": "//registry.npmjs.org"
     },
     "npmdocker":{
         "baseImage":"hosttoday/ht-docker-node:npmci",
