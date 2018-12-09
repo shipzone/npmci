@@ -47,14 +47,14 @@ const prepare = async () => {
 
   if (npmrcFileString.length > 0) {
     logger.log('info', 'found one or more access tokens');
-    logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
-    await bash(`npm set registry https:${config.npmRegistryUrl}`);
   } else {
     logger.log('error', 'no access token found! Exiting!');
     process.exit(1);
   }
 
   plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc');
+  logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
+  await bash(`npm set registry https:${config.npmRegistryUrl}`);
   return;
 };
 
