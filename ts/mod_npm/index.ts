@@ -42,9 +42,12 @@ const prepare = async () => {
   plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
     const npmRegistryUrl = npmEnvArg.split('|')[0];
     const npmToken = npmEnvArg.split('|')[1];
-    npmrcFileString = `//${npmRegistryUrl}/:_authToken="${npmToken}"\n`;
+    npmrcFileString += `//${npmRegistryUrl}/:_authToken="${npmToken}"\n`;
   });
+  logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
+  npmrcFileString += `registry=https://${config.npmRegistryUrl}\n`;
 
+  // final check
   if (npmrcFileString.length > 0) {
     logger.log('info', 'found one or more access tokens');
   } else {
@@ -52,9 +55,8 @@ const prepare = async () => {
     process.exit(1);
   }
 
+  // lets save it to disk
   plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc');
-  logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
-  await bash(`npm set registry https://${config.npmRegistryUrl}`);
   return;
 };
 
