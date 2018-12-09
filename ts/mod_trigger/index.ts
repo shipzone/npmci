@@ -6,7 +6,7 @@ const triggerValueRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)
 
 export let trigger = async () => {
   logger.log('info', 'now running triggers');
-  plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TRIGGER_*', evaluateTrigger);
+  await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TRIGGER_*', evaluateTrigger);
 };
 
 const evaluateTrigger = async triggerEnvVarArg => {

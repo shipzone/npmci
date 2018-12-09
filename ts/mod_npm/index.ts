@@ -39,7 +39,7 @@ export let handleCli = async argvArg => {
 const prepare = async () => {
   const config = await configModule.getConfig();
   let npmrcFileString: string = '';
-  plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
+  await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
     const npmRegistryUrl = npmEnvArg.split('|')[0];
     const npmToken = npmEnvArg.split('|')[1];
     npmrcFileString += `//${npmRegistryUrl}/:_authToken="${plugins.smartstring.base64.decode(npmToken)}"\n`;
