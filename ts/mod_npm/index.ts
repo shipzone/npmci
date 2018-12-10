@@ -78,7 +78,7 @@ const publish = async () => {
 
   // -> configure registry url
   if (config.npmRegistryUrl) {
-    npmAccessCliString = `--registry=https://${config.npmRegistryUrl}`;
+    npmRegistryCliString = `--registry=https://${config.npmRegistryUrl}`;
   } else {
     logger.log('error', `no registry url specified. Can't publish!`);
     process.exit(1);
