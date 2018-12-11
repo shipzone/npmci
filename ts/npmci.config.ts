@@ -8,7 +8,7 @@ import { KeyValueStore } from '@pushrocks/npmextra';
 export interface INpmciOptions {
   npmGlobalTools: string[];
   npmAccessLevel?: 'private' | 'public';
-  npmRegistryUrl?: string;
+  npmRegistryUrl: string;
   dockerRegistryRepoMap: any;
   dockerBuildargEnvMap: any;
 }
@@ -21,6 +21,8 @@ const npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd);
 const defaultConfig: INpmciOptions = {
   npmGlobalTools: [],
   dockerRegistryRepoMap: {},
+  npmAccessLevel: 'private',
+  npmRegistryUrl: 'registry.npmjs.org',
   dockerBuildargEnvMap: {}
 };
 export let configObject = npmciNpmextra.dataFor<INpmciOptions>('npmci', defaultConfig);
