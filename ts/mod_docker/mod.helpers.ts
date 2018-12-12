@@ -165,7 +165,7 @@ export let getDockerBuildArgs = async (): Promise<string> => {
   let buildArgsString: string = '';
   for (const key in NpmciConfig.configObject.dockerBuildargEnvMap) {
     const targetValue = process.env[NpmciConfig.configObject.dockerBuildargEnvMap[key]];
-    buildArgsString = `${buildArgsString} --build-arg ${key}=${targetValue}`;
+    buildArgsString = `${buildArgsString} --build-arg ${key}="${targetValue}"`;
   }
   return buildArgsString;
 };
