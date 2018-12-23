@@ -6,6 +6,7 @@ import { repo } from './npmci.env';
 import { KeyValueStore } from '@pushrocks/npmextra';
 
 export interface INpmciOptions {
+  projectInfo: plugins.projectinfo.ProjectInfo;
   npmGlobalTools: string[];
   npmAccessLevel?: 'private' | 'public';
   npmRegistryUrl: string;
@@ -19,6 +20,7 @@ export let kvStorage = new KeyValueStore('custom', `${repo.user}_${repo.repo}`);
 // handle config retrival
 const npmciNpmextra = new plugins.npmextra.Npmextra(paths.cwd);
 const defaultConfig: INpmciOptions = {
+  projectInfo: new plugins.projectinfo.ProjectInfo(paths.cwd),
   npmGlobalTools: [],
   dockerRegistryRepoMap: {},
   npmAccessLevel: 'private',
