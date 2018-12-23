@@ -1,6 +1,7 @@
 {
   "name": "@shipzone/npmci",
   "version": "3.1.18",
+  "private": false,
   "description": "node and docker in gitlab ci on steroids",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -53,6 +54,5 @@
     "smartanalytics": "^2.0.9",
     "smartsocket": "^1.1.19",
     "through2": "^3.0.0"
-  },
-  "private": false
+  }
 }
