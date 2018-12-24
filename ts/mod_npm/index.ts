@@ -42,7 +42,9 @@ const prepare = async () => {
   await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
     const npmRegistryUrl = npmEnvArg.split('|')[0];
     const npmToken = npmEnvArg.split('|')[1];
-    npmrcFileString += `//${npmRegistryUrl}/:_authToken="${plugins.smartstring.base64.decode(npmToken)}"\n`;
+    npmrcFileString += `//${npmRegistryUrl}/:_authToken="${plugins.smartstring.base64.decode(
+      npmToken
+    )}"\n`;
   });
   logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
   npmrcFileString += `registry=https://${config.npmRegistryUrl}\n`;

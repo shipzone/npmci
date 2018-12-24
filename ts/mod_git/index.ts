@@ -28,11 +28,14 @@ export let mirror = async () => {
   const githubToken = process.env.NPMCI_GIT_GITHUBTOKEN;
   const githubUser = process.env.NPMCI_GIT_GITHUBGROUP || repo.user;
   const githubRepo = process.env.NPMCI_GIT_GITHUB || repo.repo;
-  if(
+  if (
     configObject.projectInfo.npm.packageJson.private === true ||
     configObject.npmAccessLevel === 'private'
   ) {
-    logger.log('warn', `refusing to mirror due to private property use a private mirror location instead`);
+    logger.log(
+      'warn',
+      `refusing to mirror due to private property use a private mirror location instead`
+    );
     return;
   }
   if (githubToken) {
