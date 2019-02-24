@@ -1,16 +1,26 @@
 {
-    "npmts":{
-        "mode":"default",
-        "coverageTreshold": "70",
-        "cli": true
-    },
-    "npmci": {
-        "npmGlobalTools": [],
-        "npmAccessLevel": "public",
-        "npmRegistryUrl": "registry.npmjs.org"
-    },
-    "npmdocker":{
-        "baseImage":"hosttoday/ht-docker-node:npmci",
-        "command": "npmci test stable"
+  "npmts": {
+    "mode": "default",
+    "coverageTreshold": "70",
+    "cli": true
+  },
+  "npmci": {
+    "npmGlobalTools": [],
+    "npmAccessLevel": "public",
+    "npmRegistryUrl": "registry.npmjs.org"
+  },
+  "npmdocker": {
+    "baseImage": "hosttoday/ht-docker-node:npmci",
+    "command": "npmci test stable"
+  },
+  "gitzone": {
+    "module": {
+      "githost": "gitlab.com",
+      "gitscope": "shipzone",
+      "gitrepo": "npmci",
+      "shortDescription": "node and docker in gitlab ci on steroids",
+      "npmPackagename": "@shipzone/npmci",
+      "license": "MIT"
     }
+  }
 }

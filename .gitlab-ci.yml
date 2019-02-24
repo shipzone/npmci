@@ -36,13 +36,16 @@ snyk:
 
 sast:
   stage: security
-  image: docker:stable
+  image: registry.gitlab.com/hosttoday/ht-docker-dbase:npmci
   variables:
     DOCKER_DRIVER: overlay2
   allow_failure: true
   services:
     - docker:stable-dind
   script:
+    - npmci npm prepare
+    - npmci npm install
+    - npmci command npm run build
     - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
     - docker run
         --env SAST_CONFIDENCE_LEVEL="${SAST_CONFIDENCE_LEVEL:-3}"
