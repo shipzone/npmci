@@ -1,7 +1,19 @@
-dist/
-node_modules/
+.nogit/
+
+# artifacts
 coverage/
 public/
-config.json
+pages/
+
+# installs
+node_modules/
+
+# caches and builds
 .yarn/
-.npmci_cache
+.cache/
+dist/
+dist_web/
+dist_serve/
+dist_ts_web/
+
+# custom
