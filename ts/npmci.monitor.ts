@@ -2,7 +2,7 @@ import { logger } from './npmci.logging';
 import * as plugins from './npmci.plugins';
 import * as env from './npmci.env';
 
-import { Analytics } from 'smartanalytics';
+import { Analytics } from '@pushrocks/smartanalytics';
 
 export let npmciAnalytics = new Analytics({
   apiEndPoint: 'https://pubapi.lossless.one/analytics',

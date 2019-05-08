@@ -15,7 +15,7 @@ import * as smartparam from '@pushrocks/smartparam';
 import * as smartpromise from '@pushrocks/smartpromise';
 import * as smartrequest from '@pushrocks/smartrequest';
 import * as smartshell from '@pushrocks/smartshell';
-import * as smartsocket from 'smartsocket';
+import * as smartsocket from '@pushrocks/smartsocket';
 import * as smartssh from '@pushrocks/smartssh';
 import * as smartstring from '@pushrocks/smartstring';
 
