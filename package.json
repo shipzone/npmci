@@ -49,10 +49,8 @@
     "@pushrocks/smartsocket": "^1.1.36",
     "@pushrocks/smartssh": "^1.2.3",
     "@pushrocks/smartstring": "^3.0.10",
-    "@types/lodash": "^4.14.124",
     "@types/shelljs": "^0.8.5",
     "@types/through2": "^2.0.34",
-    "lodash": "^4.17.11",
     "through2": "^3.0.1"
   }
 }
