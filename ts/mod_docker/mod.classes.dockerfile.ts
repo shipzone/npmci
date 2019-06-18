@@ -42,9 +42,7 @@ export class Dockerfile {
   public async build() {
     logger.log('info', 'now building Dockerfile for ' + this.cleanTag);
     const buildArgsString = await helpers.getDockerBuildArgs();
-    const buildCommand = `docker build -t ${this.buildTag} -f ${
-      this.filePath
-    } ${buildArgsString} .`;
+    const buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
     await bash(buildCommand);
     return;
   }
@@ -86,9 +84,7 @@ export class Dockerfile {
     if (testFileExists) {
       // run tests
       await bash(
-        `docker run --name npmci_test_container --entrypoint="bash" ${
-          this.buildTag
-        } -c "mkdir /npmci_test"`
+        `docker run --name npmci_test_container --entrypoint="bash" ${this.buildTag} -c "mkdir /npmci_test"`
       );
       await bash(`docker cp ${testFile} npmci_test_container:/npmci_test/test.sh`);
       await bash(`docker commit npmci_test_container npmci_test_image`);

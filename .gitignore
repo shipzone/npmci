@@ -8,9 +8,12 @@ pages/
 # installs
 node_modules/
 
-# caches and builds
+# caches
 .yarn/
 .cache/
+.rpt2_cache
+
+# builds
 dist/
 dist_web/
 dist_serve/
