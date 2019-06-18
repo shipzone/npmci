@@ -1,4 +1,4 @@
-# gitzone standard
+# gitzone ci_default
 image: hosttoday/ht-docker-node:npmci
 
 cache:

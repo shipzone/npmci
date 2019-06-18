@@ -52,5 +52,15 @@
     "@types/shelljs": "^0.8.5",
     "@types/through2": "^2.0.34",
     "through2": "^3.0.1"
-  }
+  },
+  "files": [
+    "ts/*",
+    "ts_web/*",
+    "dist/*",
+    "dist_web/*",
+    "assets/*",
+    "cli.js",
+    "npmextra.json",
+    "readme.md"
+  ]
 }
