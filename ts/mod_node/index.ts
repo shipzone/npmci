@@ -36,7 +36,7 @@ export let install = async versionArg => {
   logger.log('info', `now installing node version ${versionArg}`);
   let version: string;
   if (versionArg === 'stable') {
-    version = '11';
+    version = '12';
   } else if (versionArg === 'lts') {
     version = '10';
   } else if (versionArg === 'legacy') {
