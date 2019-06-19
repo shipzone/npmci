@@ -10,6 +10,9 @@ import { Dockerfile } from './mod.classes.dockerfile';
 import { DockerRegistry } from './mod.classes.dockerregistry';
 import { RegistryStorage } from './mod.classes.registrystorage';
 
+// config
+import { configObject } from '../npmci.config';
+
 // instances
 const npmciRegistryStorage = new RegistryStorage();
 
@@ -98,27 +101,44 @@ export let prepare = async () => {
   return;
 };
 
-export let push = async argvArg => {
+/**
+ * pushes an image towards a registry
+ * @param argvArg
+ */
+export const push = async argvArg => {
   await prepare();
-  const registryUrlArg = argvArg._[2];
+  let dockerRegistryUrls: string[] = [];
+
+  // lets parse the input of cli and npmextra
+  if (argvArg._.length >= 3 && argvArg._[2] !== 'npmextra') {
+    dockerRegistryUrls.push(argvArg._[2]);
+  } else if (configObject.dockerRegistries) {
+    dockerRegistryUrls = dockerRegistryUrls.concat(configObject.dockerRegistries);
+  }
+
+  // lets determine the suffix
   let suffix = null;
   if (argvArg._.length >= 4) {
     suffix = argvArg._[3];
   }
-  const dockerfileArray = await helpers
-    .readDockerfiles()
-    .then(helpers.sortDockerfiles)
-    .then(helpers.mapDockerfiles);
-  const localDockerRegistry = npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
-  if (!localDockerRegistry) {
-    logger.log(
-      'error',
-      `Cannot push to registry ${registryUrlArg}, because it was not found in the authenticated registry list.`
-    );
-    process.exit(1);
-  }
-  for (const dockerfile of dockerfileArray) {
-    await dockerfile.push(localDockerRegistry, suffix);
+
+  // lets push to the registries
+  for (const dockerRegistryUrl of dockerRegistryUrls) {
+    const dockerfileArray = await helpers
+      .readDockerfiles()
+      .then(helpers.sortDockerfiles)
+      .then(helpers.mapDockerfiles);
+    const dockerRegistryToPushTo = npmciRegistryStorage.getRegistryByUrl(dockerRegistryUrl);
+    if (!dockerRegistryToPushTo) {
+      logger.log(
+        'error',
+        `Cannot push to registry ${dockerRegistryUrl}, because it was not found in the authenticated registry list.`
+      );
+      process.exit(1);
+    }
+    for (const dockerfile of dockerfileArray) {
+      await dockerfile.push(dockerRegistryToPushTo, suffix);
+    }
   }
 };
 
