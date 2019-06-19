@@ -24,7 +24,7 @@ export let modArgvArg; // will be set through the build command
  * handle cli input
  * @param argvArg
  */
-export let handleCli = async argvArg => {
+export const handleCli = async argvArg => {
   modArgvArg = argvArg;
   if (argvArg._.length >= 2) {
     const action: string = argvArg._[1];
@@ -59,7 +59,7 @@ export let handleCli = async argvArg => {
 /**
  * builds a cwd of Dockerfiles by triggering a promisechain
  */
-export let build = async () => {
+export const build = async () => {
   await prepare();
   logger.log('info', 'now building Dockerfiles...');
   await helpers
@@ -72,7 +72,7 @@ export let build = async () => {
 /**
  * login to the DockerRegistries
  */
-export let login = async () => {
+export const login = async () => {
   await prepare();
   await npmciRegistryStorage.loginAll();
 };
@@ -80,7 +80,7 @@ export let login = async () => {
 /**
  * logs in docker
  */
-export let prepare = async () => {
+export const prepare = async () => {
   // Always login to GitLab Registry
   if (!process.env.CI_BUILD_TOKEN || process.env.CI_BUILD_TOKEN === '') {
     logger.log('error', 'No registry token specified by gitlab!');
@@ -112,7 +112,10 @@ export const push = async argvArg => {
   // lets parse the input of cli and npmextra
   if (argvArg._.length >= 3 && argvArg._[2] !== 'npmextra') {
     dockerRegistryUrls.push(argvArg._[2]);
-  } else if (configObject.dockerRegistries) {
+  } else {
+    if (configObject.dockerRegistries.length === 0) {
+      logger.log('warn', `There are no docker registries listed in npmextra.json!`);
+    }
     dockerRegistryUrls = dockerRegistryUrls.concat(configObject.dockerRegistries);
   }
 
@@ -142,7 +145,7 @@ export const push = async argvArg => {
   }
 };
 
-export let pull = async argvArg => {
+export const pull = async argvArg => {
   await prepare();
   const registryUrlArg = argvArg._[2];
   let suffix = null;
@@ -159,7 +162,10 @@ export let pull = async argvArg => {
   }
 };
 
-export let test = async () => {
+/**
+ * tests docker files
+ */
+export const test = async () => {
   await prepare();
   return await helpers.readDockerfiles().then(helpers.testDockerfiles);
 };
