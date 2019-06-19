@@ -1,5 +1,5 @@
 # gitzone ci_default
-image: hosttoday/ht-docker-node:npmci
+image: registry.gitlab.com/hosttoday/ht-docker-node:npmci
 
 cache:
   paths:
@@ -49,23 +49,11 @@ testLTS:
   tags:
   - docker
   - notpriv
-    
-testSTABLE:
-  stage: test
-  script:
-  - npmci npm prepare
-  - npmci node install stable
-  - npmci npm install
-  - npmci npm test
-  coverage: /\d+.?\d+?\%\s*coverage/
-  tags:
-  - docker
-  - notpriv
 
 release:
   stage: release
   script:
-  - npmci node install stable
+  - npmci node install lts
   - npmci npm publish
   only:
   - tags

@@ -114,7 +114,10 @@ export const push = async argvArg => {
     dockerRegistryUrls.push(argvArg._[2]);
   } else {
     if (configObject.dockerRegistries.length === 0) {
-      logger.log('warn', `There are no docker registries listed in npmextra.json! This is strange!`);
+      logger.log(
+        'warn',
+        `There are no docker registries listed in npmextra.json! This is strange!`
+      );
     }
     dockerRegistryUrls = dockerRegistryUrls.concat(configObject.dockerRegistries);
   }
