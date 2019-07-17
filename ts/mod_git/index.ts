@@ -41,6 +41,9 @@ export let mirror = async () => {
   if (githubToken) {
     logger.log('info', 'found github token.');
     logger.log('info', 'attempting the mirror the repository to GitHub');
+
+    plugins.smartgit.GitRepo
+
     // add the mirror
     await bash(
       `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`

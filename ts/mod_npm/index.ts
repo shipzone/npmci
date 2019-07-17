@@ -66,25 +66,45 @@ const prepare = async () => {
  * publish a package to npm
  */
 const publish = async () => {
-  let npmAccessCliString = ``;
-  let npmRegistryCliString = ``;
-  const config = await configModule.getConfig();
+  const buildPublishCommand = async () => {
+    let npmAccessCliString = ``;
+    let npmRegistryCliString = ``;
+    let publishVerdaccioAsWell = false;
+    const config = await configModule.getConfig();
+    const availableRegistries: string[] = [];
+    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
+      availableRegistries.push(npmEnvArg.split('|')[0]);
+    });
 
-  // -> configure package access level
-  if (
-    config.npmAccessLevel &&
-    (config.npmAccessLevel === 'public' || config.npmAccessLevel === 'private')
-  ) {
-    npmAccessCliString = `--access=${config.npmAccessLevel}`;
-  }
+    // -> configure package access level
+    if (
+      config.npmAccessLevel
+    ) {
+      npmAccessCliString = `--access=${config.npmAccessLevel}`;
+      if (config.npmAccessLevel === 'public') {
+        publishVerdaccioAsWell = true;
+      }
+    }
+    // -> configure registry url
+    if (config.npmRegistryUrl) {
+      npmRegistryCliString = `--registry=https://${config.npmRegistryUrl}`;
+    } else {
+      logger.log('error', `no registry url specified. Can't publish!`);
+      process.exit(1);
+    }
 
-  // -> configure registry url
-  if (config.npmRegistryUrl) {
-    npmRegistryCliString = `--registry=https://${config.npmRegistryUrl}`;
-  } else {
-    logger.log('error', `no registry url specified. Can't publish!`);
-    process.exit(1);
-  }
+    let publishCommand = `npm publish ${npmAccessCliString} ${npmRegistryCliString} `;
+
+    // publishEverywhere
+    if (publishVerdaccioAsWell) {
+      const verdaccioRegistry = availableRegistries.find(registryString => registryString.startsWith('verdaccio'));
+      if (verdaccioRegistry) {
+        logger.log('info', `package is public and verdaccio registry is specified. Also publishing to Verdaccio!`);
+        publishCommand = `${publishCommand} && npm publish ${npmAccessCliString} --registry=https://${verdaccioRegistry}`;
+      }
+    }
+    return publishCommand;
+  };
 
   // -> preparing
   logger.log('info', `now preparing environment:`);
@@ -105,7 +125,7 @@ const publish = async () => {
 
   // -> publish it
   logger.log('info', `now invoking npm to publish the package!`);
-  await bash(`npm publish ${npmAccessCliString} ${npmRegistryCliString}`);
+  await bash(await buildPublishCommand());
   logger.log('success', `Package was successfully published!`);
 };
 

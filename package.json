@@ -40,6 +40,7 @@
     "@pushrocks/smartcli": "^3.0.7",
     "@pushrocks/smartdelay": "^2.0.3",
     "@pushrocks/smartfile": "^7.0.2",
+    "@pushrocks/smartgit": "^1.0.9",
     "@pushrocks/smartlog": "^2.0.19",
     "@pushrocks/smartlog-destination-local": "^8.0.2",
     "@pushrocks/smartparam": "^1.0.4",
