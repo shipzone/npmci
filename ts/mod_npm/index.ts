@@ -77,9 +77,7 @@ const publish = async () => {
     });
 
     // -> configure package access level
-    if (
-      config.npmAccessLevel
-    ) {
+    if (config.npmAccessLevel) {
       npmAccessCliString = `--access=${config.npmAccessLevel}`;
       if (config.npmAccessLevel === 'public') {
         publishVerdaccioAsWell = true;
@@ -97,9 +95,14 @@ const publish = async () => {
 
     // publishEverywhere
     if (publishVerdaccioAsWell) {
-      const verdaccioRegistry = availableRegistries.find(registryString => registryString.startsWith('verdaccio'));
+      const verdaccioRegistry = availableRegistries.find(registryString =>
+        registryString.startsWith('verdaccio')
+      );
       if (verdaccioRegistry) {
-        logger.log('info', `package is public and verdaccio registry is specified. Also publishing to Verdaccio!`);
+        logger.log(
+          'info',
+          `package is public and verdaccio registry is specified. Also publishing to Verdaccio!`
+        );
         publishCommand = `${publishCommand} && npm publish ${npmAccessCliString} --registry=https://${verdaccioRegistry}`;
       }
     }
