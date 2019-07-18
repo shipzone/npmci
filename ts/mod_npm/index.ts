@@ -82,6 +82,8 @@ const publish = async () => {
       if (config.npmAccessLevel === 'public') {
         publishVerdaccioAsWell = true;
       }
+    } else {
+      throw new Error('You need to set a npmAccessLevel!!!');
     }
     // -> configure registry url
     if (config.npmRegistryUrl) {
@@ -104,6 +106,11 @@ const publish = async () => {
           `package is public and verdaccio registry is specified. Also publishing to Verdaccio!`
         );
         publishCommand = `${publishCommand} && npm publish ${npmAccessCliString} --registry=https://${verdaccioRegistry}`;
+      } else {
+        logger.log(
+          'error',
+          `This package should also be published to Verdaccio, however there is no Verdaccio registry data available!`
+        );
       }
     }
     return publishCommand;
