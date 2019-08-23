@@ -50,6 +50,8 @@ export let install = async versionArg => {
   } else {
     logger.log('warn', 'Nvm not in path so staying at installed node version!');
   }
+  logger.log('info', 'now installing latest npm version');
+  await bash('npm install -g npm');
   await bash('node -v');
   await bash('npm -v');
   await bash(`npm config set cache ${paths.NpmciCacheDir}  --global `);
