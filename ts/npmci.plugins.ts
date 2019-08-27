@@ -3,6 +3,13 @@ import * as path from 'path';
 
 export { path };
 
+// @servezone
+import * as servezoneInterfaces from '@servezone/servezone-interfaces';
+
+export {
+  servezoneInterfaces
+};
+
 // @pushrocks
 import * as projectinfo from '@pushrocks/projectinfo';
 import * as npmextra from '@pushrocks/npmextra';
