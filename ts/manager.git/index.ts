@@ -27,7 +27,7 @@ export class NpmciGitManager {
     } else {
       logger.log('info', `npmci git -> cli arguments invalid! Please read the documentation.`);
     }
-  }
+  };
 
   public mirror = async () => {
     const githubToken = process.env.NPMCI_GIT_GITHUBTOKEN;
@@ -46,9 +46,9 @@ export class NpmciGitManager {
     if (githubToken) {
       logger.log('info', 'found github token.');
       logger.log('info', 'attempting the mirror the repository to GitHub');
-  
+
       // plugins.smartgit.GitRepo;
-  
+
       // add the mirror
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
@@ -61,5 +61,5 @@ export class NpmciGitManager {
       logger.log('error', `cannot find NPMCI_GIT_GITHUBTOKEN env var!`);
       process.exit(1);
     }
-  }
+  };
 }

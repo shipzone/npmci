@@ -29,28 +29,34 @@ let sortableArray: npmci.Dockerfile[];
 
 tap.test('should return valid Dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
-  dockerfile1 = new npmci.Dockerfile(npmciInstance.dockerManager, { filePath: './Dockerfile', read: true });
-  dockerfile2 = new npmci.Dockerfile(npmciInstance.dockerManager, { filePath: './Dockerfile_sometag1', read: true });
+  dockerfile1 = new npmci.Dockerfile(npmciInstance.dockerManager, {
+    filePath: './Dockerfile',
+    read: true
+  });
+  dockerfile2 = new npmci.Dockerfile(npmciInstance.dockerManager, {
+    filePath: './Dockerfile_sometag1',
+    read: true
+  });
   expect(dockerfile1.version).to.equal('latest');
   return expect(dockerfile2.version).to.equal('sometag1');
 });
 
 tap.test('should read a directory of Dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
-  return npmci.Dockerfile
-    .readDockerfiles(npmciInstance.dockerManager)
-    .then(async (readDockerfilesArrayArg: npmci.Dockerfile[]) => {
+  return npmci.Dockerfile.readDockerfiles(npmciInstance.dockerManager).then(
+    async (readDockerfilesArrayArg: npmci.Dockerfile[]) => {
       sortableArray = readDockerfilesArrayArg;
       return expect(readDockerfilesArrayArg[1].version).to.equal('sometag1');
-    });
+    }
+  );
 });
 
 tap.test('should sort an array of Dockerfiles', async () => {
-  return npmci.Dockerfile
-    .sortDockerfiles(sortableArray)
-    .then(async (sortedArrayArg: npmci.Dockerfile[]) => {
+  return npmci.Dockerfile.sortDockerfiles(sortableArray).then(
+    async (sortedArrayArg: npmci.Dockerfile[]) => {
       console.log(sortedArrayArg);
-    });
+    }
+  );
 });
 
 tap.test('should build all Dockerfiles', async () => {

@@ -1,7 +1,5 @@
 # gitzone ci_default
 image: registry.gitlab.com/hosttoday/ht-docker-node:npmci
-variables:
-  GIT_STRATEGY: clone
 
 cache:
   paths:
@@ -102,7 +100,7 @@ trigger:
 pages:
   image: hosttoday/ht-docker-dbase:npmci
   services:
-   - docker:18-dind
+   - docker:stable-dind
   stage: metadata
   script:
     - npmci command npm install -g @gitzone/tsdoc

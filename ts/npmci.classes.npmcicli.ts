@@ -106,5 +106,5 @@ export class NpmciCli {
 
   public startParse = () => {
     this.smartcli.startParse();
-  }
+  };
 }

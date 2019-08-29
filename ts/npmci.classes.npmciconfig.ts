@@ -51,7 +51,7 @@ export class NpmciConfig {
       logger
     );
 
-    this.configObject  = {
+    this.configObject = {
       projectInfo: new plugins.projectinfo.ProjectInfo(paths.cwd),
       npmGlobalTools: [],
       dockerRegistries: [],

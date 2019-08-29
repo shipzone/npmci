@@ -6,9 +6,7 @@ export { path };
 // @servezone
 import * as servezoneInterfaces from '@servezone/servezone-interfaces';
 
-export {
-  servezoneInterfaces
-};
+export { servezoneInterfaces };
 
 // @pushrocks
 import * as npmextra from '@pushrocks/npmextra';
