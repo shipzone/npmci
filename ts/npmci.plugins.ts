@@ -11,8 +11,10 @@ export {
 };
 
 // @pushrocks
-import * as projectinfo from '@pushrocks/projectinfo';
 import * as npmextra from '@pushrocks/npmextra';
+import * as projectinfo from '@pushrocks/projectinfo';
+import * as qenv from '@pushrocks/qenv';
+import * as smartanalytics from '@pushrocks/smartanalytics';
 import * as smartdelay from '@pushrocks/smartdelay';
 import * as smartfile from '@pushrocks/smartfile';
 import * as smartcli from '@pushrocks/smartcli';
@@ -27,8 +29,10 @@ import * as smartssh from '@pushrocks/smartssh';
 import * as smartstring from '@pushrocks/smartstring';
 
 export {
-  projectinfo,
   npmextra,
+  projectinfo,
+  qenv,
+  smartanalytics,
   smartdelay,
   smartfile,
   smartcli,

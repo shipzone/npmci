@@ -1,9 +1,13 @@
 import * as plugins from './npmci.plugins';
 
-export let cwd = process.cwd();
+export const cwd = process.cwd();
 
-export let NpmciPackageRoot = plugins.path.join(__dirname, '../');
-export let NpmciPackageConfig = plugins.path.join(NpmciPackageRoot, './config.json');
-export let NpmciProjectDir = cwd;
-export let NpmciTestDir = plugins.path.join(cwd, './test');
-export let NpmciCacheDir = plugins.path.join(cwd, './.npmci_cache');
+// package paths
+export const NpmciPackageRoot = plugins.path.join(__dirname, '../');
+export const NpmciPackageConfig = plugins.path.join(NpmciPackageRoot, './config.json');
+
+// project paths
+export const NpmciProjectDir = cwd;
+export const NpmciProjectNogitDir = plugins.path.join(NpmciProjectDir, './.nogit');
+export const NpmciTestDir = plugins.path.join(cwd, './test');
+export const NpmciCacheDir = plugins.path.join(cwd, './.npmci_cache');

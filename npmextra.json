@@ -1,9 +1,4 @@
 {
-  "npmts": {
-    "mode": "default",
-    "coverageTreshold": "70",
-    "cli": true
-  },
   "npmci": {
     "npmGlobalTools": [],
     "npmAccessLevel": "public",
