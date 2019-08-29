@@ -266,6 +266,13 @@ export class Dockerfile {
     );
     await bash(`docker tag ${this.buildTag} ${pushTag}`);
     await bash(`docker push ${pushTag}`);
+    const imageDigest = (await bash(
+      `docker inspect --format='{{index .RepoDigests 0}}' ${pushTag}`
+    )).split('@')[1];
+    await this.npmciDockerManagerRef.npmciRef.cloudlyConnector.announceDockerContainer({
+      dockerImageUrl: pushTag,
+      dockerImageVersion: imageDigest
+    });
   }
 
   /**

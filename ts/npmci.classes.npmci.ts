@@ -34,7 +34,7 @@ export class Npmci {
       projectId: 'gitzone',
       appName: 'npmci'
     });
-    this.cloudlyConnector = new CloudlyConnector();
+    this.cloudlyConnector = new CloudlyConnector(this);
     this.npmciEnv = new NpmciEnv(this);
     this.npmciInfo = new NpmciInfo(this);
     this.npmciCli = new NpmciCli(this);

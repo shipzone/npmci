@@ -50,7 +50,7 @@ export class NpmciDockerManager {
         `>>npmci docker ...<< cli arguments invalid... Please read the documentation.`
       );
     }
-  };
+  }
 
   /**
    * builds a cwd of Dockerfiles by triggering a promisechain
@@ -62,7 +62,7 @@ export class NpmciDockerManager {
       .then(Dockerfile.sortDockerfiles)
       .then(Dockerfile.mapDockerfiles)
       .then(Dockerfile.buildDockerfiles);
-  };
+  }
 
   /**
    * login to the DockerRegistries
@@ -70,7 +70,7 @@ export class NpmciDockerManager {
   public login = async () => {
     await this.prepare();
     await this.npmciRegistryStorage.loginAll();
-  };
+  }
 
   /**
    * logs in docker
@@ -98,7 +98,7 @@ export class NpmciDockerManager {
       }
     );
     return;
-  };
+  }
 
   /**
    * pushes an image towards a registry
@@ -146,7 +146,7 @@ export class NpmciDockerManager {
         await dockerfile.push(dockerRegistryToPushTo, suffix);
       }
     }
-  };
+  }
 
   /**
    * pulls an image
@@ -165,7 +165,7 @@ export class NpmciDockerManager {
     for (const dockerfile of dockerfileArray) {
       await dockerfile.pull(localDockerRegistry, suffix);
     }
-  };
+  }
 
   /**
    * tests docker files
@@ -173,5 +173,5 @@ export class NpmciDockerManager {
   public test = async () => {
     await this.prepare();
     return await Dockerfile.readDockerfiles(this).then(Dockerfile.testDockerfiles);
-  };
+  }
 }
