@@ -269,12 +269,10 @@ export class Dockerfile {
     );
     await bash(`docker tag ${this.buildTag} ${this.pushTag}`);
     await bash(`docker push ${this.pushTag}`);
-    console.log('you can get the digest using this command');
-    console.log(`docker inspect --format="{{index .RepoDigests 0}}" ${this.pushTag}`);
-    const imageDigest = await bash(
+    const imageDigest = (await bash(
       `docker inspect --format="{{index .RepoDigests 0}}" ${this.pushTag}`
-    );
-    console.log(imageDigest);
+    )).split('@')[1];
+    console.log(`The image ${this.pushTag} has digest ${imageDigest}`);
     await this.npmciDockerManagerRef.npmciRef.cloudlyConnector.announceDockerContainer({
       dockerImageUrl: this.pushTag,
       dockerImageVersion: this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo
