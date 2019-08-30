@@ -214,6 +214,7 @@ export class Dockerfile {
   public version: string;
   public cleanTag: string;
   public buildTag: string;
+  public pushTag: string;
   public containerName: string;
   public content: string;
   public baseImage: string;
@@ -248,7 +249,9 @@ export class Dockerfile {
   public async build() {
     logger.log('info', 'now building Dockerfile for ' + this.cleanTag);
     const buildArgsString = await Dockerfile.getDockerBuildArgs(this.npmciDockerManagerRef);
-    const buildCommand = `docker build -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
+    const buildCommand = `docker build --label="version=${
+      this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo.npm.version
+    }" -t ${this.buildTag} -f ${this.filePath} ${buildArgsString} .`;
     await bash(buildCommand);
     return;
   }
@@ -257,21 +260,24 @@ export class Dockerfile {
    * pushes the Dockerfile to a registry
    */
   public async push(dockerRegistryArg: DockerRegistry, versionSuffix: string = null) {
-    const pushTag = Dockerfile.getDockerTagString(
+    this.pushTag = Dockerfile.getDockerTagString(
       this.npmciDockerManagerRef,
       dockerRegistryArg.registryUrl,
       this.repo,
       this.version,
       versionSuffix
     );
-    await bash(`docker tag ${this.buildTag} ${pushTag}`);
-    await bash(`docker push ${pushTag}`);
-    const imageDigest = (await bash(
+    await bash(`docker tag ${this.buildTag} ${this.pushTag}`);
+    await bash(`docker push ${this.pushTag}`);
+    console.log('you can get the digest using this command');
+    console.log(`docker inspect --format='{{index .RepoDigests 0}}' ${this.pushTag}`);
+    /* const imageDigest = (await bash(
       `docker inspect --format='{{index .RepoDigests 0}}' ${pushTag}`
-    )).split('@')[1];
+    )).split('@')[1]; */
     await this.npmciDockerManagerRef.npmciRef.cloudlyConnector.announceDockerContainer({
-      dockerImageUrl: pushTag,
-      dockerImageVersion: imageDigest
+      dockerImageUrl: this.pushTag,
+      dockerImageVersion: this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo
+        .npm.version
     });
   }
 
