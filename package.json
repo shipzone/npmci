@@ -33,7 +33,7 @@
     "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
-    "@apiglobal/typedrequest": "^1.0.17",
+    "@apiglobal/typedrequest": "^1.0.24",
     "@pushrocks/lik": "^3.0.11",
     "@pushrocks/npmextra": "^3.0.5",
     "@pushrocks/projectinfo": "^4.0.2",
