@@ -18,6 +18,7 @@ stages:
 mirror:
   stage: security
   script:
+  - npm install -g npmci
   - npmci git mirror
   tags:
   - docker
