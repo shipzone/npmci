@@ -50,6 +50,7 @@ export class NpmciGitManager {
       // plugins.smartgit.GitRepo;
 
       // add the mirror
+      console.log(`git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`);
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
