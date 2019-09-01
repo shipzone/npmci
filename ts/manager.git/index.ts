@@ -32,7 +32,7 @@ export class NpmciGitManager {
   public mirror = async () => {
     const githubToken = process.env.NPMCI_GIT_GITHUBTOKEN;
     const githubUser = process.env.NPMCI_GIT_GITHUBGROUP || this.npmciRef.npmciEnv.repo.user;
-    const githubRepo = process.env.NPMCI_GIT_GITHUB || this.npmciRef.npmciEnv.repo;
+    const githubRepo = process.env.NPMCI_GIT_GITHUB || this.npmciRef.npmciEnv.repo.repo;
     if (
       this.npmciRef.npmciConfig.getConfig().projectInfo.npm.packageJson.private === true ||
       this.npmciRef.npmciConfig.getConfig().npmAccessLevel === 'private'
@@ -50,7 +50,6 @@ export class NpmciGitManager {
       // plugins.smartgit.GitRepo;
 
       // add the mirror
-      console.log(`git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`);
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
