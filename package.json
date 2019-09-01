@@ -9,8 +9,8 @@
     "npmci": "cli.js"
   },
   "scripts": {
-    "test": "(rm -f config.json) && tstest test/",
-    "build": "(rm -f config.json) && tsbuild && (npm run testVersion)",
+    "test": "tstest test/",
+    "build": "tsbuild && (npm run testVersion)",
     "testVersion": "(cd test/assets/ && node ../../cli.js -v)"
   },
   "repository": {
