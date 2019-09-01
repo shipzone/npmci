@@ -1,6 +1,6 @@
 import * as plugins from '../npmci.plugins';
 
-import {Npmci} from '../npmci.classes.npmci';
+import { Npmci } from '../npmci.classes.npmci';
 import { logger } from '../npmci.logging';
 
 /**
@@ -13,18 +13,20 @@ export class CloudlyConnector {
     this.npmciRef = npmciRefArg;
   }
 
-
   public async announceDockerContainer(optionsArg: plugins.servezoneInterfaces.IVersionData) {
     const cloudlyUrl = this.npmciRef.npmciConfig.getConfig().urlCloudly;
     if (!cloudlyUrl) {
-      logger.log('warn', 'no cloudly url provided. Thus we cannot announce the newly built Dockerimage!');
+      logger.log(
+        'warn',
+        'no cloudly url provided. Thus we cannot announce the newly built Dockerimage!'
+      );
       return;
     }
-    
+
     const typedrequest = new plugins.typedrequest.TypedRequest<
       plugins.servezoneInterfaces.IRequest_Any_Cloudly_VersionManager_Update
     >(`https://${cloudlyUrl}/versionmanager`, 'update');
 
-    const response = (await typedrequest.fire(optionsArg));
+    const response = await typedrequest.fire(optionsArg);
   }
 }

@@ -18,7 +18,6 @@ stages:
 mirror:
   stage: security
   script:
-  - npm install -g @shipzone/npmci
   - npmci git mirror
   tags:
   - docker

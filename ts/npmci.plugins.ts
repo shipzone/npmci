@@ -6,9 +6,7 @@ export { path };
 // @apiglobal
 import * as typedrequest from '@apiglobal/typedrequest';
 
-export {
-  typedrequest
-};
+export { typedrequest };
 
 // @servezone
 import * as servezoneInterfaces from '@servezone/servezone-interfaces';
