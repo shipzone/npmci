@@ -56,6 +56,7 @@ export class NpmciGitManager {
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
+      await bash(`git fetch`);
       await bash(`git push mirror --all`);
       await bash(`git checkout master`);
       await bash(`git push mirror master`);
