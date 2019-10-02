@@ -52,17 +52,19 @@ export class NpmciGitManager {
       // remove old mirrors
       await bashNoError('git remote rm mirror');
 
+      await bash(`git fetch`);
       // add the mirror
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
-      await bash(`git fetch`);
       await bash(`git push mirror --all`);
-      await bash(`git checkout master`);
+      await bash(`git checkout origin/master`);
       await bash(`git push mirror master`);
       logger.log('ok', 'pushed all branches to mirror!');
       await bash(`git push mirror --tags`);
       logger.log('ok', 'pushed all tags to mirror!');
+      // remove old mirrors
+      await bashNoError('git remote rm mirror');
     } else {
       logger.log('error', `cannot find NPMCI_GIT_GITHUBTOKEN env var!`);
       process.exit(1);
