@@ -133,8 +133,8 @@ export class NpmciNpmManager {
     await bash(`npm -v`);
 
     // -> build it
-    await bash(`npm install`);
-    await bash(`npm run build`);
+    await this.install();
+    await this.build();
 
     logger.log('success', `Nice!!! The build for the publication was successfull!`);
     logger.log('info', `Lets clean up so we don't publish any packages that don't belong to us:`);
@@ -153,6 +153,11 @@ export class NpmciNpmManager {
   public async install(): Promise<void> {
     logger.log('info', 'now installing dependencies:');
     await bash('npm ci');
+  }
+
+  public async build(): Promise<void> {
+    logger.log('info', 'now building the project:');
+    await bash('npm run build');
   }
 
   public async test(): Promise<void> {
