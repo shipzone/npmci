@@ -1,6 +1,6 @@
 import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
-import { bash } from '../npmci.bash';
+import { bash, bashNoError } from '../npmci.bash';
 import { Npmci } from '../npmci.classes.npmci';
 
 export class NpmciGitManager {
@@ -49,11 +49,16 @@ export class NpmciGitManager {
 
       // plugins.smartgit.GitRepo;
 
+      // remove old mirrors
+      await bashNoError('git remote rm mirror');
+
       // add the mirror
       await bash(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
       await bash(`git push mirror --all`);
+      await bash(`git checkout master`);
+      await bash(`git push mirror master`);
       logger.log('ok', 'pushed all branches to mirror!');
       await bash(`git push mirror --tags`);
       logger.log('ok', 'pushed all tags to mirror!');
