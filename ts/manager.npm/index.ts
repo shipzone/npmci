@@ -22,6 +22,9 @@ export class NpmciNpmManager {
         case 'install':
           await this.install();
           break;
+        case 'build':
+            await this.build();
+            break;
         case 'prepare':
           await this.prepare();
           break;
