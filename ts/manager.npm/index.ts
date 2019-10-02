@@ -152,7 +152,7 @@ export class NpmciNpmManager {
 
   public async install(): Promise<void> {
     logger.log('info', 'now installing dependencies:');
-    await bash('npm install');
+    await bash('npm ci');
   }
 
   public async test(): Promise<void> {
