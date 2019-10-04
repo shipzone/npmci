@@ -54,14 +54,14 @@ export class NpmciGitManager {
 
       await bash(`git fetch`);
       // add the mirror
-      await bash(
+      await bashNoError(
         `git remote add mirror https://${githubToken}@github.com/${githubUser}/${githubRepo}.git`
       );
-      await bash(`git push mirror --all`);
-      await bash(`git checkout origin/master`);
-      await bash(`git push mirror master`);
+      await bashNoError(`git push mirror --all`);
+      await bashNoError(`git checkout origin/master`);
+      await bashNoError(`git push mirror master`);
       logger.log('ok', 'pushed all branches to mirror!');
-      await bash(`git push mirror --tags`);
+      await bashNoError(`git push mirror --tags`);
       logger.log('ok', 'pushed all tags to mirror!');
       // remove old mirrors
       await bashNoError('git remote rm mirror');
