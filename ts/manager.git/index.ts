@@ -47,8 +47,6 @@ export class NpmciGitManager {
       logger.log('info', 'found github token.');
       logger.log('info', 'attempting the mirror the repository to GitHub');
 
-      // plugins.smartgit.GitRepo;
-
       // remove old mirrors
       await bashNoError('git remote rm mirror');
 
