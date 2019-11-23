@@ -1,6 +1,6 @@
 {
   "name": "@shipzone/npmci",
-  "version": "3.1.68",
+  "version": "3.1.67",
   "private": false,
   "description": "node and docker in gitlab ci on steroids",
   "main": "dist/index.js",
@@ -53,7 +53,6 @@
     "@pushrocks/smartssh": "^1.2.3",
     "@pushrocks/smartstring": "^3.0.14",
     "@servezone/servezone-interfaces": "^2.0.51",
-    "@types/shelljs": "^0.8.5",
     "@types/through2": "^2.0.34",
     "through2": "^3.0.1"
   },
