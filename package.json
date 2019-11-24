@@ -42,7 +42,6 @@
     "@pushrocks/smartcli": "^3.0.7",
     "@pushrocks/smartdelay": "^2.0.6",
     "@pushrocks/smartfile": "^7.0.6",
-    "@pushrocks/smartgit": "^1.0.13",
     "@pushrocks/smartlog": "^2.0.21",
     "@pushrocks/smartlog-destination-local": "^8.0.2",
     "@pushrocks/smartparam": "^1.0.4",
@@ -51,7 +50,7 @@
     "@pushrocks/smartshell": "^2.0.25",
     "@pushrocks/smartsocket": "^1.1.58",
     "@pushrocks/smartssh": "^1.2.3",
-    "@pushrocks/smartstring": "^3.0.14",
+    "@pushrocks/smartstring": "^3.0.17",
     "@servezone/servezone-interfaces": "^2.0.51",
     "@types/through2": "^2.0.34",
     "through2": "^3.0.1"
