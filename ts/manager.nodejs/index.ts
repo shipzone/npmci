@@ -62,7 +62,6 @@ export class NpmciNodeJsManager {
     await bash('npm install -g npm');
     await bash('node -v');
     await bash('npm -v');
-    await bash(`npm config set cache ${paths.NpmciCacheDir}  --global `);
 
     // lets look for further config
     const config = await this.npmciRef.npmciConfig.getConfig();

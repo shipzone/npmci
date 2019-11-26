@@ -1,4 +1,5 @@
 import * as plugins from './mod.plugins';
+import * as paths from '../npmci.paths';
 
 import { logger } from '../npmci.logging';
 import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
@@ -73,6 +74,10 @@ export class NpmciNpmManager {
 
     // lets save it to disk
     plugins.smartfile.memory.toFsSync(npmrcFileString, '/root/.npmrc');
+
+    // lets set the cache directory
+    await bash(`npm config set cache ${paths.NpmciCacheDir}  --global `);
+
     return;
   }
 
