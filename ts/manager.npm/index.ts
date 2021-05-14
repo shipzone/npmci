@@ -56,10 +56,14 @@ export class NpmciNpmManager {
     let npmrcFileString: string = '';
     await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg) => {
       const npmRegistryUrl = npmEnvArg.split('|')[0];
-      const npmToken = npmEnvArg.split('|')[1];
-      npmrcFileString += `//${npmRegistryUrl}/:_authToken="${plugins.smartstring.base64.decode(
-        npmToken
-      )}"\n`;
+      let npmToken = npmEnvArg.split('|')[1];
+      if (npmEnvArg.split('|')[2] && npmEnvArg.split('|')[2] === 'plain') {
+        logger.log('ok', 'npm token not base64 encoded.');
+      } else {
+        logger.log('ok', 'npm token base64 encoded.');
+        npmToken = plugins.smartstring.base64.decode(npmToken);
+      }
+      npmrcFileString += `//${npmRegistryUrl}/:_authToken="${npmToken}"\n`;
     });
     logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
     npmrcFileString += `registry=https://${config.npmRegistryUrl}\n`;
