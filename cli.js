@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 process.env.CLI_CALL = 'true';
-require('./dist/index');
+const cliTool = require('./dist_ts/index');
+cliTool.runCli();

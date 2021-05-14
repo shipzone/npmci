@@ -9,6 +9,7 @@
     "command": "npmci test stable"
   },
   "gitzone": {
+    "projectType": "npm",
     "module": {
       "githost": "gitlab.com",
       "gitscope": "shipzone",

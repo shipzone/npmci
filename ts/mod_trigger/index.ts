@@ -9,7 +9,7 @@ export let trigger = async () => {
   await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TRIGGER_*', evaluateTrigger);
 };
 
-const evaluateTrigger = async triggerEnvVarArg => {
+const evaluateTrigger = async (triggerEnvVarArg) => {
   const triggerRegexResultArray = triggerValueRegex.exec(triggerEnvVarArg);
   const regexDomain = triggerRegexResultArray[1];
   const regexProjectId = triggerRegexResultArray[2];
@@ -30,13 +30,13 @@ const evaluateTrigger = async triggerEnvVarArg => {
       {
         name: 'token',
         payload: regexProjectTriggerToken,
-        type: 'string'
+        type: 'string',
       },
       {
         name: 'ref',
         payload: regexRefName,
-        type: 'string'
-      }
+        type: 'string',
+      },
     ]
   );
 };

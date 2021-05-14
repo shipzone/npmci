@@ -32,7 +32,7 @@ export class Npmci {
     this.analytics = new plugins.smartanalytics.Analytics({
       apiEndPoint: 'https://pubapi.lossless.one/analytics',
       projectId: 'gitzone',
-      appName: 'npmci'
+      appName: 'npmci',
     });
     this.cloudlyConnector = new CloudlyConnector(this);
     this.npmciEnv = new NpmciEnv(this);

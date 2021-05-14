@@ -13,7 +13,9 @@ export class CloudlyConnector {
     this.npmciRef = npmciRefArg;
   }
 
-  public async announceDockerContainer(optionsArg: plugins.servezoneInterfaces.version.IVersionData) {
+  public async announceDockerContainer(
+    optionsArg: plugins.servezoneInterfaces.version.IVersionData
+  ) {
     const cloudlyUrl = this.npmciRef.npmciConfig.getConfig().urlCloudly;
     if (!cloudlyUrl) {
       logger.log(
@@ -23,9 +25,10 @@ export class CloudlyConnector {
       return;
     }
 
-    const typedrequest = new plugins.typedrequest.TypedRequest<
-      plugins.servezoneInterfaces.request.version.IRequest_Any_Cloudly_VersionManager_Update
-    >(`https://${cloudlyUrl}/versionmanager`, 'update');
+    const typedrequest = new plugins.typedrequest.TypedRequest<plugins.servezoneInterfaces.request.version.IRequest_Any_Cloudly_VersionManager_Update>(
+      `https://${cloudlyUrl}/versionmanager`,
+      'update'
+    );
 
     const response = await typedrequest.fire(optionsArg);
   }

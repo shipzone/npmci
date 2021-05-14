@@ -1,11 +1,11 @@
 import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
-import { Objectmap } from '@pushrocks/lik';
+import { ObjectMap } from '@pushrocks/lik';
 
 import { DockerRegistry } from './mod.classes.dockerregistry';
 
 export class RegistryStorage {
-  objectMap = new Objectmap<DockerRegistry>();
+  objectMap = new ObjectMap<DockerRegistry>();
   constructor() {
     // Nothing here
   }
@@ -15,13 +15,13 @@ export class RegistryStorage {
   }
 
   getRegistryByUrl(registryUrlArg: string) {
-    return this.objectMap.find(registryArg => {
+    return this.objectMap.find((registryArg) => {
       return registryArg.registryUrl === registryUrlArg;
     });
   }
 
   async loginAll() {
-    await this.objectMap.forEach(async registryArg => {
+    await this.objectMap.forEach(async (registryArg) => {
       await registryArg.login();
     });
     logger.log('success', 'logged in successfully into all available DockerRegistries!');

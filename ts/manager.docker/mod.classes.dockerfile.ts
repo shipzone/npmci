@@ -31,7 +31,7 @@ export class Dockerfile {
     for (const dockerfilePath of fileTree) {
       const myDockerfile = new Dockerfile(npmciDockerManagerRefArg, {
         filePath: dockerfilePath,
-        read: true
+        read: true,
       });
       readDockerfilesArray.push(myDockerfile);
     }
@@ -51,7 +51,7 @@ export class Dockerfile {
     const cleanTagsOriginal = Dockerfile.cleanTagsArrayFunction(sortableArrayArg, sortedArray);
     let sorterFunctionCounter: number = 0;
     const sorterFunction = () => {
-      sortableArrayArg.forEach(dockerfileArg => {
+      sortableArrayArg.forEach((dockerfileArg) => {
         const cleanTags = Dockerfile.cleanTagsArrayFunction(sortableArrayArg, sortedArray);
         if (
           cleanTags.indexOf(dockerfileArg.baseImage) === -1 &&
@@ -83,7 +83,7 @@ export class Dockerfile {
    * maps local Dockerfiles dependencies to the correspoding Dockerfile class instances
    */
   public static async mapDockerfiles(sortedDockerfileArray: Dockerfile[]): Promise<Dockerfile[]> {
-    sortedDockerfileArray.forEach(dockerfileArg => {
+    sortedDockerfileArray.forEach((dockerfileArg) => {
       if (dockerfileArg.localBaseImageDependent) {
         sortedDockerfileArray.forEach((dockfile2: Dockerfile) => {
           if (dockfile2.cleanTag === dockerfileArg.baseImage) {
@@ -198,7 +198,7 @@ export class Dockerfile {
     trackingArrayArg: Dockerfile[]
   ): string[] {
     const cleanTagsArray: string[] = [];
-    dockerfileArrayArg.forEach(dockerfileArg => {
+    dockerfileArrayArg.forEach((dockerfileArg) => {
       if (trackingArrayArg.indexOf(dockerfileArg) === -1) {
         cleanTagsArray.push(dockerfileArg.cleanTag);
       }
@@ -269,14 +269,14 @@ export class Dockerfile {
     );
     await bash(`docker tag ${this.buildTag} ${this.pushTag}`);
     await bash(`docker push ${this.pushTag}`);
-    const imageDigest = (await bash(
-      `docker inspect --format="{{index .RepoDigests 0}}" ${this.pushTag}`
-    )).split('@')[1];
+    const imageDigest = (
+      await bash(`docker inspect --format="{{index .RepoDigests 0}}" ${this.pushTag}`)
+    ).split('@')[1];
     console.log(`The image ${this.pushTag} has digest ${imageDigest}`);
     await this.npmciDockerManagerRef.npmciRef.cloudlyConnector.announceDockerContainer({
       dockerImageUrl: this.pushTag,
       dockerImageVersion: this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo
-        .npm.version
+        .npm.version,
     });
   }
 

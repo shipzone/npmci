@@ -47,8 +47,7 @@ export class NpmciConfig {
     this.npmciQenv = new plugins.qenv.Qenv(
       paths.NpmciProjectDir,
       paths.NpmciProjectNogitDir,
-      false,
-      logger
+      false
     );
 
     this.configObject = {
@@ -59,7 +58,7 @@ export class NpmciConfig {
       npmAccessLevel: 'private',
       npmRegistryUrl: 'registry.npmjs.org',
       dockerBuildargEnvMap: {},
-      urlCloudly: this.npmciQenv.getEnvVarOnDemand('NPMCI_URL_CLOUDLY')
+      urlCloudly: this.npmciQenv.getEnvVarOnDemand('NPMCI_URL_CLOUDLY'),
     };
   }
 

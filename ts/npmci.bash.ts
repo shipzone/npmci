@@ -13,7 +13,7 @@ export let nvmAvailable = smartpromise.defer<boolean>();
  */
 const npmciSmartshell = new plugins.smartshell.Smartshell({
   executor: 'bash',
-  sourceFilePaths: []
+  sourceFilePaths: [],
 });
 
 /**
@@ -84,7 +84,7 @@ export let bash = async (commandArg: string, retryArg: number = 2): Promise<stri
     logger.log('info', 'ShellExec would be: ' + commandArg);
     execResult = {
       exitCode: 0,
-      stdout: 'testOutput'
+      stdout: 'testOutput',
     };
   }
   return execResult.stdout;

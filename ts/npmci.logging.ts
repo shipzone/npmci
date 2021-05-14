@@ -7,8 +7,8 @@ export const logger = new plugins.smartlog.Smartlog({
     containerName: 'Some ContainerName',
     environment: 'test',
     runtime: 'node',
-    zone: 'Some Zone'
-  }
+    zone: 'Some Zone',
+  },
 });
 
 logger.addLogDestination(new plugins.smartlogDestinationLocal.DestinationLocal());

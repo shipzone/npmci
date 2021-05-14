@@ -21,7 +21,7 @@ export class NpmciDockerManager {
    * handle cli input
    * @param argvArg
    */
-  public handleCli = async argvArg => {
+  public handleCli = async (argvArg) => {
     if (argvArg._.length >= 2) {
       const action: string = argvArg._[1];
       switch (action) {
@@ -85,7 +85,7 @@ export class NpmciDockerManager {
       new DockerRegistry({
         registryUrl: 'registry.gitlab.com',
         username: 'gitlab-ci-token',
-        password: process.env.CI_BUILD_TOKEN
+        password: process.env.CI_BUILD_TOKEN,
       })
     );
 
@@ -93,7 +93,7 @@ export class NpmciDockerManager {
     await plugins.smartparam.forEachMinimatch(
       process.env,
       'NPMCI_LOGIN_DOCKER*',
-      async envString => {
+      async (envString) => {
         this.npmciRegistryStorage.addRegistry(DockerRegistry.fromEnvString(envString));
       }
     );
@@ -104,7 +104,7 @@ export class NpmciDockerManager {
    * pushes an image towards a registry
    * @param argvArg
    */
-  public push = async argvArg => {
+  public push = async (argvArg) => {
     await this.prepare();
     let dockerRegistryUrls: string[] = [];
 
@@ -151,7 +151,7 @@ export class NpmciDockerManager {
   /**
    * pulls an image
    */
-  public pull = async argvArg => {
+  public pull = async (argvArg) => {
     await this.prepare();
     const registryUrlArg = argvArg._[2];
     let suffix = null;

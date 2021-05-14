@@ -15,8 +15,6 @@ node_modules/
 
 # builds
 dist/
-dist_web/
-dist_serve/
-dist_ts_web/
+dist_*/
 
 # custom

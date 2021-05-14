@@ -24,8 +24,8 @@ export class NpmciNpmManager {
           await this.install();
           break;
         case 'build':
-            await this.build();
-            break;
+          await this.build();
+          break;
         case 'prepare':
           await this.prepare();
           break;
@@ -54,7 +54,7 @@ export class NpmciNpmManager {
   public async prepare() {
     const config = this.npmciRef.npmciConfig.getConfig();
     let npmrcFileString: string = '';
-    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
+    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg) => {
       const npmRegistryUrl = npmEnvArg.split('|')[0];
       const npmToken = npmEnvArg.split('|')[1];
       npmrcFileString += `//${npmRegistryUrl}/:_authToken="${plugins.smartstring.base64.decode(
@@ -91,7 +91,7 @@ export class NpmciNpmManager {
       let publishVerdaccioAsWell = false;
       const config = this.npmciRef.npmciConfig.getConfig();
       const availableRegistries: string[] = [];
-      await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', npmEnvArg => {
+      await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg) => {
         availableRegistries.push(npmEnvArg.split('|')[0]);
       });
 
@@ -116,7 +116,7 @@ export class NpmciNpmManager {
 
       // publishEverywhere
       if (publishVerdaccioAsWell) {
-        const verdaccioRegistry = availableRegistries.find(registryString =>
+        const verdaccioRegistry = availableRegistries.find((registryString) =>
           registryString.startsWith('verdaccio')
         );
         if (verdaccioRegistry) {

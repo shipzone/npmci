@@ -2,7 +2,7 @@ import { logger } from '../npmci.logging';
 import * as plugins from './mod.plugins';
 let sshInstance: plugins.smartssh.SshInstance;
 
-export let handleCli = async argvArg => {
+export let handleCli = async (argvArg) => {
   if (argvArg._.length >= 2) {
     const action: string = argvArg._[1];
     switch (action) {

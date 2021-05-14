@@ -32,7 +32,7 @@ export class DockerRegistry {
     return new DockerRegistry({
       registryUrl: registryUrl,
       username: username,
-      password: password
+      password: password,
     });
   }
 

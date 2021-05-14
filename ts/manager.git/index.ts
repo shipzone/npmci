@@ -14,7 +14,7 @@ export class NpmciGitManager {
    * handle cli input
    * @param argvArg
    */
-  public handleCli = async argvArg => {
+  public handleCli = async (argvArg) => {
     if (argvArg._.length >= 2) {
       const action: string = argvArg._[1];
       switch (action) {

@@ -5,6 +5,6 @@ export const npmciInstance = new Npmci();
 
 export { Dockerfile, Npmci };
 
-if (process.env.CLI_CALL) {
+export const runCli = async () => {
   npmciInstance.start();
-}
+};

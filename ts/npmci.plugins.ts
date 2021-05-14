@@ -47,7 +47,7 @@ export {
   smartshell,
   smartsocket,
   smartssh,
-  smartstring
+  smartstring,
 };
 
 import * as through2 from 'through2';

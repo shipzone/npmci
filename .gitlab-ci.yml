@@ -3,14 +3,14 @@ image: registry.gitlab.com/hosttoday/ht-docker-node:npmci
 
 cache:
   paths:
-  - .npmci_cache/
-  key: "$CI_BUILD_STAGE"
+    - .npmci_cache/
+  key: '$CI_BUILD_STAGE'
 
 stages:
-- security
-- test
-- release
-- metadata
+  - security
+  - test
+  - release
+  - metadata
 
 # ====================
 # security stage
@@ -18,21 +18,36 @@ stages:
 mirror:
   stage: security
   script:
-  - npmci git mirror
+    - npmci git mirror
+  only:
+    - tags
   tags:
-  - docker
-  - notpriv
+    - lossless
+    - docker
+    - notpriv
 
-snyk:
+auditProductionDependencies:
+  image: registry.gitlab.com/hosttoday/ht-docker-node:npmci
   stage: security
   script:
     - npmci npm prepare
-    - npmci command npm install -g snyk
-    - npmci command npm install --ignore-scripts
-    - npmci command snyk test
+    - npmci command npm install --production --ignore-scripts
+    - npmci command npm config set registry https://registry.npmjs.org
+    - npmci command npm audit --audit-level=high --only=prod --production
   tags:
-  - docker
-  - notpriv
+    - docker
+
+auditDevDependencies:
+  image: registry.gitlab.com/hosttoday/ht-docker-node:npmci
+  stage: security
+  script:
+    - npmci npm prepare
+    - npmci command npm install --ignore-scripts
+    - npmci command npm config set registry https://registry.npmjs.org
+    - npmci command npm audit --audit-level=high --only=dev
+  tags:
+    - docker
+  allow_failure: true
 
 # ====================
 # test stage
@@ -41,37 +56,36 @@ snyk:
 testStable:
   stage: test
   script:
-  - npmci npm prepare
-  - npmci node install stable
-  - npmci npm install
-  - npmci npm test
+    - npmci npm prepare
+    - npmci node install stable
+    - npmci npm install
+    - npmci npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
-  - docker
-  - priv
+    - docker
 
 testBuild:
   stage: test
   script:
-  - npmci npm prepare
-  - npmci node install lts
-  - npmci npm install
-  - npmci command npm run build
+    - npmci npm prepare
+    - npmci node install stable
+    - npmci npm install
+    - npmci command npm run build
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
-  - docker
-  - notpriv
+    - docker
 
 release:
   stage: release
   script:
-  - npmci node install lts
-  - npmci npm publish
+    - npmci node install stable
+    - npmci npm publish
   only:
-  - tags
+    - tags
   tags:
-  - docker
-  - notpriv
+    - lossless
+    - docker
+    - notpriv
 
 # ====================
 # metadata stage
@@ -79,35 +93,39 @@ release:
 codequality:
   stage: metadata
   allow_failure: true
+  only:
+    - tags
   script:
     - npmci command npm install -g tslint typescript
+    - npmci npm prepare
     - npmci npm install
     - npmci command "tslint -c tslint.json ./ts/**/*.ts"
   tags:
-  - docker
-  - priv
+    - lossless
+    - docker
+    - priv
 
 trigger:
   stage: metadata
   script:
-  - npmci trigger
+    - npmci trigger
   only:
-  - tags
+    - tags
   tags:
-  - docker
-  - notpriv
+    - lossless
+    - docker
+    - notpriv
 
 pages:
-  image: hosttoday/ht-docker-dbase:npmci
-  services:
-   - docker:stable-dind
   stage: metadata
   script:
+    - npmci node install lts
     - npmci command npm install -g @gitzone/tsdoc
     - npmci npm prepare
     - npmci npm install
     - npmci command tsdoc
   tags:
+    - lossless
     - docker
     - notpriv
   only:
@@ -115,5 +133,5 @@ pages:
   artifacts:
     expire_in: 1 week
     paths:
-    - public
+      - public
   allow_failure: true

@@ -1,3 +1,26 @@
 {
-  "workbench.colorCustomizations": {}
+  "json.schemas": [
+    {
+      "fileMatch": ["/npmextra.json"],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "npmci": {
+            "type": "object",
+            "description": "settings for npmci"
+          },
+          "gitzone": {
+            "type": "object",
+            "description": "settings for gitzone",
+            "properties": {
+              "projectType": {
+                "type": "string",
+                "enum": ["website", "element", "service", "npm", "wcc"]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

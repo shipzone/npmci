@@ -14,11 +14,11 @@ export class NpmciCli {
 
     // clean
     this.smartcli.addCommand('clean').subscribe(
-      async argv => {
+      async (argv) => {
         const modClean = await import('./mod_clean/index');
         await modClean.clean();
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -26,11 +26,11 @@ export class NpmciCli {
 
     // command
     this.smartcli.addCommand('command').subscribe(
-      async argv => {
+      async (argv) => {
         const modCommand = await import('./mod_command/index');
         await modCommand.command();
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -38,10 +38,10 @@ export class NpmciCli {
 
     // command
     this.smartcli.addCommand('git').subscribe(
-      async argvArg => {
+      async (argvArg) => {
         await this.npmciRef.gitManager.handleCli(argvArg);
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -49,10 +49,10 @@ export class NpmciCli {
 
     // build
     this.smartcli.addCommand('docker').subscribe(
-      async argvArg => {
+      async (argvArg) => {
         await this.npmciRef.dockerManager.handleCli(argvArg);
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -60,10 +60,10 @@ export class NpmciCli {
 
     // node
     this.smartcli.addCommand('node').subscribe(
-      async argvArg => {
+      async (argvArg) => {
         await this.npmciRef.nodejsManager.handleCli(argvArg);
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -71,21 +71,21 @@ export class NpmciCli {
 
     // npm
     this.smartcli.addCommand('npm').subscribe(
-      async argvArg => {
+      async (argvArg) => {
         await this.npmciRef.npmManager.handleCli(argvArg);
       },
-      err => {
+      (err) => {
         console.log(err);
       }
     );
 
     // trigger
     this.smartcli.addCommand('ssh').subscribe(
-      async argvArg => {
+      async (argvArg) => {
         const modSsh = await import('./mod_ssh/index');
         await modSsh.handleCli(argvArg);
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }
@@ -93,11 +93,11 @@ export class NpmciCli {
 
     // trigger
     this.smartcli.addCommand('trigger').subscribe(
-      async argv => {
+      async (argv) => {
         const modTrigger = await import('./mod_trigger/index');
         await modTrigger.trigger();
       },
-      err => {
+      (err) => {
         console.log(err);
         process.exit(1);
       }

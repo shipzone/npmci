@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "current file",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "${relativeFile}"
+      ],
+      "runtimeArgs": ["-r", "@gitzone/tsrun"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "test.ts",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "test/test.ts"
+      ],
+      "runtimeArgs": ["-r", "@gitzone/tsrun"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
+}

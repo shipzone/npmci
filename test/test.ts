@@ -31,11 +31,11 @@ tap.test('should return valid Dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
   dockerfile1 = new npmci.Dockerfile(npmciInstance.dockerManager, {
     filePath: './Dockerfile',
-    read: true
+    read: true,
   });
   dockerfile2 = new npmci.Dockerfile(npmciInstance.dockerManager, {
     filePath: './Dockerfile_sometag1',
-    read: true
+    read: true,
   });
   expect(dockerfile1.version).to.equal('latest');
   return expect(dockerfile2.version).to.equal('sometag1');
@@ -62,28 +62,28 @@ tap.test('should sort an array of Dockerfiles', async () => {
 tap.test('should build all Dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
   return npmciInstance.dockerManager.handleCli({
-    _: ['docker', 'build']
+    _: ['docker', 'build'],
   });
 });
 
 tap.test('should test all Dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
   return npmciInstance.dockerManager.handleCli({
-    _: ['docker', 'test']
+    _: ['docker', 'test'],
   });
 });
 
 tap.test('should test dockerfiles', async () => {
   const npmciInstance = new npmci.Npmci();
   return npmciInstance.dockerManager.handleCli({
-    _: ['docker', 'test']
+    _: ['docker', 'test'],
   });
 });
 
 tap.test('should login docker daemon', async () => {
   const npmciInstance = new npmci.Npmci();
   return npmciInstance.dockerManager.handleCli({
-    _: ['docker', 'login']
+    _: ['docker', 'login'],
   });
 });
 
@@ -93,7 +93,7 @@ tap.test('should login docker daemon', async () => {
 tap.test('should prepare SSH keys', async () => {
   const npmciModSsh = await import('../ts/mod_ssh');
   return await npmciModSsh.handleCli({
-    _: ['ssh', 'prepare']
+    _: ['ssh', 'prepare'],
   });
 });
 
@@ -103,13 +103,13 @@ tap.test('should prepare SSH keys', async () => {
 tap.test('should install a certain version of node', async () => {
   const npmciInstance = new npmci.Npmci();
   await npmciInstance.nodejsManager.handleCli({
-    _: ['node', 'install', 'stable']
+    _: ['node', 'install', 'stable'],
   });
   await npmciInstance.nodejsManager.handleCli({
-    _: ['node', 'install', 'lts']
+    _: ['node', 'install', 'lts'],
   });
   await npmciInstance.nodejsManager.handleCli({
-    _: ['node', 'install', 'legacy']
+    _: ['node', 'install', 'legacy'],
   });
 });
 
