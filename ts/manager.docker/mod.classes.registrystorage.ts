@@ -15,7 +15,7 @@ export class RegistryStorage {
   }
 
   getRegistryByUrl(registryUrlArg: string) {
-    return this.objectMap.find((registryArg) => {
+    return this.objectMap.findSync((registryArg) => {
       return registryArg.registryUrl === registryUrlArg;
     });
   }

@@ -16,7 +16,7 @@ export class NpmciNodeJsManager {
    * handle cli input
    * @param argvArg
    */
-  public async handleCli(argvArg) {
+  public async handleCli(argvArg: any) {
     if (argvArg._.length >= 3) {
       const action: string = argvArg._[1];
       switch (action) {
@@ -40,15 +40,15 @@ export class NpmciNodeJsManager {
    * Install a specific version of node
    * @param versionArg
    */
-  public async install(versionArg) {
+  public async install(versionArg: any) {
     logger.log('info', `now installing node version ${versionArg}`);
     let version: string;
     if (versionArg === 'stable') {
-      version = '12';
+      version = '16';
     } else if (versionArg === 'lts') {
-      version = '10';
+      version = '14';
     } else if (versionArg === 'legacy') {
-      version = '8';
+      version = '12';
     } else {
       version = versionArg;
     }

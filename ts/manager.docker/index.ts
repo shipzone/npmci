@@ -21,7 +21,7 @@ export class NpmciDockerManager {
    * handle cli input
    * @param argvArg
    */
-  public handleCli = async (argvArg) => {
+  public handleCli = async (argvArg: any) => {
     if (argvArg._.length >= 2) {
       const action: string = argvArg._[1];
       switch (action) {
@@ -93,7 +93,7 @@ export class NpmciDockerManager {
     await plugins.smartparam.forEachMinimatch(
       process.env,
       'NPMCI_LOGIN_DOCKER*',
-      async (envString) => {
+      async (envString: string) => {
         this.npmciRegistryStorage.addRegistry(DockerRegistry.fromEnvString(envString));
       }
     );
@@ -104,7 +104,7 @@ export class NpmciDockerManager {
    * pushes an image towards a registry
    * @param argvArg
    */
-  public push = async (argvArg) => {
+  public push = async (argvArg: any) => {
     await this.prepare();
     let dockerRegistryUrls: string[] = [];
 
@@ -134,7 +134,7 @@ export class NpmciDockerManager {
       const dockerfileArray = await Dockerfile.readDockerfiles(this)
         .then(Dockerfile.sortDockerfiles)
         .then(Dockerfile.mapDockerfiles);
-      const dockerRegistryToPushTo = this.npmciRegistryStorage.getRegistryByUrl(dockerRegistryUrl);
+      const dockerRegistryToPushTo = await this.npmciRegistryStorage.getRegistryByUrl(dockerRegistryUrl);
       if (!dockerRegistryToPushTo) {
         logger.log(
           'error',
@@ -151,14 +151,14 @@ export class NpmciDockerManager {
   /**
    * pulls an image
    */
-  public pull = async (argvArg) => {
+  public pull = async (argvArg: any) => {
     await this.prepare();
     const registryUrlArg = argvArg._[2];
     let suffix = null;
     if (argvArg._.length >= 4) {
       suffix = argvArg._[3];
     }
-    const localDockerRegistry = this.npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
+    const localDockerRegistry = await this.npmciRegistryStorage.getRegistryByUrl(registryUrlArg);
     const dockerfileArray = await Dockerfile.readDockerfiles(this)
       .then(Dockerfile.sortDockerfiles)
       .then(Dockerfile.mapDockerfiles);

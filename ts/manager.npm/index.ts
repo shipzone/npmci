@@ -8,7 +8,7 @@ import { Npmci } from '../npmci.classes.npmci';
 export class NpmciNpmManager {
   public npmciRef: Npmci;
 
-  constructor(npmciRefArg) {
+  constructor(npmciRefArg: Npmci) {
     this.npmciRef = npmciRefArg;
   }
 
@@ -16,7 +16,7 @@ export class NpmciNpmManager {
    * handle cli input
    * @param argvArg
    */
-  public async handleCli(argvArg) {
+  public async handleCli(argvArg: any) {
     if (argvArg._.length >= 2) {
       const action: string = argvArg._[1];
       switch (action) {
@@ -54,7 +54,7 @@ export class NpmciNpmManager {
   public async prepare() {
     const config = this.npmciRef.npmciConfig.getConfig();
     let npmrcFileString: string = '';
-    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg) => {
+    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg: string) => {
       const npmRegistryUrl = npmEnvArg.split('|')[0];
       let npmToken = npmEnvArg.split('|')[1];
       if (npmEnvArg.split('|')[2] && npmEnvArg.split('|')[2] === 'plain') {
@@ -95,7 +95,7 @@ export class NpmciNpmManager {
       let publishVerdaccioAsWell = false;
       const config = this.npmciRef.npmciConfig.getConfig();
       const availableRegistries: string[] = [];
-      await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg) => {
+      await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg: string) => {
         availableRegistries.push(npmEnvArg.split('|')[0]);
       });
 
