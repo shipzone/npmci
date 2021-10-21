@@ -21,6 +21,7 @@ import * as smartanalytics from '@pushrocks/smartanalytics';
 import * as smartdelay from '@pushrocks/smartdelay';
 import * as smartfile from '@pushrocks/smartfile';
 import * as smartcli from '@pushrocks/smartcli';
+import * as smartgit from '@pushrocks/smartgit';
 import * as smartlog from '@pushrocks/smartlog';
 import * as smartlogDestinationLocal from '@pushrocks/smartlog-destination-local';
 import * as smartparam from '@pushrocks/smartparam';
