@@ -9,7 +9,7 @@ import * as typedrequest from '@apiglobal/typedrequest';
 export { typedrequest };
 
 // @servezone
-import * as servezoneInterfaces from '@servezone/servezone-interfaces';
+import * as servezoneInterfaces from '@servezone/interfaces';
 
 export { servezoneInterfaces };
 
@@ -51,6 +51,14 @@ export {
   smartstring,
 };
 
+// @tsclass scope
+import * as tsclass from '@tsclass/tsclass';
+
+export {
+  tsclass
+}
+
+// third party
 import * as through2 from 'through2';
 
 export { through2 };

@@ -54,17 +54,21 @@ export class NpmciNpmManager {
   public async prepare() {
     const config = this.npmciRef.npmciConfig.getConfig();
     let npmrcFileString: string = '';
-    await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg: string) => {
-      const npmRegistryUrl = npmEnvArg.split('|')[0];
-      let npmToken = npmEnvArg.split('|')[1];
-      if (npmEnvArg.split('|')[2] && npmEnvArg.split('|')[2] === 'plain') {
-        logger.log('ok', 'npm token not base64 encoded.');
-      } else {
-        logger.log('ok', 'npm token base64 encoded.');
-        npmToken = plugins.smartstring.base64.decode(npmToken);
+    await plugins.smartparam.forEachMinimatch(
+      process.env,
+      'NPMCI_TOKEN_NPM*',
+      (npmEnvArg: string) => {
+        const npmRegistryUrl = npmEnvArg.split('|')[0];
+        let npmToken = npmEnvArg.split('|')[1];
+        if (npmEnvArg.split('|')[2] && npmEnvArg.split('|')[2] === 'plain') {
+          logger.log('ok', 'npm token not base64 encoded.');
+        } else {
+          logger.log('ok', 'npm token base64 encoded.');
+          npmToken = plugins.smartstring.base64.decode(npmToken);
+        }
+        npmrcFileString += `//${npmRegistryUrl}/:_authToken="${npmToken}"\n`;
       }
-      npmrcFileString += `//${npmRegistryUrl}/:_authToken="${npmToken}"\n`;
-    });
+    );
     logger.log('info', `setting default npm registry to ${config.npmRegistryUrl}`);
     npmrcFileString += `registry=https://${config.npmRegistryUrl}\n`;
 
@@ -95,9 +99,13 @@ export class NpmciNpmManager {
       let publishVerdaccioAsWell = false;
       const config = this.npmciRef.npmciConfig.getConfig();
       const availableRegistries: string[] = [];
-      await plugins.smartparam.forEachMinimatch(process.env, 'NPMCI_TOKEN_NPM*', (npmEnvArg: string) => {
-        availableRegistries.push(npmEnvArg.split('|')[0]);
-      });
+      await plugins.smartparam.forEachMinimatch(
+        process.env,
+        'NPMCI_TOKEN_NPM*',
+        (npmEnvArg: string) => {
+          availableRegistries.push(npmEnvArg.split('|')[0]);
+        }
+      );
 
       // -> configure package access level
       if (config.npmAccessLevel) {

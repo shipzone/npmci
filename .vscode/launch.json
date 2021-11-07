@@ -2,28 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "current file",
-      "type": "node",
+      "command": "npm test",
+      "name": "Run npm test",
       "request": "launch",
-      "args": [
-        "${relativeFile}"
-      ],
-      "runtimeArgs": ["-r", "@gitzone/tsrun"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "internalConsoleOptions": "openOnSessionStart"
-    },
-    {
-      "name": "test.ts",
-      "type": "node",
-      "request": "launch",
-      "args": [
-        "test/test.ts"
-      ],
-      "runtimeArgs": ["-r", "@gitzone/tsrun"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "internalConsoleOptions": "openOnSessionStart"
+      "type": "node-terminal"
     }
   ]
 }

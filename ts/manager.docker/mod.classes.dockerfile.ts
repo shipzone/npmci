@@ -152,9 +152,8 @@ export class Dockerfile {
     suffixArg?: string
   ): string {
     // determine wether the repo should be mapped accordingly to the registry
-    const mappedRepo = npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().dockerRegistryRepoMap[
-      registryArg
-    ];
+    const mappedRepo =
+      npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().dockerRegistryRepoMap[registryArg];
     const repo = (() => {
       if (mappedRepo) {
         return mappedRepo;
@@ -274,9 +273,11 @@ export class Dockerfile {
     ).split('@')[1];
     console.log(`The image ${this.pushTag} has digest ${imageDigest}`);
     await this.npmciDockerManagerRef.npmciRef.cloudlyConnector.announceDockerContainer({
-      dockerImageUrl: this.pushTag,
-      dockerImageVersion: this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo
-        .npm.version,
+      registryUrl: this.pushTag,
+      tag: this.buildTag,
+      labels: [],
+      version:
+        this.npmciDockerManagerRef.npmciRef.npmciConfig.getConfig().projectInfo.npm.version,
     });
   }
 

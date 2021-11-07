@@ -2,7 +2,8 @@ import * as plugins from './mod.plugins';
 import { bash } from '../npmci.bash';
 import { logger } from '../npmci.logging';
 
-const triggerValueRegex = /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.\-\/]*)/;
+const triggerValueRegex =
+  /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.\-\/]*)/;
 
 export let trigger = async () => {
   logger.log('info', 'now running triggers');

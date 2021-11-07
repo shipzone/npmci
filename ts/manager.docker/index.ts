@@ -134,7 +134,9 @@ export class NpmciDockerManager {
       const dockerfileArray = await Dockerfile.readDockerfiles(this)
         .then(Dockerfile.sortDockerfiles)
         .then(Dockerfile.mapDockerfiles);
-      const dockerRegistryToPushTo = await this.npmciRegistryStorage.getRegistryByUrl(dockerRegistryUrl);
+      const dockerRegistryToPushTo = await this.npmciRegistryStorage.getRegistryByUrl(
+        dockerRegistryUrl
+      );
       if (!dockerRegistryToPushTo) {
         logger.log(
           'error',

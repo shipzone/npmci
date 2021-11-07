@@ -12,6 +12,9 @@ stages:
   - release
   - metadata
 
+before_script:
+  - npm install -g @shipzone/npmci
+
 # ====================
 # security stage
 # ====================
@@ -36,6 +39,7 @@ auditProductionDependencies:
     - npmci command npm audit --audit-level=high --only=prod --production
   tags:
     - docker
+  allow_failure: true
 
 auditDevDependencies:
   image: registry.gitlab.com/hosttoday/ht-docker-node:npmci

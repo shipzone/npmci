@@ -28,7 +28,7 @@
     "@gitzone/tsrun": "^1.2.18",
     "@gitzone/tstest": "^1.0.59",
     "@pushrocks/tapbundle": "^3.2.14",
-    "@types/node": "^16.11.1",
+    "@types/node": "^16.11.6",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0"
   },
@@ -52,7 +52,8 @@
     "@pushrocks/smartsocket": "^1.2.8",
     "@pushrocks/smartssh": "^1.2.3",
     "@pushrocks/smartstring": "^3.0.24",
-    "@servezone/servezone-interfaces": "^2.0.51",
+    "@servezone/interfaces": "^1.0.3",
+    "@tsclass/tsclass": "^3.0.36",
     "@types/through2": "^2.0.36",
     "through2": "^4.0.2"
   },
