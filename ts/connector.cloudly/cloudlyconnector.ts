@@ -27,7 +27,7 @@ export class CloudlyConnector {
 
     const typedrequest =
       new plugins.typedrequest.TypedRequest<plugins.servezoneInterfaces.requests.IRequest_InformAboutNewContainerImage>(
-        `https://${cloudlyUrl}/versionmanager`,
+        `https://${cloudlyUrl}/typedrequest`,
         'servezonestandard_InformAboutNewContainerVersion'
       );
 
