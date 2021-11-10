@@ -2,6 +2,7 @@ import { tap, expect } from '@pushrocks/tapbundle';
 import * as path from 'path';
 
 process.env.NPMTS_TEST = 'true';
+process.env.NPMCI_URL_CLOUDLY = 'localhost'
 
 // set up environment
 process.env.CI_REPOSITORY_URL = 'https://yyyyyy:xxxxxxxx@gitlab.com/mygroup/myrepo.git';
