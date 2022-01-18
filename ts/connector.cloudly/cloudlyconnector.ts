@@ -14,9 +14,10 @@ export class CloudlyConnector {
   }
 
   public async announceDockerContainer(
-    optionsArg: plugins.tsclass.container.IContainer
+    optionsArg: plugins.tsclass.container.IContainer,
+    testCloudlyUrlArg?: string
   ) {
-    const cloudlyUrl = this.npmciRef.npmciConfig.getConfig().urlCloudly;
+    const cloudlyUrl = testCloudlyUrlArg || this.npmciRef.npmciConfig.getConfig().urlCloudly;
     if (!cloudlyUrl) {
       logger.log(
         'warn',
