@@ -1,6 +1,6 @@
-import * as plugins from './mod.plugins';
-import { bash } from '../npmci.bash';
-import { logger } from '../npmci.logging';
+import * as plugins from './mod.plugins.js';
+import { bash } from '../npmci.bash.js';
+import { logger } from '../npmci.logging.js';
 
 const triggerValueRegex =
   /^([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|([a-zA-Z0-9\.]*)\|?([a-zA-Z0-9\.\-\/]*)/;

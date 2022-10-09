@@ -1,4 +1,4 @@
-import * as plugins from './npmci.plugins';
+import * as plugins from './npmci.plugins.js';
 
 export const logger = new plugins.smartlog.Smartlog({
   logContext: {

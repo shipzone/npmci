@@ -1,5 +1,5 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
 let sshInstance: plugins.smartssh.SshInstance;
 
 export let handleCli = async (argvArg: any) => {

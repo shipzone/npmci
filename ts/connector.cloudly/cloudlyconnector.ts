@@ -1,7 +1,7 @@
-import * as plugins from '../npmci.plugins';
+import * as plugins from '../npmci.plugins.js';
 
-import { Npmci } from '../npmci.classes.npmci';
-import { logger } from '../npmci.logging';
+import { Npmci } from '../npmci.classes.npmci.js';
+import { logger } from '../npmci.logging.js';
 
 /**
  * connects to cloudly

@@ -1,7 +1,7 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
-import { bash, bashNoError } from '../npmci.bash';
-import { Npmci } from '../npmci.classes.npmci';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
+import { bash, bashNoError } from '../npmci.bash.js';
+import { Npmci } from '../npmci.classes.npmci.js';
 
 export class NpmciGitManager {
   public npmciRef: Npmci;

@@ -1,5 +1,5 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
-import * as paths from '../npmci.paths';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
+import * as paths from '../npmci.paths.js';
 
-import { Dockerfile } from './mod.classes.dockerfile';
+import { Dockerfile } from './mod.classes.dockerfile.js';

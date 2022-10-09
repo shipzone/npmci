@@ -1,8 +1,8 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
 import { ObjectMap } from '@pushrocks/lik';
 
-import { DockerRegistry } from './mod.classes.dockerregistry';
+import { DockerRegistry } from './mod.classes.dockerregistry.js';
 
 export class RegistryStorage {
   objectMap = new ObjectMap<DockerRegistry>();

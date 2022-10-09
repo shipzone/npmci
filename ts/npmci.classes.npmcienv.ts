@@ -1,5 +1,5 @@
-import * as plugins from './npmci.plugins';
-import { Npmci } from './npmci.classes.npmci';
+import * as plugins from './npmci.plugins.js';
+import { Npmci } from './npmci.classes.npmci.js';
 
 export class NpmciEnv {
   public npmciRef: Npmci;

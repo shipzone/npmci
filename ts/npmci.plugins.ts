@@ -25,6 +25,7 @@ import * as smartgit from '@pushrocks/smartgit';
 import * as smartlog from '@pushrocks/smartlog';
 import * as smartlogDestinationLocal from '@pushrocks/smartlog-destination-local';
 import * as smartparam from '@pushrocks/smartparam';
+import * as smartpath from '@pushrocks/smartpath';
 import * as smartpromise from '@pushrocks/smartpromise';
 import * as smartrequest from '@pushrocks/smartrequest';
 import * as smartshell from '@pushrocks/smartshell';
@@ -39,10 +40,12 @@ export {
   smartanalytics,
   smartdelay,
   smartfile,
+  smartgit,
   smartcli,
   smartlog,
   smartlogDestinationLocal,
   smartparam,
+  smartpath,
   smartpromise,
   smartrequest,
   smartshell,

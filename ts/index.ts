@@ -1,5 +1,5 @@
-import { Npmci } from './npmci.classes.npmci';
-import { Dockerfile } from './manager.docker/mod.classes.dockerfile';
+import { Npmci } from './npmci.classes.npmci.js';
+import { Dockerfile } from './manager.docker/mod.classes.dockerfile.js';
 
 export const npmciInstance = new Npmci();
 

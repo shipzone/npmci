@@ -1,6 +1,6 @@
-import { logger } from './npmci.logging';
-import * as plugins from './npmci.plugins';
-import * as paths from './npmci.paths';
+import { logger } from './npmci.logging.js';
+import * as plugins from './npmci.plugins.js';
+import * as paths from './npmci.paths.js';
 
 import * as smartpromise from '@pushrocks/smartpromise';
 

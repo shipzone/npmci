@@ -1,5 +1,6 @@
 import { tap, expect } from '@pushrocks/tapbundle';
 import * as path from 'path';
+import * as smartpath from '@pushrocks/smartpath';
 
 process.env.NPMTS_TEST = 'true';
 process.env.NPMCI_URL_CLOUDLY = 'localhost'
@@ -15,10 +16,14 @@ process.env.NPMCI_LOGIN_DOCKER = 'docker.io|someuser|somepass';
 process.env.NPMCI_SSHKEY_1 = 'hostString|somePrivKey|##';
 
 process.cwd = () => {
-  return path.join(__dirname, 'assets/');
+  return path.join(smartpath.get.dirnameFromImportMetaUrl(import.meta.url), 'assets/');
 };
 
-import * as npmci from '../ts';
+let npmci: typeof import('../ts/index.js');
+
+tap.preTask('should import npmci', async () => {
+  npmci = await import('../ts/index.js');
+})
 
 // ======
 // Docker
@@ -38,8 +43,8 @@ tap.test('should return valid Dockerfiles', async () => {
     filePath: './Dockerfile_sometag1',
     read: true,
   });
-  expect(dockerfile1.version).to.equal('latest');
-  return expect(dockerfile2.version).to.equal('sometag1');
+  expect(dockerfile1.version).toEqual('latest');
+  return expect(dockerfile2.version).toEqual('sometag1');
 });
 
 tap.test('should read a directory of Dockerfiles', async () => {
@@ -47,7 +52,7 @@ tap.test('should read a directory of Dockerfiles', async () => {
   return npmci.Dockerfile.readDockerfiles(npmciInstance.dockerManager).then(
     async (readDockerfilesArrayArg: npmci.Dockerfile[]) => {
       sortableArray = readDockerfilesArrayArg;
-      return expect(readDockerfilesArrayArg[1].version).to.equal('sometag1');
+      return expect(readDockerfilesArrayArg[1].version).toEqual('sometag1');
     }
   );
 });
@@ -92,7 +97,7 @@ tap.test('should login docker daemon', async () => {
 // SSH
 // ===
 tap.test('should prepare SSH keys', async () => {
-  const npmciModSsh = await import('../ts/mod_ssh');
+  const npmciModSsh = await import('../ts/mod_ssh/index.js');
   return await npmciModSsh.handleCli({
     _: ['ssh', 'prepare'],
   });

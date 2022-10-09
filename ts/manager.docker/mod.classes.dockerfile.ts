@@ -1,13 +1,13 @@
-import * as plugins from './mod.plugins';
-import * as paths from '../npmci.paths';
+import * as plugins from './mod.plugins.js';
+import * as paths from '../npmci.paths.js';
 
-import { logger } from '../npmci.logging';
-import { bash } from '../npmci.bash';
+import { logger } from '../npmci.logging.js';
+import { bash } from '../npmci.bash.js';
 
-import { DockerRegistry } from './mod.classes.dockerregistry';
-import * as helpers from './mod.helpers';
-import { NpmciDockerManager } from '.';
-import { Npmci } from '../npmci.classes.npmci';
+import { DockerRegistry } from './mod.classes.dockerregistry.js';
+import * as helpers from './mod.helpers.js';
+import { NpmciDockerManager } from './index.js';
+import { Npmci } from '../npmci.classes.npmci.js';
 
 /**
  * class Dockerfile represents a Dockerfile on disk in npmci

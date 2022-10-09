@@ -1,7 +1,7 @@
-import { logger } from './npmci.logging';
-import * as plugins from './npmci.plugins';
-import * as paths from './npmci.paths';
-import { Npmci } from './npmci.classes.npmci';
+import { logger } from './npmci.logging.js';
+import * as plugins from './npmci.plugins.js';
+import * as paths from './npmci.paths.js';
+import { Npmci } from './npmci.classes.npmci.js';
 
 export class NpmciCli {
   public npmciRef: Npmci;
@@ -15,7 +15,7 @@ export class NpmciCli {
     // clean
     this.smartcli.addCommand('clean').subscribe(
       async (argv) => {
-        const modClean = await import('./mod_clean/index');
+        const modClean = await import('./mod_clean/index.js');
         await modClean.clean();
       },
       (err) => {
@@ -27,7 +27,7 @@ export class NpmciCli {
     // command
     this.smartcli.addCommand('command').subscribe(
       async (argv) => {
-        const modCommand = await import('./mod_command/index');
+        const modCommand = await import('./mod_command/index.js');
         await modCommand.command();
       },
       (err) => {
@@ -82,7 +82,7 @@ export class NpmciCli {
     // trigger
     this.smartcli.addCommand('ssh').subscribe(
       async (argvArg) => {
-        const modSsh = await import('./mod_ssh/index');
+        const modSsh = await import('./mod_ssh/index.js');
         await modSsh.handleCli(argvArg);
       },
       (err) => {
@@ -94,7 +94,7 @@ export class NpmciCli {
     // trigger
     this.smartcli.addCommand('trigger').subscribe(
       async (argv) => {
-        const modTrigger = await import('./mod_trigger/index');
+        const modTrigger = await import('./mod_trigger/index.js');
         await modTrigger.trigger();
       },
       (err) => {

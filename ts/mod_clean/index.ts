@@ -1,5 +1,5 @@
-import * as plugins from './mod.plugins';
-import * as paths from '../npmci.paths';
+import * as plugins from './mod.plugins.js';
+import * as paths from '../npmci.paths.js';
 
 /**
  * cleans npmci config files

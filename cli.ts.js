@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 process.env.CLI_CALL = 'true';
-require('@gitzone/tsrun');
-const cliTool = require('./ts/index');
-cliTool.runCli();
+
+import * as tsrun from '@gitzone/tsrun';
+tsrun.runPath('./cli.child.js', import.meta.url);

@@ -1,13 +1,13 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
-import * as paths from '../npmci.paths';
-import { bash } from '../npmci.bash';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
+import * as paths from '../npmci.paths.js';
+import { bash } from '../npmci.bash.js';
 
 // classes
-import { Npmci } from '../npmci.classes.npmci';
-import { Dockerfile } from './mod.classes.dockerfile';
-import { DockerRegistry } from './mod.classes.dockerregistry';
-import { RegistryStorage } from './mod.classes.registrystorage';
+import { Npmci } from '../npmci.classes.npmci.js';
+import { Dockerfile } from './mod.classes.dockerfile.js';
+import { DockerRegistry } from './mod.classes.dockerregistry.js';
+import { RegistryStorage } from './mod.classes.registrystorage.js';
 
 export class NpmciDockerManager {
   public npmciRef: Npmci;

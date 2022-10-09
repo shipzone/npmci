@@ -1,17 +1,17 @@
-import * as plugins from './npmci.plugins';
+import * as plugins from './npmci.plugins.js';
 
-import { CloudlyConnector } from './connector.cloudly/cloudlyconnector';
+import { CloudlyConnector } from './connector.cloudly/cloudlyconnector.js';
 
-import { NpmciInfo } from './npmci.classes.npmciinfo';
-import { NpmciCli } from './npmci.classes.npmcicli';
-import { NpmciConfig } from './npmci.classes.npmciconfig';
+import { NpmciInfo } from './npmci.classes.npmciinfo.js';
+import { NpmciCli } from './npmci.classes.npmcicli.js';
+import { NpmciConfig } from './npmci.classes.npmciconfig.js';
 
 // mods
-import { NpmciDockerManager } from './manager.docker';
-import { NpmciGitManager } from './manager.git';
-import { NpmciNodeJsManager } from './manager.nodejs';
-import { NpmciNpmManager } from './manager.npm';
-import { NpmciEnv } from './npmci.classes.npmcienv';
+import { NpmciDockerManager } from './manager.docker/index.js';
+import { NpmciGitManager } from './manager.git/index.js';
+import { NpmciNodeJsManager } from './manager.nodejs/index.js';
+import { NpmciNpmManager } from './manager.npm/index.js';
+import { NpmciEnv } from './npmci.classes.npmcienv.js';
 
 export class Npmci {
   public analytics: plugins.smartanalytics.Analytics;

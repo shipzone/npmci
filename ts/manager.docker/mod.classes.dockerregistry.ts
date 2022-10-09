@@ -1,6 +1,6 @@
-import { logger } from '../npmci.logging';
-import * as plugins from './mod.plugins';
-import { bash } from '../npmci.bash';
+import { logger } from '../npmci.logging.js';
+import * as plugins from './mod.plugins.js';
+import { bash } from '../npmci.bash.js';
 
 export interface IDockerRegistryConstructorOptions {
   registryUrl: string;

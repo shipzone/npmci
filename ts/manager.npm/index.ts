@@ -1,9 +1,9 @@
-import * as plugins from './mod.plugins';
-import * as paths from '../npmci.paths';
+import * as plugins from './mod.plugins.js';
+import * as paths from '../npmci.paths.js';
 
-import { logger } from '../npmci.logging';
-import { bash, bashNoError, nvmAvailable } from '../npmci.bash';
-import { Npmci } from '../npmci.classes.npmci';
+import { logger } from '../npmci.logging.js';
+import { bash, bashNoError, nvmAvailable } from '../npmci.bash.js';
+import { Npmci } from '../npmci.classes.npmci.js';
 
 export class NpmciNpmManager {
   public npmciRef: Npmci;

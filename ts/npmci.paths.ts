@@ -1,9 +1,9 @@
-import * as plugins from './npmci.plugins';
+import * as plugins from './npmci.plugins.js';
 
 export const cwd = process.cwd();
 
 // package paths
-export const NpmciPackageRoot = plugins.path.join(__dirname, '../');
+export const NpmciPackageRoot = plugins.path.join(plugins.smartpath.get.dirnameFromImportMetaUrl(import.meta.url), '../');
 export const NpmciPackageConfig = plugins.path.join(NpmciPackageRoot, './config.json');
 
 // project paths
