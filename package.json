@@ -1,6 +1,6 @@
 {
   "name": "@shipzone/npmci",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "private": false,
   "description": "node and docker in gitlab ci on steroids",
   "main": "dist_ts/index.js",
