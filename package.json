@@ -51,7 +51,7 @@
     "@pushrocks/smartrequest": "^2.0.11",
     "@pushrocks/smartshell": "^2.0.30",
     "@pushrocks/smartsocket": "^2.0.7",
-    "@pushrocks/smartssh": "^1.2.3",
+    "@pushrocks/smartssh": "^2.0.0",
     "@pushrocks/smartstring": "^4.0.5",
     "@servezone/interfaces": "^1.0.3",
     "@tsclass/tsclass": "^4.0.21",

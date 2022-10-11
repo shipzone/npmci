@@ -23,7 +23,7 @@ specifiers:
   '@pushrocks/smartrequest': ^2.0.11
   '@pushrocks/smartshell': ^2.0.30
   '@pushrocks/smartsocket': ^2.0.7
-  '@pushrocks/smartssh': ^1.2.3
+  '@pushrocks/smartssh': ^2.0.0
   '@pushrocks/smartstring': ^4.0.5
   '@pushrocks/tapbundle': ^5.0.4
   '@servezone/interfaces': ^1.0.3
@@ -52,7 +52,7 @@ dependencies:
   '@pushrocks/smartrequest': 2.0.11
   '@pushrocks/smartshell': 2.0.30
   '@pushrocks/smartsocket': 2.0.7
-  '@pushrocks/smartssh': 1.2.4
+  '@pushrocks/smartssh': 2.0.0
   '@pushrocks/smartstring': 4.0.5
   '@servezone/interfaces': 1.0.3
   '@tsclass/tsclass': 4.0.21
@@ -466,13 +466,6 @@ packages:
     dependencies:
       '@pushrocks/smartpromise': 3.1.7
 
-  /@pushrocks/smartenv/4.0.16:
-    resolution: {integrity: sha512-NwYMONDc/NjY6BGvzZzLMteF83kPQTF9BCGfqWbktUUruEtdqL+nGw6ecoLFi2b5u7XPb8jK1TKIcSvpNJ7SyA==}
-    dependencies:
-      '@pushrocks/smartpromise': 3.1.7
-      '@types/node': 14.18.32
-    dev: false
-
   /@pushrocks/smartenv/5.0.3:
     resolution: {integrity: sha512-/cgEDhOIo9LB5Vd2BVO9+QrjC38w872iy7w88UWuwz7obVILWOHl3MYMHAKFqXexuwKpQ/y/Klu2xQHtOPgi6Q==}
     dependencies:
@@ -562,22 +555,6 @@ packages:
       js-yaml: 4.1.0
     transitivePeerDependencies:
       - supports-color
-
-  /@pushrocks/smartfile/7.0.12:
-    resolution: {integrity: sha512-/4T4K07WqOXGvQQ/VFyRMUd8kN1RdqQgmrqHjZE/vMDLz7RYsqU9FlEN6OGX1G1E6pR9IdHnT4ClXPlvzClHYg==}
-    dependencies:
-      '@pushrocks/smarthash': 2.1.10
-      '@pushrocks/smartmime': 1.0.5
-      '@pushrocks/smartpath': 4.0.3
-      '@pushrocks/smartpromise': 3.1.7
-      '@pushrocks/smartrequest': 1.1.56
-      '@types/fs-extra': 8.1.2
-      fs-extra: 8.1.0
-      glob: 7.2.3
-      js-yaml: 3.14.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@pushrocks/smartfile/8.0.11:
     resolution: {integrity: sha512-mujs1mDgorsryQ8OZuL94MZZDYL3+cbdPKaXSchPjyxOOx8iGacUzc5BK4jDsImYeYEo07MpdJ5BjvGkORQR/w==}
@@ -862,18 +839,18 @@ packages:
       - supports-color
     dev: true
 
-  /@pushrocks/smartssh/1.2.4:
-    resolution: {integrity: sha512-q+AnT9nGGEzGQ0uGH58vYmUODf+NuqRv/ReyXEupSt+aowkZD7rwcETH5LDNC6lgVkk4I6K4vUEgjaI+Leigvg==}
+  /@pushrocks/smartssh/2.0.0:
+    resolution: {integrity: sha512-aK5AA68wOnwLwELpiry4neAF3SqI+dqjtMexBMUzkMjIngqKWBZZWmEzBZZp1BRwz4ORFasH7bbaThfgfrgYCw==}
     dependencies:
-      '@pushrocks/smartfile': 7.0.12
-      '@pushrocks/smartpath': 4.0.3
+      '@pushrocks/smartfile': 10.0.5
+      '@pushrocks/smartpath': 5.0.5
       '@pushrocks/smartpromise': 3.1.7
       '@pushrocks/smartshell': 2.0.30
-      '@pushrocks/smartstring': 3.0.26
-      '@types/fs-extra': 8.1.2
-      '@types/minimatch': 3.0.5
-      fs-extra: 8.1.0
-      minimatch: 3.1.2
+      '@pushrocks/smartstring': 4.0.5
+      '@types/fs-extra': 9.0.13
+      '@types/minimatch': 5.1.2
+      fs-extra: 10.1.0
+      minimatch: 5.1.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -887,18 +864,6 @@ packages:
       '@types/through2': 2.0.36
       from2: 2.3.0
       through2: 4.0.2
-
-  /@pushrocks/smartstring/3.0.26:
-    resolution: {integrity: sha512-bVAXxXpVudVvoF1ePTiHNBdAGfkH+TDe1mGV2vPg8RBYW1oGBidCDfiy7jIva+5EhdXv3E1FW7lfdwuejhP7rw==}
-    dependencies:
-      '@pushrocks/smartenv': 4.0.16
-      crypto-random-string: 3.3.1
-      js-base64: 2.6.4
-      normalize-newline: 3.0.0
-      randomatic: 3.1.1
-      strip-indent: 3.0.0
-      url: 0.11.0
-    dev: false
 
   /@pushrocks/smartstring/4.0.5:
     resolution: {integrity: sha512-g9a/Mfj+eJAUrTDQoH3oaYegjI98WlVoSLAI8lpExQ/STlEJGO5ZdWDqgZ0HvHe+5UeWvxzCFpHifqRhMUJ+dQ==}
@@ -1196,12 +1161,6 @@ packages:
     dependencies:
       '@types/node': 18.8.4
 
-  /@types/fs-extra/8.1.2:
-    resolution: {integrity: sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==}
-    dependencies:
-      '@types/node': 18.8.4
-    dev: false
-
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
@@ -1306,10 +1265,6 @@ packages:
 
   /@types/minimatch/5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
-
-  /@types/node/14.18.32:
-    resolution: {integrity: sha512-Y6S38pFr04yb13qqHf8uk1nHE3lXgQ30WZbv1mLliV9pt0NjvqdWttLcrOYLnXbOafknVYRHZGoMSpR9UwfYow==}
-    dev: false
 
   /@types/node/18.8.4:
     resolution: {integrity: sha512-WdlVphvfR/GJCLEMbNA8lJ0lhFNBj4SW3O+O5/cEGw9oYrv0al9zTwuQsq+myDUXgNx2jgBynoVgZ2MMJ6pbow==}
@@ -1925,13 +1880,6 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
-
-  /crypto-random-string/3.3.1:
-    resolution: {integrity: sha512-5j88ECEn6h17UePrLi6pn1JcLtAiANa3KExyr9y9Z5vo2mv56Gh3I4Aja/B9P9uyMwyxNHAHWv+nE72f30T5Dg==}
-    engines: {node: '>=8'}
-    dependencies:
-      type-fest: 0.8.1
-    dev: false
 
   /crypto-random-string/4.0.0:
     resolution: {integrity: sha512-x8dy3RnvYdlUcPOjkEHqozhiwzKNSq7GcPuXFbnyMOCHxX8V3OgIg/pYuabl2sbUPfIJaeAQB7PMOK8DFIdoRA==}
@@ -2568,15 +2516,6 @@ packages:
       jsonfile: 6.1.0
       universalify: 2.0.0
 
-  /fs-extra/8.1.0:
-    resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
-    engines: {node: '>=6 <7 || >=8'}
-    dependencies:
-      graceful-fs: 4.2.10
-      jsonfile: 4.0.0
-      universalify: 0.1.2
-    dev: false
-
   /fs.realpath/1.0.0:
     resolution: {integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=}
 
@@ -2992,10 +2931,6 @@ packages:
       istanbul-lib-report: 3.0.0
     dev: true
 
-  /js-base64/2.6.4:
-    resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
-    dev: false
-
   /js-base64/3.7.2:
     resolution: {integrity: sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==}
 
@@ -3019,12 +2954,6 @@ packages:
   /json-buffer/3.0.0:
     resolution: {integrity: sha1-Wx85evx11ne96Lz8Dkfh+aPZqJg=}
     dev: true
-
-  /jsonfile/4.0.0:
-    resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
-    optionalDependencies:
-      graceful-fs: 4.2.10
-    dev: false
 
   /jsonfile/6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -3402,11 +3331,6 @@ packages:
     dependencies:
       whatwg-url: 5.0.0
     dev: true
-
-  /normalize-newline/3.0.0:
-    resolution: {integrity: sha1-HL6oBKukNgAfg5OKsh7AOdaa6dM=}
-    engines: {node: '>=4'}
-    dev: false
 
   /normalize-newline/4.1.0:
     resolution: {integrity: sha512-ff4jKqMI8Xl50/4Mms/9jPobzAV/UK+kXG2XJ/7AqOmxIx8mqfqTIHYxuAnEgJ2AQeBbLnlbmZ5+38Y9A0w/YA==}
@@ -4039,13 +3963,6 @@ packages:
       ansi-regex: 5.0.1
     dev: true
 
-  /strip-indent/3.0.0:
-    resolution: {integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      min-indent: 1.0.1
-    dev: false
-
   /strip-indent/4.0.0:
     resolution: {integrity: sha512-mnVSV2l+Zv6BLpSD/8V87CW/y9EmmbYzGCIavsnsI6/nwn26DwffM/yztm30Z/I2DY9wdS3vXVCMnHDgZaVNoA==}
     engines: {node: '>=12'}
@@ -4205,11 +4122,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /type-fest/0.8.1:
-    resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
-    engines: {node: '>=8'}
-    dev: false
-
   /type-fest/1.4.0:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
@@ -4262,11 +4174,6 @@ packages:
       pako: 0.2.9
       tiny-inflate: 1.0.3
     dev: true
-
-  /universalify/0.1.2:
-    resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
-    engines: {node: '>= 4.0.0'}
-    dev: false
 
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
