@@ -3,6 +3,6 @@
  */
 export const commitinfo = {
   name: '@shipzone/npmci',
-  version: '4.0.0',
+  version: '4.0.1',
   description: 'node and docker in gitlab ci on steroids'
 }

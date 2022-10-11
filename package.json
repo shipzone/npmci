@@ -42,6 +42,7 @@
     "@pushrocks/smartanalytics": "^2.0.15",
     "@pushrocks/smartcli": "^4.0.6",
     "@pushrocks/smartdelay": "^2.0.13",
+    "@pushrocks/smartenv": "^5.0.3",
     "@pushrocks/smartfile": "^10.0.5",
     "@pushrocks/smartgit": "^3.0.0",
     "@pushrocks/smartlog": "^3.0.1",
