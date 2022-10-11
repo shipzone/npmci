@@ -44,11 +44,11 @@ export class NpmciNodeJsManager {
     logger.log('info', `now installing node version ${versionArg}`);
     let version: string;
     if (versionArg === 'stable') {
-      version = '16';
+      version = '18';
     } else if (versionArg === 'lts') {
-      version = '14';
+      version = '16';
     } else if (versionArg === 'legacy') {
-      version = '12';
+      version = '14';
     } else {
       version = versionArg;
     }
@@ -59,9 +59,10 @@ export class NpmciNodeJsManager {
       logger.log('warn', 'Nvm not in path so staying at installed node version!');
     }
     logger.log('info', 'now installing latest npm version');
-    await bash('npm install -g npm');
+    await bash('npm install -g npm && pnpm install -g pnpm');
     await bash('node -v');
     await bash('npm -v');
+    await bash('pnpm -v');
 
     // lets look for further config
     const config = await this.npmciRef.npmciConfig.getConfig();
