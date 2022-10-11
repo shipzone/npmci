@@ -13,7 +13,7 @@ stages:
   - metadata
 
 before_script:
-  - npm install -g @shipzone/npmci
+  - pnpm install -g @shipzone/npmci pnpm
 
 # ====================
 # security stage
