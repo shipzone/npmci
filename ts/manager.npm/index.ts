@@ -151,6 +151,7 @@ export class NpmciNpmManager {
     logger.log('info', `now preparing environment:`);
     this.prepare();
     await bash(`npm -v`);
+    await bash(`pnpm -v`);
 
     // -> build it
     await this.install();
@@ -172,16 +173,16 @@ export class NpmciNpmManager {
 
   public async install(): Promise<void> {
     logger.log('info', 'now installing dependencies:');
-    await bash('npm ci');
+    await bash('pnpm install');
   }
 
   public async build(): Promise<void> {
     logger.log('info', 'now building the project:');
-    await bash('npm run build');
+    await bash('pnpm run build');
   }
 
   public async test(): Promise<void> {
     logger.log('info', 'now starting tests:');
-    await bash('npm test');
+    await bash('pnpm test');
   }
 }
